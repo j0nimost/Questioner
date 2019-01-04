@@ -23,22 +23,16 @@
     </nav>
 
     <div>
-        <div class="register">
-            <form name="register" onsubmit="return false">
-                <label>Email</label>
-                <label id="err" class="hidden" for="email">Email required</label>
-                <input type="email" name="email" placeholder="Email"/>
+        <div class="login">
+            <form name="login" onsubmit="return false">
                 <label>Username</label>
                 <label id="err" class="hidden" for="username">Username required</label>
                 <input type="text" name="username" placeholder="Username"/>
                 <label>Password</label>
                 <label id="err" class="hidden" for="password">Password required</label>
                 <input type="password" name="password" placeholder="Password"/>
-                <label>Confirm Password</label>
-                <label id="err" class="hidden" for="cpassword">Password required</label>
-                <input type="password" name="cpassword" placeholder="confirm password"/>
                 <input type="submit" value="Submit" onclick="input_error()"/>
-                <a href="login.html">or Sign in?</a>
+                <a href="register.html">or Sign up?</a>
             </form>
         </div>
     </div>

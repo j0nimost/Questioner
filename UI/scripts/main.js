@@ -1,4 +1,4 @@
-function register_error(){
+function input_error(){
     /*get all elements*/
     
     var elements = document.querySelectorAll("form  input[type='text']")
