@@ -1,0 +1,157 @@
+/*Css file specifically for meetup page*/
+body div {
+    width: 100%;
+    background-color: #fffdfdf3;
+
+    margin-top: 55px;
+    min-height:fit-content;
+    width:100%;
+    padding: 0;
+}
+
+div .meetup{
+    position: absolute;
+    left: 60px;
+    top:0;
+    left: 30px;
+    width: 100%;
+    /*margin-top: 55px;*/
+    padding: 20px;
+    display: inline-block;
+}
+
+div .meetup .meetup-list{
+    top: 5px;
+    width: 65%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    float: left;
+}
+
+div .meetup .info {
+    display: block;
+    float: right;
+    width: 32%;
+}
+
+div .meetup .info ul{
+    list-style-type: none;
+    border: 1px solid #131212dc;
+    width: 45%;
+    padding: 0;
+}
+
+div .meetup .meetup-list ul{
+    list-style-type: none;
+}
+
+div .meetup .info ul li {
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    border-bottom: 1px solid #131212dc;
+    cursor: default;
+}
+
+div .meetup .info ul li span {
+    padding-left: 6px;
+}
+
+div .meetup .info ul .active {
+    background-color: #d1cecedc;
+}
+
+div .meetup .info ul > li:last-child{
+    border-bottom: none;
+}
+
+div .meetup .meetup-list ul li {
+    border: 1px solid rgb(82, 80, 80);
+}
+
+div .meetup .meetup-list ul li .meetup-inline {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    margin-top: 5px;
+}
+
+div .meetup .meetup-list ul li #time {
+    display: block;
+    width: 20%;
+    padding: 0;
+    margin-left: 15px;
+    margin-top: 0;
+    float: left;
+    height: 100%;
+}
+
+div .meetup .meetup-list ul li #meetup-body {
+    display: block;
+    width: 70%;
+    padding: 0;
+    margin-top: 0;
+    margin-left: 0;
+    float: right;
+}
+
+div .meetup .meetup-list ul li #meetup-body div {
+    margin-top: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+div .meetup .meetup-list ul li #meetup-body div #tag {
+    display: block;
+    float: left;
+    padding: 0;
+    text-decoration: none;
+    color: #131212dc;
+}
+
+div .meetup .meetup-list ul li #meetup-body div #scheduled {
+    display: block;
+    float: right;
+    padding: 0;
+    margin-right: 5px;
+}
+
+div .meetup .meetup-list ul li #meetup-body div #scheduled img {
+    height: 25px;
+    width: 22px;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div #title {
+    text-decoration: none;
+    /*font-size: 20px;*/
+    margin: 0;
+    color: #131212dc;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div #meetup-question {
+    text-decoration: none;
+    color: #292828ce;
+    font-size: 15px;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div #meetup-question:hover{
+    color: #131212dc;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div p {
+    margin-bottom: 0;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div #title:hover, div .meetup .meetup-list ul li #meetup-body div #tag:hover {
+    text-decoration: underline;
+}
+
+div .meetup .meetup-list ul li #meetup-body div div #title h3 {
+    margin-top: 0;
+}
+
+@media all and (max-width: 480px) {
+    .info { display: none; }
+  }
