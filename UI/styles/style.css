@@ -75,6 +75,13 @@ footer h5{
     margin-left: 10px;
 }
 
-#err {
-    display: none;
+#err.hidden{
+    display: none !important; 
 }
+
+#err {
+    display: block !important;
+    font-size: 13px;
+    color: #ff0000c5;
+}
+
