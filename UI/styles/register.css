@@ -10,7 +10,7 @@ div {
     height: auto;
   }
 
-div .register {
+div .register, div .login {
     width: 80%;
     margin: auto;
 }
@@ -36,12 +36,12 @@ input[type=submit] {
     cursor: pointer;
   }
 
-div .register a {
+div .register a, div .login a {
     float: right;
     text-decoration: none;
     color: #131212dc;
 }
 
-div .register a:hover{
+div .register a:hover, div .login a:hover{
     text-decoration: underline;
 }
