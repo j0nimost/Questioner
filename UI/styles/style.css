@@ -1,5 +1,6 @@
 /* This is a generic CSS file that will handle a 
-    common elements,tags across html pages*/
+    common elements,tags across html pages
+*/
 
 body {
     /*define font style*/
@@ -8,7 +9,7 @@ body {
 }
 
 nav {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     top: 0;
@@ -28,35 +29,76 @@ nav ul {
 
 nav ul li {
     padding: 0;
-    margin: 1px;
-    left: 0;
-    float: left;
+    margin: 0;
+    display: inline;
 }
 
 nav ul li a {
-    display: block;
+    display: inline-block;
     padding: 2px;
     text-decoration: none;
     color: #131212dc;
+    width: 8.5%;
 }
 
 nav ul li a:hover {
     background-color: white;
 }
 
-nav ul li a img{
+nav ul #logo {
+    display: inline-block;
     width: 75px;
     height: 70px;
+}
+
+nav ul #logo a {
+    display: block;
+    width: 100%;
+}
+
+nav ul #logo a img{
+    width: 100%;
+    height: 70%;
     overflow: hidden;
-    padding: 0;
+    display: block;
 }
 
 nav ul #admin {
-    margin-right: 12px;
-    margin-top: 25px;
+    /*display: inline-block;*/
+    position: relative;
+    top: 22px;
+    right: 20px;
+    float: right;
     border: 1px solid rgb(82, 80, 80);
     border-radius: 1.5px;
 }
+
+nav ul #admin a{
+    display: block;
+    width: 90%;
+}
+
+nav ul #profile_logo {
+    /*display: inline-block;*/
+    position: relative;
+    top: 20px;
+    float: right;
+    right: 125px;
+    margin-bottom: 1px;
+}
+
+nav ul #profile_logo a {
+    display: inline-block;
+    width: 90%;
+}
+
+nav ul #profile_logo a img{
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    display: block;
+}
+
 
 
 footer{
