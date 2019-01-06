@@ -108,6 +108,7 @@ div .meetup .meetup-summary .questions ul li div {
     top: 1px;
     /*text-align: left;*/
     text-indent: 3px;
+    margin-bottom: 12px;
 }
 
 div .meetup .meetup-detail {
@@ -135,4 +136,64 @@ div .meetup .meetup-detail p {
     margin-left: 12px;
     display: block;
     margin-top: 2px;
+}
+
+
+div .meetup .meetup-summary .questions .links {
+    margin-top: 0;
+}
+
+div .meetup .meetup-summary .questions .links ul{
+    display: inline;
+    list-style-type: none;
+}
+
+div .meetup .meetup-summary .questions .links ul li {
+    width: 56px;
+    display: inline-block;
+    margin: 5px;
+    margin-top: 0;
+    text-align: center;
+}
+
+div .meetup .meetup-summary .questions .links ul #up{
+    display: block;
+    float: left;
+    margin-left: 40px;
+}
+
+div .meetup .meetup-summary .questions .links ul #upcount-li{
+    display: block;
+    float: left;
+    margin-left: 4px;
+    width: fit-content !important;
+}
+
+div .meetup .meetup-summary .questions .links ul #downcount-li{
+    display: block;
+    float: right;
+    margin-left: 4px;
+    width: fit-content !important;
+}
+
+div .meetup .meetup-summary .questions .links ul #up:hover{
+    border: 1px solid #0077ccd8;
+}
+
+div .meetup .meetup-summary .questions .links ul #down {
+    display: block;
+    float: right;
+    margin-right: 40px;
+}
+
+div .meetup .meetup-summary .questions .links ul #down:hover{
+    border: 1px solid #f82727;
+}
+
+div .meetup .meetup-summary .questions .links ul li a {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #131212dc;
+    cursor: pointer;
 }
