@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/question.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/meetup-detail.css" />
 </head>
 
@@ -81,7 +82,7 @@
                             </div>
                         </li>
                         <li>
-                            <h5>Where will there be food?</h5>
+                            <h5>Will there be food?</h5>
                             <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                                 has been
                                 the
@@ -93,6 +94,18 @@
                                     <li id="down"><a onclick="votedowncount()" role="button">Down</a></li>
                                     <li id="downcount-li"><span id="downcount"></span></li>
                                 </ul>
+                            </div>
+                        </li>
+                        <li class="ask-question">
+                            <h5>ask question</h5>
+                            <div>
+                                <form>
+                                    <label for='title'>Title</label>
+                                    <input type="text" id="title" placeholder="Title"/>
+                                    <label for='body'>Body</label>
+                                    <textarea id="body" placeholder="Enter question detail"></textarea>
+                                    <input type="submit" value="submit"/>
+                                </form>
                             </div>
                         </li>
                     </ul>
