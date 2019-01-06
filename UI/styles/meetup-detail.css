@@ -197,3 +197,19 @@ div .meetup .meetup-summary .questions .links ul li a {
     color: #131212dc;
     cursor: pointer;
 }
+
+div .meetup .meetup-summary .questions .links ul #reply{
+    width: fit-content !important;
+    position: absolute;
+    float: right;
+    top: 0;
+    right: 0;
+    border: none !important;
+}
+
+div .meetup .meetup-summary .questions .links ul #reply a img{
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    padding: 0;
+}
