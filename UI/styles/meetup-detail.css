@@ -216,7 +216,7 @@ div .meetup .meetup-summary .questions .links ul #reply a img{
 
 div .meetup .meetup-summary .questions .comments {
     margin-top: 15px;
-    display: block;
+    display: none;
 }
 
 div .meetup .meetup-summary .questions .comments h5{
