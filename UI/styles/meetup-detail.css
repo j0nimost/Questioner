@@ -1,0 +1,138 @@
+
+body div {
+    position: relative;
+    top: 25px;
+    padding: 0;
+    margin: 5px;
+    width: 100%;
+    background-color: #fffdfdf3;
+    margin-left: 0;
+    margin-right: 0;
+    height: auto;
+}
+
+div .meetup {
+    position: relative;
+    left: 5px;
+    height: fit-content;
+    bottom: 50px;
+    width: 100%;
+    display: inline-block;
+
+}
+
+div .meetup .meetup-summary{
+    height: fit-content;
+    display: block;
+    width: 70%;
+    float: left;
+    left: 20px;
+    
+}
+
+div .meetup .meetup-summary h4 {
+    margin-bottom: 0;
+}
+
+div .meetup .meetup-summary img {
+    border-radius: 3px;
+}
+
+div .meetup .meetup-summary .details{
+    clear: both;
+    margin-top: 6px;
+}
+
+div .meetup .meetup-summary .attendees{
+    margin-bottom: 25px;
+    height: fit-content;
+}
+
+div .meetup .meetup-summary .attendees h5 {
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+div .meetup .meetup-summary .attendees .profile-1{
+    background-color: #f5f5f5;
+    width: 70px;
+    border: 1px solid #b4b2b2;
+    height: fit-content;
+    text-align: center;
+    margin-top: 0;
+    border-radius: 70%;
+    top: 15px;
+}
+
+div .meetup .meetup-summary .attendees .profile-1:hover{
+    border-color: aliceblue;
+}
+
+
+div .meetup .meetup-summary .attendees .profile-1 img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+div .meetup .meetup-summary .questions{
+    margin-top: 15x;
+    margin-bottom: 100px;
+    top: 55px;
+    padding: 0;
+    height: max-content;
+    border-top: 1px solid #bebebedc;
+}
+
+div .meetup .meetup-summary .questions ul {
+    list-style-type: none;
+    padding-left: 1px
+}
+
+div .meetup .meetup-summary .questions ul li {
+    border: 1px solid #131212dc;
+    border-radius: 3px;
+    height: fit-content;
+    margin: 5px;
+    margin-bottom: 9px;
+}
+
+div .meetup .meetup-summary .questions ul li h5{
+    margin-bottom: 0;
+    margin-top: 9px;
+    font-size: 22px;
+    padding-left: 5px;
+}
+
+div .meetup .meetup-summary .questions ul li div {
+    top: 1px;
+    /*text-align: left;*/
+    text-indent: 3px;
+}
+
+div .meetup .meetup-detail {
+    width: 25%;
+    display: block;
+    float: right;
+    position: fixed;
+    right: 0;
+    top: 85px;
+}
+
+div .meetup .meetup-detail div {
+    display: inline-block;
+}
+
+div .meetup .meetup-detail img {
+    height: 30px;
+    width: 30px;
+    display: block;
+    float: left;
+}
+
+div .meetup .meetup-detail p {
+    float: left;
+    margin-left: 12px;
+    display: block;
+    margin-top: 2px;
+}
