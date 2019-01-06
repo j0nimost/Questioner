@@ -26,3 +26,15 @@ function votedowncount(){
     var spanval = document.getElementById('downcount')
     spanval.innerHTML = down + ' votes'
 }
+
+function enablecomment() {
+    var comment = document.getElementsByClassName('comments')
+
+    for (var i = 0; i < comment.length;i+=1){
+        if (comment[i].style.display === 'none'){
+            comment[i].style.display = 'block'
+        } else {
+            comment[i].style.display = 'none'
+        }    
+    }
+}
