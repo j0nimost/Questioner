@@ -10,3 +10,19 @@ function input_error(){
             
 }
 }
+
+
+up = 0;
+down = 0;
+
+function voteupcount(){
+    up = parseInt(up) + parseInt(1)
+    var spanval = document.getElementById('upcount')
+    spanval.innerHTML = up + ' votes'
+}
+
+function votedowncount(){
+    down = parseInt(down) + parseInt(1)
+    var spanval = document.getElementById('downcount')
+    spanval.innerHTML = down + ' votes'
+}
