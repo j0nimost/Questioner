@@ -213,3 +213,47 @@ div .meetup .meetup-summary .questions .links ul #reply a img{
     margin: 0;
     padding: 0;
 }
+
+div .meetup .meetup-summary .questions .comments {
+    margin-top: 15px;
+    display: block;
+}
+
+div .meetup .meetup-summary .questions .comments h5{
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+div .meetup .meetup-summary .questions .comments ul #add-comment {
+    height: 200px !important;
+}
+
+div .meetup .meetup-summary .questions .comments ul li h6 {
+    margin: 5px;
+}
+
+div .meetup .meetup-summary .questions .comments form {
+    width: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+div .meetup .meetup-summary .questions .comments form textarea {
+    padding: 0;
+    margin-left: 15px;
+    margin-top: 10px;
+    width: 95%;
+}
+
+div .meetup .meetup-summary .questions .comments form input[type=submit]{
+    width: 20%;
+    background-color: #0077ccd8;
+    color: white;
+    padding: 14px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    height: fit-content;
+}
