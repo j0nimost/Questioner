@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/style.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../styles/question.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/question.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/meetup-detail.css" />
 </head>
 
@@ -62,8 +62,22 @@
                                     <li id="upcount-li"><span id="upcount"></span></li>
                                     <li id="down"><a onclick="votedowncount()" role="button">Down</a></li>
                                     <li id="downcount-li"><span id="downcount"></span></li>
-                                    <li id="reply"><a><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png"/></a></li>
+                                    <li id="reply"><a onclick="enablecomment()" role="button"><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png" /></a></li>
                                 </ul>
+                            </div>
+
+                            <div class="comments">
+                                <div>
+                                    <h5>comments</h5>
+                                    <ul>
+                                        <li id="add-comment">
+                                            <form>
+                                                <textarea placeholder="Enter comment"></textarea>
+                                                <input type="submit" value="comment" />
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -79,8 +93,22 @@
                                     <li id="upcount-li"><span id="upcount"></span></li>
                                     <li id="down"><a onclick="votedowncount()" role="button">Down</a></li>
                                     <li id="downcount-li"><span id="downcount"></span></li>
-                                    <li id="reply"><a><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png"/></a></li>
+                                    <li id="reply"><a onclick="enablecomment()" role="button"><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png" /></a></li>
                                 </ul>
+                            </div>
+
+                            <div class="comments">
+                                <div>
+                                    <h5>comments</h5>
+                                    <ul>
+                                        <li id="add-comment">
+                                            <form>
+                                                <textarea placeholder="Enter comment"></textarea>
+                                                <input type="submit" value="comment" />
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -95,8 +123,28 @@
                                     <li id="upcount-li"><span id="upcount"></span></li>
                                     <li id="down"><a onclick="votedowncount()" role="button">Down</a></li>
                                     <li id="downcount-li"><span id="downcount"></span></li>
-                                    <li id="reply"><a><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png"/></a></li>
+                                    <li id="reply"><a onclick="enablecomment()" role="button"><img src="https://img.icons8.com/ios/50/000000/reply-arrow.png" /></a></li>
                                 </ul>
+                            </div>
+                            <div class="comments">
+                                <div>
+                                    <h5>comments</h5>
+                                    <ul>
+                                        <li>
+                                            <h6>@Alex</h6>
+                                            <div>
+                                                Excepteur sint occaecat cupidatat non proident,
+                                                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                            </div>
+                                        </li>
+                                        <li id="add-comment">
+                                            <form>
+                                                <textarea placeholder="Enter comment"></textarea>
+                                                <input type="submit" value="comment" />
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </li>
                         <li class="ask-question">
@@ -104,10 +152,10 @@
                             <div>
                                 <form>
                                     <label for='title'>Title</label>
-                                    <input type="text" id="title" placeholder="Title"/>
+                                    <input type="text" id="title" placeholder="Title" />
                                     <label for='body'>Body</label>
                                     <textarea id="body" placeholder="Enter question detail"></textarea>
-                                    <input type="submit" value="submit"/>
+                                    <input type="submit" value="submit" />
                                 </form>
                             </div>
                         </li>
