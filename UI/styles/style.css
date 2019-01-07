@@ -76,6 +76,7 @@ nav ul #admin {
 nav ul #admin a{
     display: block;
     width: 90%;
+    cursor: pointer;
 }
 
 nav ul #profile_logo {
