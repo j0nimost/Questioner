@@ -69,6 +69,8 @@ div .meetup .info ul > li:last-child{
 
 div .meetup .meetup-list ul li {
     border: 1px solid rgb(82, 80, 80);
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 div .meetup .meetup-list ul li .meetup-inline {
