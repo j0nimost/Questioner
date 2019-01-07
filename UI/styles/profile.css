@@ -1,0 +1,96 @@
+div .profile {
+    width: 60%;
+    padding: 0;
+    margin-top: 8px;
+    background-color: aliceblue;
+    position: relative;
+    top: 55px;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div .profile ul {
+    list-style-type: none;
+    display: inline-block;
+}
+
+div .profile ul #profile-img {
+    width: fit-content;
+    float: left;
+}
+
+div .profile ul #profile-img img {
+    height: 90px;
+    width: 90px;
+    border-radius: 70%;
+    padding: 0;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+div .profile ul #profile-img h5 {
+    font-size: 22px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+div .profile ul #profile-img ul {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0;
+    width: 100%;
+}
+
+div .profile ul #profile-img ul li {
+    margin-left: 5px;
+}
+
+div .profile ul #profile-img ul #notifications {
+    float: left;
+    width: fit-content;
+}
+
+div .profile ul #profile-img ul #notifications h6 {
+    margin: 0;
+    font-size: 15px;
+    color: #1bd31b;
+}
+
+div .profile ul #profile-img ul #alert {
+    float: left;    
+    width: fit-content;
+}
+
+div .profile ul #profile-img ul #alert h6 {
+    margin: 0;
+    font-size: 15px;
+    color: #f82727;
+}
+
+div .profile ul #profile-img ul #messages {
+    float: right;
+    width: 32.3%;
+}
+
+div .profile ul #profile-img ul #messages h6 {
+    margin: 0;
+    font-size: 15px;
+    color: #0077ccd8;
+}
+
+div .profile ul #profile-info {
+    float: right;
+    width: 60%;
+}
+
+div .profile ul #profile-info h5 {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+div .profile ul #profile-info div {
+    width:  fit-content;
+}
