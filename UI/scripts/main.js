@@ -38,3 +38,15 @@ function enablecomment() {
         }    
     }
 }
+
+
+function enableadmin() {
+    var create_meetup = document.getElementById('create')
+
+        if (create_meetup.style.display === 'none') {
+            create_meetup.style.display = 'block'
+        } else {
+            create_meetup.style.display = 'none'
+        }
+    return false;
+}
