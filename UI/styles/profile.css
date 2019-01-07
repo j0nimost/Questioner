@@ -59,20 +59,11 @@ div .profile ul #profile-img ul #notifications h6 {
     color: #1bd31b;
 }
 
-div .profile ul #profile-img ul #alert {
-    float: left;    
-    width: fit-content;
-}
-
-div .profile ul #profile-img ul #alert h6 {
-    margin: 0;
-    font-size: 15px;
-    color: #f82727;
-}
 
 div .profile ul #profile-img ul #messages {
     float: right;
-    width: 32.3%;
+    width: fit-content;
+    margin-left: 10px;
 }
 
 div .profile ul #profile-img ul #messages h6 {
