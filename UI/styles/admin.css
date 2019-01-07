@@ -82,3 +82,17 @@ div .meetup .meetup-list ul #create #create-form .time {
     left: 0;
 }
 
+
+div .meetup .meetup-list .meetup-inline #meetup-body #delete {
+    border: 1px solid #131212dc;
+    padding: 5px;
+    margin-right: 15px;
+    float: right;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+}
+
+div .meetup .meetup-list .meetup-inline #meetup-body #delete:hover {
+    border: 1.5px solid #f82727;
+} 
