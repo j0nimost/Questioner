@@ -41,12 +41,25 @@ function enablecomment() {
 
 
 function enableadmin() {
-    var create_meetup = document.getElementById('create')
+    var delete_btn = document.getElementsByName('delete')
+    var create_meetup = document.getElementById('create');
 
+
+        /* for create section */
         if (create_meetup.style.display === 'none') {
-            create_meetup.style.display = 'block'
+            create_meetup.style.display = 'block';
         } else {
+
             create_meetup.style.display = 'none'
+        }
+
+        /*for delete buttons */
+        for (var i = 0; i < delete_btn.length; i += 1){
+            if (delete_btn[i].style.display === 'none') {
+                delete_btn[i].style.display = 'block'
+            } else {
+                delete_btn[i].style.display = 'none'
+            }
         }
     return false;
 }

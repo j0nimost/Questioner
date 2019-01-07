@@ -14,10 +14,11 @@ div .meetup{
     left: 60px;
     top:0;
     left: 30px;
-    width: 100%;
+    width: 95%;
     /*margin-top: 55px;*/
     padding: 20px;
     display: inline-block;
+    margin-bottom: 80px;
 }
 
 div .meetup .meetup-list{
