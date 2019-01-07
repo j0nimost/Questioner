@@ -60,19 +60,26 @@
 
             <div class="tab">
                 <button class="tab-btn" onclick="opentab(event, 'topquestion')">Top Questions</button>
+                <button class="tab-btn" onclick="opentab(event, 'commented')">Comments</button>
             </div>
-
-            <div id="topquestion" class="tabitem">
-                <ul>
-                    <li>
-                        <a ><h4>Will there be food?</h4></a>
-                    </li>
-                    <li>
-                        <a><h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h4></a>
-                    </li>
-                </ul>
+            <div class="toggled">
+                <div id="topquestion" class="tabitem">
+                    <ul>
+                        <li>
+                            <a ><h4>Will there be food?</h4></a>
+                        </li>
+                        <li>
+                            <a><h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h4></a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="commented" class="tabitem">
+                    <ul>
+                        <li><a><h6>Sed aliquam vitae justo at ultrices. Nulla eget mattis massa.</h6></a></li>
+                        <li><a><h6>Praesent ut gravida dui, non cursus dui. Pellentesque in lectus et eros lacinia pulvinar vitae hendrerit mauris</h6></a></li>
+                    </ul>
+                </div>
             </div>
-
 
         </div>
     </div>
