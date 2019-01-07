@@ -63,3 +63,18 @@ function enableadmin() {
         }
     return false;
 }
+
+function opentab(event, itemid) {
+    var i, tabitem, tabbtn;
+    console.log('works')
+  tabitem = document.getElementsByClassName("tabitem");
+  for ( i = 0; i < tabitem.length; i++) {
+    tabitem[i].style.display = "none";
+  }
+  tabbtn = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tabbtn.length; i++) {
+    tabbtn[i].className = tabbtn[i].className.replace(" active", "");
+  }
+  document.getElementById(itemid).style.display = "block";
+  event.currentTarget.className += " active";
+}
