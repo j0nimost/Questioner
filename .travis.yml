@@ -10,5 +10,8 @@
   install:
   - pip install -r requirements.txt
 
+  env: 
+  - APP_SETTINGS='development'
+  
   script:
   - pytest
