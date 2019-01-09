@@ -1,4 +1,5 @@
 # Questioner API
+[![Build Status](https://travis-ci.org/j0nimost/Questioner.svg?branch=develop)](https://travis-ci.org/j0nimost/Questioner) 
 This is Andela's Bootcamp Challenge two. The challenge is to create an API implementation for Questioner.
 
 ## Summary
