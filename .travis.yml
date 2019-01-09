@@ -14,7 +14,7 @@
   - APP_SETTINGS='development'
   
   script:
-  - pytest
+  - pytest --cov=./
 
   after_success:
   - codecov
