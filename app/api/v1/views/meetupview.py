@@ -2,7 +2,7 @@ from flask import request, jsonify, make_response
 from flask import Blueprint
 from werkzeug.exceptions import BadRequest
 
-from ..models.meetupmodel import Meetups
+from ..models.meetupmodel import Meetups, meetups
 
 meetupreq = Blueprint('meetupreq', __name__, url_prefix='/api/v1')
 
@@ -23,3 +23,16 @@ def post():
         return response
     else:
         return make_response(jsonify({'message': 'invalid request type'}), 400)
+
+
+@meetupreq.route('/meetups/upcoming', methods=['GET'])
+def get():
+    '''Get all upcoming meetups'''
+    upcomingmeetups = {
+        'status': 200,
+        'data': meetups
+    }
+
+    response = jsonify(upcomingmeetups)
+    response.status_code = 200
+    return response
