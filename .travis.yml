@@ -9,12 +9,13 @@
 
   install:
   - pip install -r requirements.txt
+  - pip install pytest-cov
 
   env: 
   - APP_SETTINGS='development'
   
   script:
-  - pytest
+  - py.test  --cov-report term --cov=app/test/v1
 
   after_success:
   - codecov
