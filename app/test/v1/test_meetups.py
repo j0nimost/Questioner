@@ -44,5 +44,10 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn('invalid request type', str(json.loads(response.data)))
 
+    def test_get_upcoming(self):
+        response = self.client.get('/api/v1/meetups/upcoming')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Nairobi Go Meetup', str(response.data))
+
     def tearDown(self):
         meetups.pop()
