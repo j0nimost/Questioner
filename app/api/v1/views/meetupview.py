@@ -36,3 +36,18 @@ def get():
     response = jsonify(upcomingmeetups)
     response.status_code = 200
     return response
+
+
+@meetupreq.route('/meetups/<int:id>', methods=['GET'])
+def get_by_id(id):
+    '''Get a specific meetup with a particular ID'''
+    meetup_obj = Meetups.find(id)
+    if meetup_obj:
+        meetup = {
+            'status': 200,
+            'data': [meetup_obj]
+        }
+        response = jsonify(meetup)
+        response.status_code = 200
+        return response
+    return make_response(jsonify({"message": "Not Found"}), 404)
