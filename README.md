@@ -1,7 +1,5 @@
 # Questioner API
-[![Build Status](https://travis-ci.org/j0nimost/Questioner.svg?branch=develop)](https://travis-ci.org/j0nimost/Questioner) 
-
-[![codecov](https://codecov.io/gh/j0nimost/Questioner/branch/develop/graph/badge.svg)](https://codecov.io/gh/j0nimost/Questioner)
+[![Build Status](https://travis-ci.org/j0nimost/Questioner.svg?branch=develop)](https://travis-ci.org/j0nimost/Questioner) [![codecov](https://codecov.io/gh/j0nimost/Questioner/branch/develop/graph/badge.svg)](https://codecov.io/gh/j0nimost/Questioner) [![Maintainability](https://api.codeclimate.com/v1/badges/9afd47aa96de42fcf690/maintainability)](https://codeclimate.com/github/j0nimost/Questioner/maintainability)
 
 
 This is Andela's Bootcamp Challenge two. The challenge is to create an API implementation for Questioner.
