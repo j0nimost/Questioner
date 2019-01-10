@@ -14,6 +14,7 @@ class Questions(Meetups):
                         body: str):
         '''creates questions about a meetup'''
         question = {
+            'id': len(questions)+1,
             'userid': userid,
             'meetupid': meetupid,
             'title': title,
