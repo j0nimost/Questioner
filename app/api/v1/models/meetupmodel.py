@@ -27,3 +27,11 @@ class Meetups(object):
         }
         meetups.append(meetup)
         return meetup
+
+    @classmethod
+    def find(self, id):
+        if iter(meetups):
+            for meetup in meetups:
+                if meetup['id'] == id:
+                    return meetup
+            return None
