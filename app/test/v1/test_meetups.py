@@ -55,7 +55,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertIn('Nairobi Go Meetup', str(json.loads(response.data)))
 
     def test_get_meetup_notfound(self):
-        response = self.client.get('/api/v1/meetups/1')
+        response = self.client.get('/api/v1/meetups/0')
         self.assertEqual(response.status_code, 404)
         self.assertIn('Not Found', str(json.loads(response.data)))
 
