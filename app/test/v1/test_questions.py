@@ -51,7 +51,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 202)
         data = json.loads(response.data)
         print(data)
-        self.assertEqual(14, data['data']['votes'])
+        self.assertEqual(14, data['data'][0]['votes'])
 
     def test_downvote_notfound(self):
         question_downvote = {
