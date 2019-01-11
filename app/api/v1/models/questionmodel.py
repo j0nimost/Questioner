@@ -18,7 +18,25 @@ class Questions(Meetups):
             'userid': userid,
             'meetupid': meetupid,
             'title': title,
-            'body': body
+            'body': body,
+            'votes': 0
         }
         questions.append(question)
+        return question
+
+    @classmethod
+    def find(self, id):
+        '''Finds a specific question and returns a tuple'''
+        if iter(questions):
+            for index, question in enumerate(questions):
+                if question['id'] == id:
+                    return index, question
+        return None, None
+
+    @classmethod
+    def update(self, id: int, votes: int):
+        '''Updates a question by providing votes, expects a question object'''
+        index, question = self.find(id)
+        question['votes'] += votes
+        questions[index] = question
         return question

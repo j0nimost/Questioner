@@ -23,7 +23,8 @@ class MeetupsTestCase(unittest.TestCase):
             'userid': 1,
             'meetupid': 2,
             'title': 'Will there be food',
-            'body': 'I will only attend if there is food'
+            'body': 'I will only attend if there is food',
+            'votes': 15
         })
 
     def test_create_question(self):
@@ -39,6 +40,30 @@ class MeetupsTestCase(unittest.TestCase):
                                     content_type='application/xml')
         self.assertEqual(response.status_code, 400)
         self.assertIn('invalid request type', str(json.loads(response.data)))
+
+    def test_downvote(self):
+        question_downvote = {
+            'votes': -1
+        }
+        response = self.client.patch('api/v1/questions/1/downvote',
+                                     data=json.dumps(question_downvote),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        print(data)
+        self.assertEqual(14, data['data'][0]['votes'])
+
+    def test_downvote_notfound(self):
+        question_downvote = {
+            'votes': -1
+        }
+        response = self.client.patch('api/v1/questions/0/downvote',
+                                     data=json.dumps(question_downvote),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        print(data)
+        self.assertEqual('Not Found', data['message'])
 
     def tearDown(self):
         questions.pop()
