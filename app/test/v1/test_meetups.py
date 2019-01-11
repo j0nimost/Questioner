@@ -29,6 +29,10 @@ class MeetupsTestCase(unittest.TestCase):
             'tags': []
         })
 
+        self.rsvp = {
+            'userid': 1
+        }
+
     def test_create_meetup(self):
         response = self.client.post('/api/v1/meetups',
                                     data=json.dumps(self.meetup),
@@ -58,6 +62,31 @@ class MeetupsTestCase(unittest.TestCase):
         response = self.client.get('/api/v1/meetups/0')
         self.assertEqual(response.status_code, 404)
         self.assertIn('Not Found', str(json.loads(response.data)))
+
+    def test_create_rsvp(self):
+        response = self.client.post('/api/v1/meetups/1/rsvps',
+                                    data=json.dumps(self.rsvp),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        data = json.loads(response.data)
+        self.assertEqual(1, data['data'][0]['id'])
+        self.assertEqual('Nairobi Go Meetup', data['data'][0]['topic'])
+
+    def test_create_rsvp_badrequest(self):
+        response = self.client.post('/api/v1/meetups/1/rsvps',
+                                    data=json.dumps(self.rsvp),
+                                    content_type='application/xml')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual('invalid request type', data['message'])
+
+    def test_create_rsvp_notfound(self):
+        response = self.client.post('/api/v1/meetups/0/rsvps',
+                                    data=json.dumps(self.rsvp),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        self.assertEqual('Not Found', data['message'])
 
     def tearDown(self):
         meetups.pop()

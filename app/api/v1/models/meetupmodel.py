@@ -2,6 +2,7 @@ import datetime
 
 
 meetups = []
+rsvps = []
 
 
 class Meetups(object):
@@ -29,8 +30,20 @@ class Meetups(object):
         return meetup
 
     @classmethod
+    def add_rsvp(self, userid: int, meetupid: int):
+        '''Adds a RSVP'''
+        rsvp = {
+            'userid': userid,
+            'meetupid': meetupid,
+            'isScheduled': True
+        }
+        rsvps.append(rsvp)
+        meetup = self.find(meetupid)
+        return meetup
+
+    @classmethod
     def find(self, id):
-        '''Find a particular question, expects id'''
+        '''Find a particular meetup, expects id'''
         if iter(meetups):
             for meetup in meetups:
                 if meetup['id'] == id:
