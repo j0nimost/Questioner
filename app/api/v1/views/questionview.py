@@ -38,7 +38,7 @@ def downvote(id):
             question = Questions.update(id, votes)
             question_obj = {
                 'status': 202,
-                'data': question
+                'data': [question]
             }
             response = jsonify(question_obj)
             response.status_code = 202
