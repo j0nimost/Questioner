@@ -65,5 +65,29 @@ class MeetupsTestCase(unittest.TestCase):
         print(data)
         self.assertEqual('Not Found', data['message'])
 
+    def test_upvote(self):
+        question_upvote = {
+            'votes': 1
+        }
+        response = self.client.patch('api/v1/questions/1/upvote',
+                                     data=json.dumps(question_upvote),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        print(data)
+        self.assertEqual(15, data['data'][0]['votes'])
+
+    def test_upvote_notfound(self):
+        question_upvote = {
+            'votes': 1
+        }
+        response = self.client.patch('api/v1/questions/0/upvote',
+                                     data=json.dumps(question_upvote),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        print(data)
+        self.assertEqual('Not Found', data['message'])
+
     def tearDown(self):
         questions.pop()
