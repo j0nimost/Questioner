@@ -34,9 +34,9 @@ class Questions(Meetups):
         return None, None
 
     @classmethod
-    def update(self, question_update):
+    def update(self, id: int, votes: int):
         '''Updates a question by providing votes, expects a question object'''
-        index, question = self.find(question_update['id'])
-        question['votes'] += question_update['votes']
+        index, question = self.find(id)
+        question['votes'] += votes
         questions[index] = question
         return question
