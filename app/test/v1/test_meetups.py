@@ -30,8 +30,7 @@ class MeetupsTestCase(unittest.TestCase):
         })
 
         self.rsvp = {
-            'userid': 1,
-            'meetupid': 1
+            'userid': 1
         }
 
     def test_create_meetup(self):
