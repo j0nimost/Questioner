@@ -42,14 +42,28 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertIn('invalid request type', str(json.loads(response.data)))
 
     def test_downvote(self):
-        question_downvote = questions[0]
-        question_downvote['votes'] = -1
+        question_downvote = {
+            'votes': -1
+        }
         response = self.client.patch('api/v1/questions/1/downvote',
                                      data=json.dumps(question_downvote),
                                      content_type='application/json')
         self.assertEqual(response.status_code, 202)
         data = json.loads(response.data)
+        print(data)
         self.assertEqual(14, data['data']['votes'])
+
+    def test_downvote_notfound(self):
+        question_downvote = {
+            'votes': -1
+        }
+        response = self.client.patch('api/v1/questions/0/downvote',
+                                     data=json.dumps(question_downvote),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        print(data)
+        self.assertEqual('Not Found', data['message'])
 
     def tearDown(self):
         questions.pop()
