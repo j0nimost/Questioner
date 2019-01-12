@@ -2,7 +2,8 @@ import unittest
 import json
 
 from app import create_app
-from ...api.v1.models.questionmodel import Questions, questions
+from ...api.v1.models.questionmodel import Questions
+from ...api.v1.models.basemodel import questions
 
 
 class MeetupsTestCase(unittest.TestCase):
