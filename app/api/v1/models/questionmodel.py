@@ -1,15 +1,11 @@
-from .meetupmodel import Meetups
-
-questions = []
+from .basemodel import BaseModel, questions
 
 
-class Questions(Meetups):
+class Questions(BaseModel):
     '''Questions Model handles the business logic for the questions'''
-
     def __init__(self):
-        super().__init__(self)
+        super().__init__('questiondb')
 
-    @classmethod
     def create_question(self, userid: int, meetupid: int, title: str,
                         body: str):
         '''creates questions about a meetup'''
@@ -21,22 +17,12 @@ class Questions(Meetups):
             'body': body,
             'votes': 0
         }
-        questions.append(question)
-        return question
+        self.save(question)
 
-    @classmethod
-    def find(self, id):
-        '''Finds a specific question and returns a tuple'''
-        if iter(questions):
-            for index, question in enumerate(questions):
-                if question['id'] == id:
-                    return index, question
-        return None, None
-
-    @classmethod
-    def update(self, id: int, votes: int):
-        '''Updates a question by providing votes, expects a question object'''
-        index, question = self.find(id)
+    def update_votes(self, id: int, votes: int):
+        '''
+         Updates a question by providing votes, expects a question object
+        '''
+        _, question = self.find(id)
         question['votes'] += votes
-        questions[index] = question
         return question

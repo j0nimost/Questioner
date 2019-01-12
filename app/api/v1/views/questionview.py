@@ -5,6 +5,8 @@ from ..models.questionmodel import Questions
 
 ques = Blueprint('ques', __name__, url_prefix='/api/v1')
 
+quest_obj = Questions()
+
 
 @ques.route('/questions', methods=['POST'])
 def post():
@@ -15,7 +17,8 @@ def post():
         title = request.json['title']
         body = request.json['body']
 
-        question_obj = Questions.create_question(userid, meetupid, title, body)
+        quest_obj.create_question(userid, meetupid, title, body)
+        question_obj = quest_obj.return_data()
         question = {
             'status': 201,
             'data': [question_obj]
@@ -32,10 +35,10 @@ def post():
 def downvote(id):
     '''Downvotes a Question'''
     if request.json:
-        votes = request.json['votes']
-        _, find_question = Questions.find(id)
-        if find_question:
-            question = Questions.update(id, votes)
+        downvotes = request.json['votes']
+        _, downvote_quest = quest_obj.find(id)
+        if downvote_quest:
+            question = quest_obj.update_votes(id, downvotes)
             question_obj = {
                 'status': 202,
                 'data': [question]
@@ -53,10 +56,10 @@ def downvote(id):
 def upvote(id):
     '''Upvotes a Question'''
     if request.json:
-        votes = request.json['votes']
-        _, find_question = Questions.find(id)
-        if find_question:
-            question = Questions.update(id, votes)
+        upvotes = request.json['votes']
+        _, upvote_quest = quest_obj.find(id)
+        if upvote_quest:
+            question = quest_obj.update_votes(id, upvotes)
             question_obj = {
                 'status': 202,
                 'data': [question]

@@ -2,9 +2,12 @@ from flask import request, jsonify, make_response
 from flask import Blueprint
 from werkzeug.exceptions import BadRequest
 
-from ..models.meetupmodel import Meetups, meetups
+from ..models.meetupmodel import Meetups, RSVPS
 
 meetupreq = Blueprint('meetupreq', __name__, url_prefix='/api/v1')
+
+meetup_obj = Meetups()
+rsvp_obj = RSVPS()
 
 
 @meetupreq.route('/meetups', methods=['POST'])
@@ -17,8 +20,10 @@ def post():
         happeningOn = request.json['happeningOn']
         tags = request.json['tags']
 
-        response = jsonify(Meetups().create_meetup(location, images, topic,
-                           happeningOn, tags))
+        meetup_obj.create_meetup(location, images, topic,
+                                 happeningOn, tags)
+        meetup_ = meetup_obj.return_data()
+        response = jsonify(meetup_)
         response.status_code = 201
         return response
     else:
@@ -28,6 +33,7 @@ def post():
 @meetupreq.route('/meetups/upcoming', methods=['GET'])
 def get():
     '''Get all upcoming meetups'''
+    meetups = meetup_obj.get_all()
     upcomingmeetups = {
         'status': 200,
         'data': meetups
@@ -41,11 +47,11 @@ def get():
 @meetupreq.route('/meetups/<int:id>', methods=['GET'])
 def get_by_id(id):
     '''Get a specific meetup with a particular ID'''
-    meetup_obj = Meetups.find(id)
-    if meetup_obj:
+    _, meetup_ = meetup_obj.find(id)
+    if meetup_:
         meetup = {
             'status': 200,
-            'data': [meetup_obj]
+            'data': [meetup_]
         }
         response = jsonify(meetup)
         response.status_code = 200
@@ -55,15 +61,17 @@ def get_by_id(id):
 
 @meetupreq.route('/meetups/<int:id>/rsvps', methods=['POST'])
 def post_rsvp(id):
+    '''Create RSVP for an event'''
+    _, meetup = meetup_obj.find(id)
     if request.json:
-        if Meetups.find(id):
+        if meetup:
             userid = request.json['userid']
-            meetup = Meetups.add_rsvp(userid, id)
-            meetup_obj = {
+            rsvp_obj.create_rsvp(userid, id)
+            meetup_ = {
                 'status': 201,
                 'data': [meetup]
             }
-            response = jsonify(meetup_obj)
+            response = jsonify(meetup_)
             response.status_code = 201
             return response
         else:
