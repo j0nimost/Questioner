@@ -26,3 +26,23 @@ class Questions(BaseModel):
         _, question = self.find(id)
         question['votes'] += votes
         return question
+
+question_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "userid": {"type": "number"},
+        "meetupid": {"type": "number"},
+        "title": {"type": "string"},
+        "body": {"type": "string"},
+        "votes": {"type": "number"}
+    }
+}
+
+vote_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "votes": {"type": "number"}
+    }
+}

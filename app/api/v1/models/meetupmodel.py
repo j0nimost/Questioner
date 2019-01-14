@@ -40,3 +40,23 @@ class RSVPS(BaseModel):
             'isScheduled': True
         }
         self.save(rsvp)
+
+meetup_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "topic": {"type": "string"},
+        "location": {"type": "string"},
+        "images": {"type": "array"},
+        "happeningOn": {"type": "string"},
+        "tags": {"type": "array"}
+    }
+}
+
+rsvp_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "userid": {"type": "number"}
+    }
+}
