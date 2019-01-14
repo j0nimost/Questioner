@@ -3,6 +3,7 @@ from flask import Blueprint
 from werkzeug.exceptions import BadRequest
 
 from ..models.meetupmodel import Meetups, RSVPS
+from ..utils.validation import validate_input
 
 meetupreq = Blueprint('meetupreq', __name__, url_prefix='/api/v1')
 
@@ -11,6 +12,7 @@ rsvp_obj = RSVPS()
 
 
 @meetupreq.route('/meetups', methods=['POST'])
+@validate_input('meetup')
 def post():
     '''create meetup endup'''
     if request.json:
@@ -60,6 +62,7 @@ def get_by_id(id):
 
 
 @meetupreq.route('/meetups/<int:id>/rsvps', methods=['POST'])
+@validate_input('rsvp')
 def post_rsvp(id):
     '''Create RSVP for an event'''
     _, meetup = meetup_obj.find(id)

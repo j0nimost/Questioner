@@ -2,6 +2,7 @@ from flask import request, jsonify, make_response
 from flask import Blueprint
 
 from ..models.questionmodel import Questions
+from ..utils.validation import validate_input
 
 ques = Blueprint('ques', __name__, url_prefix='/api/v1')
 
@@ -9,6 +10,7 @@ quest_obj = Questions()
 
 
 @ques.route('/questions', methods=['POST'])
+@validate_input('question')
 def post():
     '''Creates Question'''
     if request.json:
@@ -32,6 +34,7 @@ def post():
 
 
 @ques.route('/questions/<int:id>/downvote', methods=['PATCH'])
+@validate_input('vote')
 def downvote(id):
     '''Downvotes a Question'''
     if request.json:
@@ -53,6 +56,7 @@ def downvote(id):
 
 
 @ques.route('/questions/<int:id>/upvote', methods=['PATCH'])
+@validate_input('vote')
 def upvote(id):
     '''Upvotes a Question'''
     if request.json:
