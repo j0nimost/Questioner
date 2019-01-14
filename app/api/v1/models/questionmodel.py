@@ -36,7 +36,8 @@ question_schema = {
         "title": {"type": "string"},
         "body": {"type": "string"},
         "votes": {"type": "number"}
-    }
+    },
+    "required": ["title", "body"]
 }
 
 vote_schema = {
@@ -44,5 +45,6 @@ vote_schema = {
     "type": "object",
     "properties": {
         "votes": {"type": "number"}
-    }
+    },
+    "required": ["votes"]
 }

@@ -50,7 +50,8 @@ meetup_schema = {
         "images": {"type": "array"},
         "happeningOn": {"type": "string"},
         "tags": {"type": "array"}
-    }
+    },
+    "required": ["topic", "location", "happeningOn"]
 }
 
 rsvp_schema = {
@@ -58,5 +59,6 @@ rsvp_schema = {
     "type": "object",
     "properties": {
         "userid": {"type": "number"}
-    }
+    },
+    "required": ["userid"]
 }
