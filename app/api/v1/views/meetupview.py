@@ -58,6 +58,21 @@ def get_by_id(id):
     return make_response(jsonify({"message": "Not Found"}), 404)
 
 
+@meetupreq.route('/meetups/<int:id>', methods=['PATCH'])
+@validate_input('meetup')
+def update(id):
+    '''Update a meetup'''
+    update_meetup = request.json
+    _, meetup_ = meetup_obj.find(id)
+    if meetup_:
+        data = meetup_obj.update(update_meetup)
+        response = jsonify(data)
+        response.status_code = 202
+        return response
+    else:
+        return make_response(jsonify({'message': 'Not Found'}), 404)
+
+
 @meetupreq.route('/meetups/<int:id>/rsvps', methods=['POST'])
 @validate_input('rsvp')
 def post_rsvp(id):
