@@ -18,7 +18,11 @@ def validate_input(schema):
             try:
                 validate(request.json, config[schema])
             except ValidationError as e:
-                return jsonify({"message": 'unexpected ' + e.message}), 400
+                err_obj = {
+                    "status": 400,
+                    "error": 'unexpected ' + e.message
+                }
+                return jsonify(err_obj), 400
             return func(*args, **kwargs)
         wrapper.__name__ = func.__name__
         return wrapper
