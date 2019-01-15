@@ -73,6 +73,19 @@ def update(id):
         return make_response(jsonify({'message': 'Not Found'}), 404)
 
 
+@meetupreq.route('/meetups/<int:id>', methods=['DELETE'])
+def delete(id):
+    '''Delete a meetup'''
+    _, meetup = meetup_obj.find(id)
+    if meetup:
+        meetup_obj.delete(id)
+        response = jsonify({"message": "Successfully Deleted"})
+        response.status_code = 200
+        return response
+    else:
+        return make_response(jsonify({"message": "Not Found"}), 404)
+
+
 @meetupreq.route('/meetups/<int:id>/rsvps', methods=['POST'])
 @validate_input('rsvp')
 def post_rsvp(id):
