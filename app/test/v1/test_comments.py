@@ -52,7 +52,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected '1' is not of type 'number'",
-                         data['message'])
+                         data['error'])
 
     def test_create_comment_missing_object(self):
         '''Test comment json missing object'''
@@ -63,7 +63,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'userid' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_create_comment_badrequest(self):
         '''Test create comment with empty json'''
@@ -73,7 +73,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response._status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected None is not of type 'object'",
-                         data['message'])
+                         data['error'])
 
     def test_create_comment_notfound(self):
         '''Test Question not found'''
@@ -82,7 +82,7 @@ class CommentTestCase(unittest.TestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_get_comments(self):
         '''Test Get comments under a question'''
@@ -96,7 +96,7 @@ class CommentTestCase(unittest.TestCase):
         response = self.client.get('/api/v1/questions/0/comments')
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_update_comments(self):
         '''Test update comments'''
@@ -120,7 +120,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 20 is not of type 'string'",
-                         data['message'])
+                         data['error'])
 
     def test_update_comments_missing_object(self):
         '''Test update object, missing json object'''
@@ -132,7 +132,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'body' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_update_comments_badrequest(self):
         '''Test comment update, comment not found'''
@@ -143,7 +143,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected None is not of type 'object'",
-                         data['message'])
+                         data['error'])
 
     def tearDown(self):
         comments.pop()
