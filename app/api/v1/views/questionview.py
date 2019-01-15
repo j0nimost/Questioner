@@ -45,7 +45,7 @@ def downvote(id):
         response.status_code = 202
         return response
     else:
-        return make_response(jsonify({'message': 'Not Found'}), 404)
+        return jsonify(err_obj), 404
 
 
 @ques.route('/questions/<int:id>/upvote', methods=['PATCH'])
@@ -64,4 +64,9 @@ def upvote(id):
         response.status_code = 202
         return response
     else:
-        return make_response(jsonify({'message': 'Not Found'}), 404)
+        return jsonify(err_obj), 404
+
+err_obj = {
+    'status': 404,
+    'error': 'Not Found'
+}
