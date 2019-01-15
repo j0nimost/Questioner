@@ -2,6 +2,7 @@
 meetups = []
 questions = []
 rsvps = []
+comments = []
 
 
 class BaseModel(object):
@@ -57,5 +58,6 @@ class BaseModel(object):
 dbconfig = {
     'meetupsdb': meetups,
     'questiondb': questions,
-    'rsvpsdb': rsvps
+    'rsvpsdb': rsvps,
+    'commentdb': comments
 }
