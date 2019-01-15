@@ -60,7 +60,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 21 is not of type 'string'",
-                         data['message'])
+                         data['error'])
 
     def test_meetup_missing_object(self):
         '''Test missing object from meetup json object'''
@@ -72,7 +72,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'topic' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_get_upcoming(self):
         '''Test get meetups'''
@@ -101,7 +101,7 @@ class MeetupsTestCase(unittest.TestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 202)
         data = json.loads(response.data)
-        self.assertEqual('Golang Devs', data['topic'])
+        self.assertEqual('Golang Devs', data['data']['topic'])
 
     def test_update_meetup_validation(self):
         '''Test meetup object types match schema'''
@@ -113,7 +113,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 5 is not of type 'string'",
-                         data['message'])
+                         data['error'])
 
     def test_update_meetup_missing_object(self):
         '''Test meetup json missing object'''
@@ -125,21 +125,21 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'topic' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_delete_meetup(self):
         '''Test delete meetup functionality'''
         response = self.client.delete('/api/v1/meetups/1')
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
-        self.assertEqual('Successfully Deleted', data['message'])
+        self.assertEqual('Successfully Deleted', data['data'])
 
     def test_delete_meetup_notfound(self):
         '''Test delete meetup, meetup not found '''
         response = self.client.delete('/api/v1/meetups/0')
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_create_rsvp(self):
         '''Test create rsvp'''
@@ -153,7 +153,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected None is not of type 'object'",
-                         data['message'])
+                         data['error'])
 
     def test_create_rsvp_notfound(self):
         '''Test create rsvp, meetup not found'''
@@ -162,7 +162,7 @@ class MeetupsTestCase(unittest.TestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_rsvp_validation(self):
         '''Test rsvp object types match schema'''
@@ -173,7 +173,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected '1' is not of type 'number'",
-                         data['message'])
+                         data['error'])
 
     def test_rsvp_missing_object(self):
         '''Test rsvp json missing json object'''
@@ -184,7 +184,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'userid' is a required property",
-                         data['message'])
+                         data['error'])
 
     def tearDown(self):
         meetups.pop()
