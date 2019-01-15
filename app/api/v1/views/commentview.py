@@ -31,3 +31,20 @@ def post(id):
         return response
     else:
         return make_response(jsonify({"message": "Not Found"}), 404)
+
+
+@comment.route('/questions/<int:id>/comments', methods=['GET'])
+def get(id):
+    '''Get all comments under a question'''
+    _, question = ques_obj.find(id)
+    if question:
+        comments = comment_obj.get_all(id)
+        data = {
+            'status': 200,
+            'data': comments
+        }
+        response = jsonify(data)
+        response.status_code = 200
+        return response
+    else:
+        return make_response(jsonify({'message': 'Not Found'}), 404)
