@@ -55,7 +55,7 @@ def get_by_id(id):
         response = jsonify(meetup)
         response.status_code = 200
         return response
-    return make_response(jsonify({"message": "Not Found"}), 404)
+    return jsonify(err_obj), 404
 
 
 @meetupreq.route('/meetups/<int:id>', methods=['PATCH'])
@@ -66,11 +66,15 @@ def update(id):
     _, meetup_ = meetup_obj.find(id)
     if meetup_:
         data = meetup_obj.update(update_meetup)
-        response = jsonify(data)
+        meetup_upd = {
+            'status': 202,
+            'data': data
+        }
+        response = jsonify(meetup_upd)
         response.status_code = 202
         return response
     else:
-        return make_response(jsonify({'message': 'Not Found'}), 404)
+        return jsonify(err_obj), 404
 
 
 @meetupreq.route('/meetups/<int:id>', methods=['DELETE'])
@@ -79,11 +83,15 @@ def delete(id):
     _, meetup = meetup_obj.find(id)
     if meetup:
         meetup_obj.delete(id)
-        response = jsonify({"message": "Successfully Deleted"})
+        message = {
+            'status': 200,
+            'data': "Successfully Deleted"
+        }
+        response = jsonify(message)
         response.status_code = 200
         return response
     else:
-        return make_response(jsonify({"message": "Not Found"}), 404)
+        return jsonify(err_obj), 404
 
 
 @meetupreq.route('/meetups/<int:id>/rsvps', methods=['POST'])
@@ -102,4 +110,9 @@ def post_rsvp(id):
         response.status_code = 201
         return response
     else:
-        return make_response(jsonify({"message": "Not Found"}), 404)
+        return jsonify(err_obj), 404
+
+err_obj = {
+    'status': 404,
+    'error': 'Not Found'
+}

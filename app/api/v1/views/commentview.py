@@ -30,7 +30,7 @@ def post(id):
         response.status_code = 201
         return response
     else:
-        return make_response(jsonify({"message": "Not Found"}), 404)
+        return jsonify(error_obj), 404
 
 
 @comment.route('/questions/<int:id>/comments', methods=['GET'])
@@ -47,7 +47,7 @@ def get(id):
         response.status_code = 200
         return response
     else:
-        return make_response(jsonify({'message': 'Not Found'}), 404)
+        return jsonify(error_obj), 404
 
 
 @comment.route('/comments/<int:id>', methods=['PATCH'])
@@ -65,5 +65,8 @@ def update_comment(id):
         response = jsonify(comment_upt)
         response.status_code = 202
         return response
-    else:
-        return make_response(jsonify({"message": "Not Found"}))
+
+error_obj = {
+    'static': 404,
+    'error': 'Not Found'
+}
