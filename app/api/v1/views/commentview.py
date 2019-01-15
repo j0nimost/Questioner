@@ -48,3 +48,22 @@ def get(id):
         return response
     else:
         return make_response(jsonify({'message': 'Not Found'}), 404)
+
+
+@comment.route('/comments/<int:id>', methods=['PATCH'])
+@validate_input('comment')
+def update_comment(id):
+    '''Update a comment'''
+    _, data = comment_obj.find(id)
+    if data:
+        data_upd = request.json
+        updated_obj = comment_obj.update(data_upd)
+        comment_upt = {
+            'status': 202,
+            'data': updated_obj
+        }
+        response = jsonify(comment_upt)
+        response.status_code = 202
+        return response
+    else:
+        return make_response(jsonify({"message": "Not Found"}))

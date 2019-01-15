@@ -98,6 +98,53 @@ class CommentTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual('Not Found', data['message'])
 
+    def test_update_comments(self):
+        '''Test update comments'''
+        comment = comments[0]
+        comment['body'] = 'It has been rescheduled to a later date'
+        response = self.client.patch('/api/v1/comments/1',
+                                     data=json.dumps(comment),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        self.assertEqual('It has been rescheduled to a later date',
+                         data['data']['body'])
+
+    def test_update_comments_validation(self):
+        '''Test update objects type match schema'''
+        comment = comments[0]
+        comment['body'] = 20
+        response = self.client.patch('/api/v1/comments/1',
+                                     data=json.dumps(comment),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 20 is not of type 'string'",
+                         data['message'])
+
+    def test_update_comments_missing_object(self):
+        '''Test update object, missing json object'''
+        comment = comments[0]
+        del comment['body']
+        response = self.client.patch('/api/v1/comments/1',
+                                     data=json.dumps(comment),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 'body' is a required property",
+                         data['message'])
+
+    def test_update_comments_badrequest(self):
+        '''Test comment update, comment not found'''
+        comment = comments[0]
+        response = self.client.patch('/api/v1/comments/1',
+                                     data=json.dumps(comment),
+                                     content_type='application/xml')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected None is not of type 'object'",
+                         data['message'])
+
     def tearDown(self):
         comments.pop()
         questions.pop()
