@@ -84,6 +84,20 @@ class CommentTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual('Not Found', data['message'])
 
+    def test_get_comments(self):
+        '''Test Get comments under a question'''
+        response = self.client.get('/api/v1/questions/1/comments')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertIsInstance(data['data'], list)
+
+    def test_get_comments_notfound(self):
+        '''Test Get comments, not found question'''
+        response = self.client.get('/api/v1/questions/0/comments')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        self.assertEqual('Not Found', data['message'])
+
     def tearDown(self):
         comments.pop()
         questions.pop()
