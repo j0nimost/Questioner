@@ -23,6 +23,14 @@ class Comments(BaseModel):
         }
         self.save(comment)
 
+    def get_all(self, id: int):
+        '''Get all comments under a question'''
+        ques_comments = []
+        for comment in comments:
+            if comment['questionid'] == id:
+                ques_comments.append(comment)
+        return ques_comments
+
 comment_schema = {
     "$schema": "https://json-schema.org/schema#",
     "type": "object",
