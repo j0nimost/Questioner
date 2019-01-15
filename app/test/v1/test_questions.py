@@ -52,7 +52,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected None is not of type 'object'",
-                         data['message'])
+                         data['error'])
 
     def test_question_validation(self):
         '''Test whether type's expected match validation'''
@@ -63,7 +63,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 1212 is not of type 'string'",
-                         data['message'])
+                         data['error'])
 
     def test_question_missing_object(self):
         '''Test whether an object is missing from the Json object'''
@@ -74,7 +74,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'title' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_downvote(self):
         '''Test downvote a question'''
@@ -94,7 +94,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
         print(data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_downvote_validation(self):
         '''Test downvote object type matches schema'''
@@ -105,7 +105,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected '-1' is not of type 'number'",
-                         data['message'])
+                         data['error'])
 
     def test_downvote_missing_object(self):
         '''Test downvote object missing object'''
@@ -116,7 +116,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'votes' is a required property",
-                         data['message'])
+                         data['error'])
 
     def test_upvote(self):
         '''Test upvote a question'''
@@ -135,7 +135,7 @@ class MeetupsTestCase(unittest.TestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Not Found', data['message'])
+        self.assertEqual('Not Found', data['error'])
 
     def test_upvote_validation(self):
         '''Test upvote object types match schema'''
@@ -146,7 +146,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected '1' is not of type 'number'",
-                         data['message'])
+                         data['error'])
 
     def test_upvote_missing_object(self):
         '''Test upvote object missing object'''
@@ -157,7 +157,7 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'votes' is a required property",
-                         data['message'])
+                         data['error'])
 
     def tearDown(self):
         questions.pop()
