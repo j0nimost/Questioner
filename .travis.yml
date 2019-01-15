@@ -15,7 +15,7 @@
   - APP_SETTINGS='development'
   
   script:
-  - py.test  --cov-report term --cov=app/test/v1
+  - py.test  --cov-report term --cov=app/app
 
   after_success:
   - codecov
