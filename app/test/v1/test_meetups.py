@@ -92,6 +92,41 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Not Found', str(json.loads(response.data)))
 
+    def test_update_meetup(self):
+        '''Test update meetup'''
+        update = meetups[0]
+        update['topic'] = 'Golang Devs'
+        response = self.client.patch('/api/v1/meetups/1',
+                                     data=json.dumps(update),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        self.assertEqual('Golang Devs', data['topic'])
+
+    def test_update_meetup_validation(self):
+        '''Test meetup object types match schema'''
+        update = meetups[0]
+        update['topic'] = 5
+        response = self.client.patch('/api/v1/meetups/1',
+                                     data=json.dumps(update),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 5 is not of type 'string'",
+                         data['message'])
+
+    def test_update_meetup_missing_object(self):
+        '''Test meetup json missing object'''
+        update = meetups[0]
+        del update['topic']
+        response = self.client.patch('/api/v1/meetups/1',
+                                     data=json.dumps(update),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 'topic' is a required property",
+                         data['message'])
+
     def test_create_rsvp(self):
         '''Test create rsvp'''
         pass
