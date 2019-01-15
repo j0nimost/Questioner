@@ -127,6 +127,20 @@ class MeetupsTestCase(unittest.TestCase):
         self.assertEqual("unexpected 'topic' is a required property",
                          data['message'])
 
+    def test_delete_meetup(self):
+        '''Test delete meetup functionality'''
+        response = self.client.delete('/api/v1/meetups/1')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertEqual('Successfully Deleted', data['message'])
+
+    def test_delete_meetup_notfound(self):
+        '''Test delete meetup, meetup not found '''
+        response = self.client.delete('/api/v1/meetups/0')
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        self.assertEqual('Not Found', data['message'])
+
     def test_create_rsvp(self):
         '''Test create rsvp'''
         pass
