@@ -12,8 +12,15 @@
   - pip install pytest-cov
 
   env: 
-  - APP_SETTINGS='development'
+  - APP_SETTINGS='testing'
+  - export DATABASE_URL="dbname='questioner' host='127.0.0.1' port='5432' user='questioner' password=''"
   
+  services:
+  - postgresql
+
+  before_script:
+  - psql -c 'CREATE DATABASE questioner;' -U questioner
+
   script:
   - py.test  --cov-report term --cov=app/api/
 
