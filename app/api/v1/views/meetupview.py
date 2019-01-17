@@ -24,7 +24,11 @@ def post():
     meetup_obj.create_meetup(location, images, topic,
                              happeningOn, tags)
     meetup_ = meetup_obj.return_data()
-    response = jsonify(meetup_)
+    response_obj = {
+        "status": 201,
+        "data": [meetup_]
+    }
+    response = jsonify(response_obj)
     response.status_code = 201
     return response
 
