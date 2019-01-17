@@ -41,7 +41,8 @@ class CommentTestCase(unittest.TestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
-        self.assertIn(" you please share the location", data['data']['body'])
+        self.assertIn(" you please share the location",
+                      data['data'][0]['body'])
 
     def test_create_comment_validation(self):
         '''Test comment object types match schema'''
