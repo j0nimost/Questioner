@@ -60,7 +60,7 @@ def update_comment(id):
         updated_obj = comment_obj.update(data_upd)
         comment_upt = {
             'status': 202,
-            'data': updated_obj
+            'data': [updated_obj]
         }
         response = jsonify(comment_upt)
         response.status_code = 202
