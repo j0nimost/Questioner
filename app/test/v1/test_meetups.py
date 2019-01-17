@@ -101,7 +101,7 @@ class MeetupsTestCase(unittest.TestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 202)
         data = json.loads(response.data)
-        self.assertEqual('Golang Devs', data['data']['topic'])
+        self.assertEqual('Golang Devs', data['data'][0]['topic'])
 
     def test_update_meetup_validation(self):
         '''Test meetup object types match schema'''
