@@ -4,6 +4,7 @@ import os
 class Config(object):
     '''Base Configuration class'''
     DEBUG = False
+    DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 class Production(Config):

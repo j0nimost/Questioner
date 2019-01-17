@@ -1,6 +1,7 @@
 astroid==2.1.0
 atomicwrites==1.2.1
 attrs==18.2.0
+autopep8==1.4.3
 certifi==2018.11.29
 chardet==3.0.4
 Click==7.0
@@ -19,7 +20,9 @@ mccabe==0.6.1
 more-itertools==5.0.0
 pep8==1.7.1
 pluggy==0.8.0
+psycopg2==2.7.6.1
 py==1.7.0
+pycodestyle==2.4.0
 pylint==2.2.2
 pytest==4.1.0
 pytest-cov==2.6.1
