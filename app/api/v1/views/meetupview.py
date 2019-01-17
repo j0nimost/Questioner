@@ -72,7 +72,7 @@ def update(id):
         data = meetup_obj.update(update_meetup)
         meetup_upd = {
             'status': 202,
-            'data': data
+            'data': [data]
         }
         response = jsonify(meetup_upd)
         response.status_code = 202
