@@ -109,7 +109,7 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 202)
         data = json.loads(response.data)
         self.assertEqual('It has been rescheduled to a later date',
-                         data['data']['body'])
+                         data['data'][0]['body'])
 
     def test_update_comments_validation(self):
         '''Test update objects type match schema'''
