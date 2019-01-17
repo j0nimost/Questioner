@@ -76,6 +76,7 @@ These are the basic requirements required to run Questioner API;
 ## Testing
 
 ### Running Questioner
+
 Run the following commands subsequently.
 - `git clone https://github.com/j0nimost/Questioner.git`
 - `cd Questioner/`
@@ -85,13 +86,14 @@ Run the following commands subsequently.
 - `flask run`
 
 ### Running Tests
+
 Run the following commands subsequently.
 - `git clone https://github.com/j0nimost/Questioner.git`
 - `cd Questioner/`
 - `virtualenv env`
 - [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to create exports.
 - `pip install -r requirements.txt`
-- `cd app/api/tests/v<number>`
+- `cd app/api/tests/<choose a version>`
 - `pytest`
 
 
