@@ -39,8 +39,8 @@ class MeetupsTestCase(unittest.TestCase):
                                     data=json.dumps(self.meetup),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        print('{} code'.format(response.status_code))
-        self.assertIn('Nairobi Go Meetup', str(json.loads(response.data)))
+        data = json.loads(response.data)
+        self.assertIn('Nairobi Go Meetup', data['data'][0]['topic'])
 
     def test_create_meetup_badrequest(self):
         '''Test create a meetup empty json object'''
