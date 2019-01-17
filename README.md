@@ -94,7 +94,7 @@ Run the following commands subsequently.
 - `$ git clone https://github.com/j0nimost/Questioner.git`
 - `$ cd Questioner/`
 - `$ virtualenv env`
-- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to create exports.
+- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to activate virtual env and create exports.
 - `$ pip install -r requirements.txt`
 - `$ flask run`
 
@@ -104,7 +104,7 @@ Run the following commands subsequently.
 - `$ git clone https://github.com/j0nimost/Questioner.git`
 - `$ cd Questioner/`
 - `$ virtualenv env`
-- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to create exports.
+- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to activate virtual env and create exports.
 - `$ pip install -r requirements.txt`
 - `$ cd app/api/tests/<choose a version>`
 - `$ pytest`
