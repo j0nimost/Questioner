@@ -24,7 +24,7 @@ def post(id):
         data = comment_obj.return_data()
         data_response = {
             'status': 201,
-            'data': data
+            'data': [data]
         }
         response = jsonify(data_response)
         response.status_code = 201
