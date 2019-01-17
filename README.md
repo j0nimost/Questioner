@@ -8,7 +8,13 @@ This is Andela's Bootcamp Challenge two. The challenge is to create an API imple
 The Questioner API will not use a database instead it uses data structures to store data in memory. The Questioner API uses the Flask framework for development. The Questioner API will handle features from questions and meetups.
 
 ### Version
-This is the first version `v1` of the api. All endpoints under version 1, will have a prefix url structure of `api/v1`
+The API versioning corresponds to the challenges being done; The prefix for versioning the API is `api/v<number>`
+
+## V1
+This is the first version `v1` of the api. This Version consists of Challenge 2, endpoints. To access this version in the folder structure use `app/api/v1`. Tests for this version are located in `app/tests/v1` folder.
+
+## V2
+This is the second version `v2` of the api. This version consists of Challenge 3 endpoints. To access this version in the folder structure use `app/api/v2`. Tests for this version are located in `app/tests/v2` folder.
 
 ## Features
 
