@@ -20,6 +20,10 @@
 
   addons:
     postgresql: "10.6"
+
+    apt:
+        packages:
+        - postgresql-10.6-postgis-2.5
   
   dist:
     trusty
