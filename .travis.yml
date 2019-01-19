@@ -23,7 +23,7 @@
 
     apt:
         packages:
-        - postgresql-10.6-postgis-2.5
+        - postgresql-10-postgis-2.5
   
   dist:
     trusty
