@@ -24,9 +24,10 @@ class AuthTestCase(unittest.TestCase):
 
     def test_auth_signup(self):
         '''test signup'''
-        response = self.client.post('/api/v2/auth/signup',
+        response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
                                     content_type='application/json')
+
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
         print(data['data'][0]['user'][0]['id'])
