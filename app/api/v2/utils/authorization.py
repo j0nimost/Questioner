@@ -18,7 +18,7 @@ def encode_jwt(userid):
         token = jwt.encode(
             payload,
             os.getenv('SECRET'),
-            algorithm='HS256')
+            algorithm='HS256').decode('utf-8')
         return token
     except Exception as e:
         return e
