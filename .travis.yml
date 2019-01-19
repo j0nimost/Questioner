@@ -20,6 +20,9 @@
 
   addons:
     postgresql: "10.6"
+  
+  dist:
+    trusty
 
   before_script:
     - sudo apt-get update
