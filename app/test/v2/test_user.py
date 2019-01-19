@@ -26,12 +26,11 @@ class AuthTestCase(unittest.TestCase):
         '''test signup'''
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
 
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
-        print(data['data'][0]['user'][0]['id'])
-
         self.assertEqual('j0nimost', data['data'][0]['user'][0]['username'])
         self.assertIsNotNone(data['data'][0]['token'])
 
@@ -40,7 +39,8 @@ class AuthTestCase(unittest.TestCase):
         self.signup['password'] = 'dfdfdfdpp'
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("password and confirm password don't match",
@@ -51,7 +51,8 @@ class AuthTestCase(unittest.TestCase):
         self.signup['email'] = 'joni.com'
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual('unexpected pattern for email',
@@ -62,7 +63,8 @@ class AuthTestCase(unittest.TestCase):
         self.signup['password'] = 'lolpo'
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected password too short", data['error'])
@@ -72,7 +74,8 @@ class AuthTestCase(unittest.TestCase):
         self.signup['fullname'] = 20
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 20 is not of type 'string'",
@@ -83,7 +86,8 @@ class AuthTestCase(unittest.TestCase):
         del self.signup['fullname']
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'fullname' is a required property",
@@ -93,11 +97,13 @@ class AuthTestCase(unittest.TestCase):
         ''''Tests if a user already exists'''
         _ = self.client.post('api/v2/auth/signup',
                              data=json.dumps(self.signup),
-                             content_type='application/json')
+                             headers={
+                                    "Content-Type": "application/json"})
 
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
-                                    content_type='application/json')
+                                    headers={
+                                        "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 409)
         data = json.loads(response.data)
         self.assertEqual("user already exists with similar email/username",
