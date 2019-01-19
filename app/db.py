@@ -9,8 +9,12 @@ Setups all the required connections and creates tables
 
 def init():
     '''Set's up the connection'''
-    connection_str = os.getenv('DATABASE_URL')
-    connection = psycopg2.connect(connection_str)
+    # connection_str = os.getenv('DATABASE_URL')
+    connection = psycopg2.connect("""dbname=questioner
+                                     user=questioner
+                                     password=andela1
+                                     host=localhost
+                                     port=5432""")
     return connection
 
 
