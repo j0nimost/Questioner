@@ -15,15 +15,17 @@ class AuthTestCase(unittest.TestCase):
         queries = create_query()
         self.val = exec_queries(queries)
         self.signup = {
-            "fullname": 'John Nyingi',
-            "username": 'j0nimost',
-            "email": 'j0ni@ke.com',
-            "password": '**andela1',
+            "fullname": "John Nyingi",
+            "username": "j0nimost",
+            "email": "j0ni@ke.com",
+            "password": "**andela1",
             "confirmpassword": "**andela1"
         }
 
     def test_auth_signup(self):
         '''test signup'''
+        print(type(self.signup))
+        print(type(json.dumps(self.signup)))
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
                                     headers={
