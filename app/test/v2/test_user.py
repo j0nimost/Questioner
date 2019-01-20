@@ -24,13 +24,11 @@ class AuthTestCase(unittest.TestCase):
 
     def test_auth_signup(self):
         '''test signup'''
-        print(type(self.signup))
-        print(type(json.dumps(self.signup)))
         response = self.client.post('api/v2/auth/signup',
                                     data=json.dumps(self.signup),
                                     headers={
                                         "Content-Type": "application/json"})
-
+        print(response.data)
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
         self.assertEqual('j0nimost', data['data'][0]['user'][0]['username'])
