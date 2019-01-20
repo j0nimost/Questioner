@@ -22,6 +22,11 @@ class AuthTestCase(unittest.TestCase):
             "confirmpassword": "**andela1"
         }
 
+        self.signin = {
+            "email": "j0ni@ke.com",
+            "password": "**andela1"
+        }
+
     def test_auth_signup(self):
         '''test signup'''
         response = self.client.post('api/v2/auth/signup',
@@ -106,6 +111,48 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 409)
         data = json.loads(response.data)
         self.assertEqual("user already exists with similar email/username",
+                         data['error'])
+
+    def test_auth_signin_wronginput(self):
+        '''Test invalid email/password'''
+        self.signin['email'] = 'kenn@gmail.com'
+        response = self.client.post('api/v2/auth/signin',
+                                    data=json.dumps(self.signin),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual('Wrong password/email', data['error'])
+
+    def test_auth_signin_missingobject(self):
+        '''Test if Signin object is missing an object'''
+        del self.signin['email']
+        response = self.client.post('api/v2/auth/signin',
+                                    data=json.dumps(self.signin),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 'email' is a required property",
+                         data['error'])
+
+    def test_auth_signin_regex(self):
+        self.signin['email'] = 'oktrythis.com'
+        response = self.client.post('api/v2/auth/signin',
+                                    data=json.dumps(self.signin),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual('unexpected pattern for email',
+                         data['error'])
+
+    def test_auth_signin_mismatch(self):
+        '''Test if object types match schema'''
+        self.signin['email'] = 25
+        response = self.client.post('api/v2/auth/signin',
+                                    data=json.dumps(self.signin),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 25 is not of type 'string'",
                          data['error'])
 
     def tearDown(self):
