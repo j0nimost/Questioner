@@ -28,8 +28,7 @@ class AuthTestCase(unittest.TestCase):
                                     data=json.dumps(self.signup),
                                     headers={
                                         "Content-Type": "application/json"})
-        print(response.data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
         self.assertEqual('j0nimost', data['data'][0]['user'][0]['username'])
         self.assertIsNotNone(data['data'][0]['token'])
