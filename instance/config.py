@@ -5,6 +5,7 @@ class Config(object):
     '''Base Configuration class'''
     DEBUG = False
     DATABASE_URL = os.getenv('DATABASE_URL')
+    SECRET = os.urandom(24)
 
 
 class Production(Config):
@@ -17,6 +18,7 @@ class Testing(Config):
     '''Testing Environment Variables'''
     DEBUG = True
     TESTING = True
+    # DATABASE_URL_TEST = os.getenv('DATABASE_URL_TEST')
 
 
 class Development(Config):
