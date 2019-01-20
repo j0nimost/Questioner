@@ -11,3 +11,13 @@ __pycache__/
 settings.json
 
 .pytest_cache/
+
+instance/__pycache__
+
+app/test/__pycache__
+app/test/.pytest_cache
+
+app/api/v2/__pycache__
+app/api/v2/models/__pycache__
+app/api/v2/utils/__pycache__
+app/api/v2/views/__pycache__

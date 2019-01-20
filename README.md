@@ -79,8 +79,9 @@ This API uses [PostgreSQL database](https://www.postgresql.org/) the following a
 
 - `$ sudo apt install postgresql postgresql-contrib`
 - `$ sudo -i -u postgres`
-- `$ psql -c 'CREATE DATABASE questioner;' -U postgres`
 - `$ psql -c "CREATE USER questioner WITH PASSWORD 'andela1';" -U postgres`
+- `$ psql -c 'CREATE DATABASE questioner;' -U postgres`
+
 
 - To create tables access [this file](https://github.com/j0nimost/Questioner/blob/develop/app/db.py) run the scripts at bottom of the file
 -  `$ \dt` confirm tables are created
@@ -94,7 +95,7 @@ Run the following commands subsequently.
 - `$ git clone https://github.com/j0nimost/Questioner.git`
 - `$ cd Questioner/`
 - `$ virtualenv env`
-- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to activate virtual env and create exports.
+- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env-test) to create exports.
 - `$ pip install -r requirements.txt`
 - `$ flask run`
 
@@ -104,7 +105,7 @@ Run the following commands subsequently.
 - `$ git clone https://github.com/j0nimost/Questioner.git`
 - `$ cd Questioner/`
 - `$ virtualenv env`
-- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env) to activate virtual env and create exports.
+- [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env-test) to create exports.
 - `$ pip install -r requirements.txt`
 - `$ cd app/api/tests/<choose a version>`
 - `$ pytest`
