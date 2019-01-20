@@ -14,7 +14,7 @@ class UserModel(BaseModel):
 
     def name(self, fullname):
         '''Initialize firstname, lastname'''
-        firstname, lastname = fullname.split()
+        firstname, lastname = fullname.split(' ')
         return firstname, lastname
 
     def insert_query(self, fullname, username, email, password=''):
