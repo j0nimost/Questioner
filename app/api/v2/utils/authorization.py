@@ -21,7 +21,7 @@ def encode_jwt(userid):
             algorithm='HS256').decode('utf-8')
         return token
     except Exception as e:
-        return e
+        return str(e)
 
 
 def decode_jwt(token):
