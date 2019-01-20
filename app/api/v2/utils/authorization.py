@@ -2,6 +2,8 @@ import os
 import jwt
 import datetime
 
+from flask import current_app
+
 
 def encode_jwt(userid):
     '''creates an encoded jwt token'''
@@ -9,7 +11,7 @@ def encode_jwt(userid):
         exp = datetime.datetime.utcnow() + datetime.timedelta(days=0,
                                                               hours=1)
         creation = datetime.datetime.utcnow()
-
+        secret = current_app.config['SECRET']
         payload = {
             "expiry": exp.isoformat(),
             "created": creation.isoformat(),
@@ -17,7 +19,7 @@ def encode_jwt(userid):
         }
         token = jwt.encode(
             payload,
-            os.getenv('SECRET'),
+            secret,
             algorithm='HS256').decode('utf-8')
         return token
     except Exception as e:
