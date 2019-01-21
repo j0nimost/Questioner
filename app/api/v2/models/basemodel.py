@@ -30,8 +30,8 @@ class BaseModel(object):
         dbconn = self.conn
         cur = dbconn.cursor()
         query = '''
-                    SELECT * FROM {} WHERE {}={}
-                '''.format(self.table, name, item)
+                    SELECT * FROM {} WHERE {}='{}'
+                '''.format(self.table, name, item,)
         cur.execute(query)
         data = cur.fetchone()
         cur.close()
@@ -48,7 +48,6 @@ class BaseModel(object):
         cur.execute(query)
         exists = cur.fetchone()[0]
         cur.close()
-        cur
         return exists
 
     def save(self, conn: init()):

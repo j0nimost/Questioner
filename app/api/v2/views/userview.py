@@ -60,3 +60,37 @@ def post():
         if isinstance(token, str):
             return jsonify(token_body), 201
     return jsonify(_id), 400
+
+
+@auth.route('auth/signin', methods=['POST'])
+@cross_origin(allow_headers=['Content-Type'])
+@validate_input('login')
+def login():
+    '''This is the login endpoint'''
+    email = request.json['email']
+    password = request.json['password']
+
+    usr = usr_obj.fetch('email', email)
+    if usr:
+        usr_val = list(usr)
+        user_key = ['id', 'firstname', 'lastname', 'username', 'email',
+                    'password', 'createdOn']
+        usr_ = dict(zip(user_key, usr_val))
+
+        isPassword = check_pass(usr_['password'], password)
+        if isPassword:
+            token = encode_jwt(usr_['id'])
+            token_body = {
+                "status": 202,
+                "data": [{
+                    "token": token,
+                    "user": [usr_]
+                }]
+            }
+            return jsonify(token_body), 202
+    return jsonify(error), 400
+
+error = {
+        "status": 400,
+        "error": "Wrong password/email"
+        }

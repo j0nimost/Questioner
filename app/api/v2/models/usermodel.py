@@ -55,3 +55,16 @@ user_schema = {
     "required": ["fullname", "username", "email",
                  "password", "confirmpassword"]
 }
+
+login_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "email": {"type": "string",
+                  "pattern": r"""(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-
+                                    .]+$)"""},
+        "password": {"type": "string"}
+    },
+    "required": ["email", "password"]
+
+}

@@ -23,13 +23,15 @@ def encode_jwt(userid):
             algorithm='HS256').decode('utf-8')
         return token
     except Exception as e:
-        return str(e)
+        return e
 
 
 def decode_jwt(token):
     '''decode the jwt token'''
+    secret = current_app.config['SECRET']
+
     try:
-        payload = jwt.decode(token, os.getenv('SECRET'))
+        payload = jwt.decode(token, secret)
         return payload['id']
     except jwt.ExpiredSignatureError:
         return "Token is expired please login"
