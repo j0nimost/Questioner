@@ -14,7 +14,8 @@ class UserModel(BaseModel):
 
     def name(self, fullname):
         '''Initialize firstname, lastname'''
-        firstname, lastname = fullname.split(' ')
+        firstname = fullname.split(' ')[0]
+        lastname = fullname.split(' ')[-1]
         return firstname, lastname
 
     def insert_query(self, fullname, username, email, password=''):
@@ -42,11 +43,13 @@ user_schema = {
     "$schema": "https://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "fullname": {"type": "string"},
-        "username": {"type": "string"},
+        "fullname": {"type": "string",
+                     "pattern": r"(?=^.{0,40}$)^[a-zA-Z-]+\s[a-zA-Z-]+$"},
+        "username": {"type": "string",
+                     "pattern": "^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$"},
         "email": {"type": "string",
                   "pattern": r"""(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-
-                                    .]+$)"""},
+                                .]+$)"""},
         "password": {"type": "string",
                      "minLength": 8},
         "confirmpassword": {"type": "string",
