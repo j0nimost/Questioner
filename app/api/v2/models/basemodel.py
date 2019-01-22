@@ -46,7 +46,7 @@ class BaseModel(object):
                  WHERE {}='{}');
                 """.format(self.table, name, item)
         cur.execute(query)
-        exists = cur.fetchone()[0]
+        exists = cur.fetchone()[0]  # error
         cur.close()
         return exists
 
@@ -56,9 +56,25 @@ class BaseModel(object):
         conn.cursor().close()
         return True
 
-    def update(self):
+    def update(self, query, data):
         '''abstract method handles updates'''
-        pass
+        dbconn = self.conn
+        cur = dbconn.cursor()
+
+        try:
+            if isinstance(data, list):
+                cur.executemany(query, data)
+                dbconn.commit()
+                cur.close()
+                return True
+            else:
+                cur.execute(query, data)
+                id_ = cur.fetchone()[0]
+                dbconn.commit()
+                cur.close()
+                return id_
+        except Exception as e:
+            return e
 
     def delete(self):
         '''abstract method delete items'''

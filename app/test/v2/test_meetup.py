@@ -2,7 +2,7 @@ import unittest
 import json
 
 from app import create_app
-from ...db import create_query, delete_test, exec_queries
+from ...db import create_query, delete_test, exec_queries, seed_meetup
 
 
 class MeetupTestCase(unittest.TestCase):
@@ -18,6 +18,10 @@ class MeetupTestCase(unittest.TestCase):
             "topic": "Nairobi Golang",
             "location": "Senteru plaza",
             "happeningOn": "2019-01-26"
+        }
+
+        self.images = {
+            "images": ['lop.png', 'zip.png']
         }
 
     def test_create_meetup(self):
@@ -49,6 +53,28 @@ class MeetupTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'happeningOn' is a required property",
+                         data['error'])
+
+    def test_create_meetup_images_notfound(self):
+        '''Test image insertion'''
+        # Get seed
+        response = self.client.patch("api/v2/meetups/0/images",
+                                     data=json.dumps(self.images),
+                                     content_type='application/json')
+        # print(response.data)
+        self.assertEqual(response.status_code, 404)
+        data = json.loads(response.data)
+        self.assertEqual("Not Found", data['error'])
+
+    def test_create_meetup_images_missing(self):
+        '''Test missing image object'''
+        del self.images['images']
+        response = self.client.patch("api/v2/meetups/1/images",
+                                     data=json.dumps(self.images),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 'images' is a required property",
                          data['error'])
 
     def tearDown(self):

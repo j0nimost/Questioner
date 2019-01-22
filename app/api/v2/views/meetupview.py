@@ -27,3 +27,36 @@ def post():
         "data": [meetup_dict]
     }
     return jsonify(meetup_dict), 201
+
+
+@meetup_v2.route('/meetups/<int:meetup_id>/images', methods=['PATCH'])
+@validate_input('images')
+def post_images(meetup_id):
+    images_ = request.json['images']
+    # doess meetup exist
+    meetup = meetup_obj.fetch('id', meetup_id)
+    if meetup:
+        '''update meetup'''
+        id_ = meetup_obj.insert_images(meetup_id, images=images_)
+        if isinstance(id_, bool):
+            meetup_vals = meetup_obj.fetch('id', meetup_id)
+            meetupid = meetup_vals[0]
+            topic = meetup_vals[2]
+            images = meetup_vals[4]
+            meetup_dict = {
+                "status": 202,
+                "data": {
+                    "meetup_id": meetupid,
+                    "topic": topic,
+                    "images": images
+                }
+            }
+            return jsonify(meetup_dict), 202
+        else:
+            return id_, 500
+    else:
+        notfound = {
+            "status": 404,
+            "error": "Not Found"
+        }
+        return jsonify(notfound), 404

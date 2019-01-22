@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import datetime
 
 '''
 This file is reponsible for initializing the Database Connection.
@@ -103,3 +104,25 @@ def create_query():
 
     queries = [users_tbl, meetups_tbl, question_tbl, comments_tbl, rsvp_tbl]
     return queries
+
+
+def seed_meetup():
+    creationTime = datetime.datetime.now()
+    meetup = '''
+        INSERT INTO meetup(createdOn, topic, location, happeningOn)
+        Values('{}','Nairobi Go', 'Senteru Plaza', '2019-01-26')
+        RETURNING id;
+                '''.format(creationTime)
+    queries = [meetup]
+    db = init()
+    cur = db.cursor()
+
+    try:
+        for query in queries:
+            cur.execute(query)
+            id_ = cur.fetchone()[0]
+            return id_
+    except Exception as e:
+        return e
+    finally:
+        cur.close()
