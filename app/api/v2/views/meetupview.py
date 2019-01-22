@@ -38,11 +38,22 @@ def post_images(meetup_id):
     if meetup:
         '''update meetup'''
         id_ = meetup_obj.insert_images(meetup_id, images=images_)
-        meetup_vals = meetup_obj.fetch('id', id_)
-        meetup_keys = ['id', 'createdOn', 'topic', 'location', 'images',
-                       'tags', 'happeningOn']
-        meetup_dict = (zip(meetup_keys, meetup_vals))
-        return jsonify(meetup_dict), 202
+        if isinstance(id_, bool):
+            meetup_vals = meetup_obj.fetch('id', meetup_id)
+            meetupid = meetup_vals[0]
+            topic = meetup_vals[2]
+            images = meetup_vals[4]
+            meetup_dict = {
+                "status": 202,
+                "data": {
+                    "meetup_id": meetupid,
+                    "topic": topic,
+                    "images": images
+                }
+            }
+            return jsonify(meetup_dict), 202
+        else:
+            return id_, 500
     else:
         notfound = {
             "status": 404,
