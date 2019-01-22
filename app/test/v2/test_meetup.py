@@ -74,7 +74,8 @@ class MeetupTestCase(unittest.TestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual("unexpected 'images' is a required property", data['error'])
+        self.assertEqual("unexpected 'images' is a required property",
+                         data['error'])
 
     def tearDown(self):
         queries = delete_test()
