@@ -59,7 +59,7 @@ class AuthTestCase(unittest.TestCase):
                                         "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual('unexpected pattern for email',
+        self.assertEqual("email format expected is joe@lin.com",
                          data['error'])
                 
     def test_auth_signup_fullnameregex(self):
@@ -71,7 +71,7 @@ class AuthTestCase(unittest.TestCase):
                                         "Content-Type": "application/json"})
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual('unexpected pattern for fullname', data['error'])
+        self.assertEqual("fullname format should be 'John Doe'", data['error'])
 
     def test_auth_signup_password_length(self):
         '''Test password minimum length'''
@@ -145,14 +145,14 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual("unexpected 'email' is a required property",
                          data['error'])
 
-    def test_auth_signin_regex(self):
+    def test_auth_signin_emailregex(self):
         self.signin['email'] = 'oktrythis.com'
         response = self.client.post('api/v2/auth/signin',
                                     data=json.dumps(self.signin),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual('unexpected pattern for email',
+        self.assertEqual("email format expected is joe@lin.com",
                          data['error'])
 
     def test_auth_signin_mismatch(self):
