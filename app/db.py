@@ -52,8 +52,8 @@ def create_query():
         createdOn TIMESTAMP NOT NULL,
         topic VARCHAR(80) NOT NULL,
         location VARCHAR(55) NOT NULL,
-        images VARCHAR(80),
-        tags VARCHAR(80),
+        images TEXT[],
+        tags TEXT[],
         happeningOn TIMESTAMP NOT NULL
     );'''
 
