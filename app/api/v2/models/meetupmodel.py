@@ -4,6 +4,7 @@ from .basemodel import BaseModel
 
 class MeetupModel(BaseModel):
     '''Handles the business logic meetup'''
+
     def __init__(self):
         super().__init__('meetup')
 
@@ -37,13 +38,18 @@ class MeetupModel(BaseModel):
             return id_
         return None
 
+
 meetup_schema = {
-    "$schema": "https://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "topic": {"type": "string"},
-        "location": {"type": "string"},
-        "happeningOn": {"type": "string"}
+        "topic": {"type": "string",
+                  "pattern": "^(\\s*\\w\\s*){2,}$"},
+        "location": {"type": "string",
+                     "pattern": "^(\\s*\\w\\s*){2,}$"},
+        "happeningOn": {"type": "string",
+                        "pattern": r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
+                        }
     },
     "required": ["topic", "location", "happeningOn"]
 }
@@ -52,7 +58,12 @@ image_schema = {
     "$schema": "https://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "images": {"type": "array"}
+        "images": {"type": "array",
+                   "items": {"type": "string",
+                             "pattern": "\w+:(\/?\/?)[^\s]+"},
+                   "minItems": 1,
+                   "maxItems": 4
+                   }
     },
     "required": ["images"]
 }
