@@ -7,6 +7,7 @@ from .api.v1.views.questionview import ques
 from .api.v1.views.commentview import comment
 
 from .api.v2.views.userview import auth
+from .api.v2.views.meetupview import meetup_v2 as meetupv2
 
 from .db import init
 
@@ -22,6 +23,7 @@ def create_app(config):
     app.url_map.strict_slashes = False
 
     app.register_blueprint(auth)
+    app.register_blueprint(meetupv2)
     app.register_blueprint(meetupreq)
     app.register_blueprint(ques)
     app.register_blueprint(comment)
