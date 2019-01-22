@@ -50,7 +50,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual("password and confirm password don't match",
                          data['error'])
 
-    def test_auth_signup_regex(self):
+    def test_auth_signup_emailregex(self):
         '''Tests regex structure'''
         self.signup['email'] = 'joni.com'
         response = self.client.post('api/v2/auth/signup',
@@ -61,6 +61,17 @@ class AuthTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual('unexpected pattern for email',
                          data['error'])
+                
+    def test_auth_signup_fullnameregex(self):
+        '''Test the fullname regex pattern'''
+        self.signup['fullname'] = "mathogothanio"
+        response = self.client.post('api/v2/auth/signup',
+                                    data=json.dumps(self.signup),
+                                    headers={
+                                        "Content-Type": "application/json"})
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual('unexpected pattern for fullname', data['error'])
 
     def test_auth_signup_password_length(self):
         '''Test password minimum length'''
