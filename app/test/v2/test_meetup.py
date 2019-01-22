@@ -21,7 +21,7 @@ class MeetupTestCase(unittest.TestCase):
         }
 
         self.images = {
-            "images": ['lop.png', 'zip.png']
+            "images": ['http://lop.png', 'http://zip.png', 'http://zofgo.jpg', 'http://zik.jpg']
         }
 
     def test_create_meetup(self):
@@ -55,6 +55,17 @@ class MeetupTestCase(unittest.TestCase):
         self.assertEqual("unexpected 'happeningOn' is a required property",
                          data['error'])
 
+    def test_create_meetup_dateformat(self):
+        '''Test the date format'''
+        self.meetup['happeningOn'] = '20/15/2018'
+        response = self.client.post('api/v2/meetups',
+                                    data=json.dumps(self.meetup),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("datetime format expected is yyyy-mm-dd",
+                         data['error'])
+
     def test_create_meetup_images_notfound(self):
         '''Test image insertion'''
         # Get seed
@@ -75,6 +86,37 @@ class MeetupTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'images' is a required property",
+                         data['error'])
+
+    def test_create_meetup_images_emptyarr(self):
+        '''Test validation for empty array'''
+        self.images['images'] = []
+        response = self.client.patch('api/v2/meetups/1/images',
+                                     data=json.dumps(self.images),
+                                     content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected [] is too short", data['error'])
+
+    def test_create_meetup_images_largearr(self):
+        '''Test if images list is too large'''
+        self.images['images'].append("http://trial.png")
+        response = self.client.patch('api/v2/meetups/1/images',
+                                     data=json.dumps(self.images),
+                                     content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("""unexpected ['http://lop.png', 'http://zip.png', 'http://zofgo.jpg', 'http://zik.jpg', 'http://trial.png'] is too long""", data['error'])
+
+    def test_create_meetup_images_arrtype(self):
+        '''Test type of array'''
+        self.images['images'] = ['lol', 0, "ol["]
+        response = self.client.patch('api/v2/meetups/1/images',
+                                     data=json.dumps(self.images),
+                                     content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("images should be in uri format(http://img.png)",
                          data['error'])
 
     def tearDown(self):
