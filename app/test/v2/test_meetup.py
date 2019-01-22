@@ -47,7 +47,7 @@ class MeetupTestCase(unittest.TestCase):
     def test_create_meetup_missing(self):
         '''Test if meetup object is missing'''
         del self.meetup['happeningOn']
-        response = self.client.patch('api/v2/meetups',
+        response = self.client.post('api/v2/meetups',
                                      data=json.dumps(self.meetup),
                                      content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -60,10 +60,10 @@ class MeetupTestCase(unittest.TestCase):
         # Get seed
         id_ = seed_meetup()
         print('id is {}'.format(str(id_)))
-        response = self.client.post('''api/v2/meetups/{}/images
+        response = self.client.patch('''api/v2/meetups/{}/images
                                     '''.format(str(id_)),
-                                    data=json.dumps(self.images),
-                                    content_type='application/json')
+                                     data=json.dumps(self.images),
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 201)
         data = json.loads(response.data)
         self.assertEqual('Nairobi Go', data['data']['topic'])
