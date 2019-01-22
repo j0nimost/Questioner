@@ -50,12 +50,15 @@ def create_query():
     '''Create Queries'''
     meetups_tbl = '''CREATE TABLE IF NOT EXISTS meetup(
         id serial PRIMARY KEY NOT NULL,
+        userid INTEGER,
         createdOn TIMESTAMP NOT NULL,
         topic VARCHAR(80) NOT NULL,
         location VARCHAR(55) NOT NULL,
         images TEXT[],
         tags TEXT[],
-        happeningOn TIMESTAMP NOT NULL
+        happeningOn TIMESTAMP NOT NULL,
+        CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
+        ON DELETE CASCADE
     );'''
 
     users_tbl = '''CREATE TABLE IF NOT EXISTS usertbl (
@@ -84,10 +87,13 @@ def create_query():
     question_tbl = '''CREATE TABLE IF NOT EXISTS question(
         id serial PRIMARY KEY NOT NULL,
         meetupid INTEGER NOT NULL,
+        userid INTEGER NOT NULL,
         title VARCHAR(80) NOT NULL,
         body VARCHAR(140) NOT NULL,
         votes INTEGER,
         CONSTRAINT ques_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
+        ON DELETE CASCADE,
+        CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
         ON DELETE CASCADE
     );'''
 
