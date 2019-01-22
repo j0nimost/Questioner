@@ -24,6 +24,16 @@ class MeetupModel(BaseModel):
         id_ = super().insert(meetup_dict, query)
         return id_
 
+    def insert_images(self, meetupid, images=[]):
+        '''Update meetup and insert images'''
+        meetup = super().fetch('id', meetupid)
+        if meetup:
+            query = '''
+                UPDATE meetup SET images =%%s WHERE id={}
+                RETURNING id;'''.format(meetupid)
+            id_ = super().update(query, images)
+            return id_
+        return None
 
 meetup_schema = {
     "$schema": "https://json-schema.org/schema#",
@@ -34,4 +44,13 @@ meetup_schema = {
         "happeningOn": {"type": "string"}
     },
     "required": ["topic", "location", "happeningOn"]
+}
+
+image_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "images": {"type": "array"}
+    },
+    "required": ["images"]
 }
