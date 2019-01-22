@@ -19,11 +19,34 @@ def validate_input(schema):
             try:
                 validate(request.json, config[schema])
             except ValidationError as e:
+                ''''''
                 if e.validator == 'pattern':
-                    err_obj = {
-                        "status": 400,
-                        "error": 'unexpected pattern for ' + e.path[0]
-                    }
+                    ''''''
+                    if "happeningOn" == e.path[0]:
+                        err_obj = {
+                            "status": 400,
+                            "error": "datetime format expected is yyyy-mm-dd"
+                        }
+                    elif "fullname" == e.path[0]:
+                        err_obj = {
+                            "status": 400,
+                            "error": "fullname format should be 'John Doe'"
+                        }
+                    elif "email" == e.path[0]:
+                        err_obj = {
+                            "status": 400,
+                            "error": "email format expected is joe@lin.com"
+                        }
+                    elif "images" == e.path[0]:
+                        err_obj = {
+                            "status": 400,
+                            "error": "images should be in uri format(http://img.png)"
+                        }
+                    else:
+                        err_obj = {
+                            "status": 400,
+                            "error": 'unexpected pattern for ' + e.path[0]
+                        }
                 elif e.validator == 'minLength':
                     err_obj = {
                         "status": 400,
