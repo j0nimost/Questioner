@@ -27,10 +27,12 @@ class MeetupModel(BaseModel):
     def insert_images(self, meetupid, images=[]):
         '''Update meetup and insert images'''
         meetup = super().fetch('id', meetupid)
+        images = [('{' + x + '}',) for x in images]
         if meetup:
             query = '''
-                UPDATE meetup SET images =%%s WHERE id={}
-                RETURNING id;'''.format(meetupid)
+                        UPDATE meetup SET images=images || %s WHERE id={}
+                        RETURNING id;
+                    '''.format(meetupid)
             id_ = super().update(query, images)
             return id_
         return None
