@@ -56,9 +56,23 @@ class BaseModel(object):
         conn.cursor().close()
         return True
 
-    def update(self):
+    def update(self, query, data):
         '''abstract method handles updates'''
-        pass
+        dbconn = self.conn
+        cur = dbconn.cursor()
+
+        if isinstance(data, list):
+            cur.executemany(query, data)
+            id_ = cur.fetchone()[0]
+            dbconn.commit()
+            cur.close()
+            return id_
+        else:
+            cur.execute(query, data)
+            id_ = cur.fetchone()[0]
+            dbconn.commit()
+            cur.close()
+            return id_
 
     def delete(self):
         '''abstract method delete items'''
