@@ -48,25 +48,33 @@ class MeetupTestCase(unittest.TestCase):
         '''Test if meetup object is missing'''
         del self.meetup['happeningOn']
         response = self.client.post('api/v2/meetups',
-                                     data=json.dumps(self.meetup),
-                                     content_type='application/json')
+                                    data=json.dumps(self.meetup),
+                                    content_type='application/json')
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
         self.assertEqual("unexpected 'happeningOn' is a required property",
                          data['error'])
 
-    def test_create_meetup_images(self):
+    def test_create_meetup_images_notfound(self):
         '''Test image insertion'''
         # Get seed
-        id_ = seed_meetup()
-        print('id is {}'.format(str(id_)))
-        response = self.client.patch('''api/v2/meetups/{}/images
-                                    '''.format(str(id_)),
+        response = self.client.patch("api/v2/meetups/0/images",
                                      data=json.dumps(self.images),
                                      content_type='application/json')
-        self.assertEqual(response.status_code, 201)
+        # print(response.data)
+        self.assertEqual(response.status_code, 404)
         data = json.loads(response.data)
-        self.assertEqual('Nairobi Go', data['data']['topic'])
+        self.assertEqual("Not Found", data['error'])
+
+    def test_create_meetup_images_missing(self):
+        '''Test missing image object'''
+        del self.images['images']
+        response = self.client.patch("api/v2/meetups/1/images",
+                                     data=json.dumps(self.images),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertEqual("unexpected 'images' is a required property", data['error'])
 
     def tearDown(self):
         queries = delete_test()
