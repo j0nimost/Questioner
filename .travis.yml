@@ -24,7 +24,7 @@
   before_script:
     - psql -c "CREATE USER questioner WITH PASSWORD 'andela1';" -U postgres 
     - psql -c 'CREATE DATABASE qtest;' -U postgres 
-    - psql -c "GRANT ALL privileges on database questioner to questioner;" -U postgres 
+    - psql -c "GRANT ALL privileges on database qtest to questioner;" -U postgres 
 
   script:
     - py.test  --cov-report term --cov=app/api/
