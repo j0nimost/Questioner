@@ -10,7 +10,7 @@ Setups all the required connections and creates tables
 
 def init():
     '''Set's up the connection'''
-    x = os.getenv('FLASK_ENV')
+    x = os.getenv('APP_SETTINGS')
 
     if x == 'testing':
         testing_db = os.getenv('DATABASE_URL_TEST')
@@ -40,20 +40,15 @@ def exec_queries(queries_: list):
 
 def delete_test():
     '''Drop tables'''
-    usertbl = "DROP TABLE IF EXISTS usertbl CASCADE;"
-    meetuptbl = "DROP TABLE IF EXISTS meetup CASCADE;"
-    commenttbl = "DROP TABLE IF EXISTS comment CASCADE;"
-    questiontbl = "DROP TABLE IF EXISTS question CASCADE;"
-    rsvptbl = "DROP TABLE IF EXISTS rsvp CASCADE;"
-    roletbl = "DROP TABLE IF EXISTS roles CASCADE;"
+    drop_db = "DROP DATABASE IF EXISTS qtest;"
 
-    drop_queries = [usertbl, meetuptbl, roletbl, questiontbl,
-                    commenttbl, rsvptbl]
+    drop_queries = [drop_db]
     return drop_queries
 
 
 def create_query():
     '''Create Queries'''
+    create_qtest = "CREATE DATABASE IF NOT EXISTS qtest;"
     meetups_tbl = '''CREATE TABLE IF NOT EXISTS meetup(
         id serial PRIMARY KEY NOT NULL,
         userid INTEGER,
@@ -124,7 +119,7 @@ def create_query():
         UNIQUE (role)
     );'''
 
-    queries = [users_tbl, meetups_tbl, roles_tbl,
+    queries = [create_qtest, users_tbl, meetups_tbl, roles_tbl,
                question_tbl, comments_tbl, rsvp_tbl]
     return queries
 
