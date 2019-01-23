@@ -18,7 +18,7 @@ class Testing(Config):
     '''Testing Environment Variables'''
     DEBUG = True
     TESTING = True
-    # DATABASE_URL_TEST = os.getenv('DATABASE_URL_TEST')
+    DATABASE_URL_TEST = os.getenv('DATABASE_URL_TEST')
 
 
 class Development(Config):
