@@ -21,6 +21,11 @@ def post():
     password = request.json['password']
     confirm_pass = request.json['confirmpassword']
 
+    try:
+        userrole = request.json['role']
+    except KeyError:
+        userrole = 'user'
+
     isMatched = match_password(password, confirm_pass)
     if not isMatched:
         error = {
@@ -39,21 +44,25 @@ def post():
         return jsonify(err_obj), 409
 
     h_password = hash_pass(password)
-    _id = usr_obj.insert_query(fullname, username, email, h_password)
+    
+    if userrole:
+        _id = usr_obj.insert_query(fullname, username, email, h_password,
+                                   userrole)
+    else:
+        _id = usr_obj.insert_query(fullname, username, email, h_password)
     if _id:
         '''create token'''
         usr = usr_obj.fetch('id', _id)
-        usr_val = list(usr)
-        token = encode_jwt(_id)
-        user_key = ['id', 'firstname', 'lastname', 'username', 'email',
-                    'password', 'createdOn']
-        usr_dict = dict(zip(user_key, usr_val))
+        if userrole:
+            token = encode_jwt(_id, userrole)
+        else:
+            token = encode_jwt(_id)
         token_body = {
             "status": 201,
             "data": [
                 {
                     "token": token,
-                    "user": [usr_dict]
+                    "user": [usr]
                 }
             ]
         }
@@ -72,19 +81,17 @@ def login():
 
     usr = usr_obj.fetch('email', email)
     if usr:
-        usr_val = list(usr)
-        user_key = ['id', 'firstname', 'lastname', 'username', 'email',
-                    'password', 'createdOn']
-        usr_ = dict(zip(user_key, usr_val))
-
-        isPassword = check_pass(usr_['password'], password)
+        isPassword = check_pass(usr['password'], password)
         if isPassword:
-            token = encode_jwt(usr_['id'])
+            if usr['userrole'] == 'admin':
+                token = encode_jwt(usr['id'], 'admin')
+            else:
+                token = encode_jwt(usr['id'])
             token_body = {
                 "status": 202,
                 "data": [{
                     "token": token,
-                    "user": [usr_]
+                    "user": [usr]
                 }]
             }
             return jsonify(token_body), 202
