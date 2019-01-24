@@ -1,6 +1,7 @@
 import os
 import jwt
 import datetime
+import json
 
 from flask import jsonify
 from functools import wraps
@@ -79,6 +80,13 @@ def isAuthorized(role):
                             "error": "user does not exist"
                         }
                         return jsonify(error_msg), 400
+
+                else:
+                    error_tk = {
+                        "status": 400,
+                        "error": str(userid.json)
+                    }
+                    return jsonify(error_tk), 400
             else:
                 error_msg = {
                     "status": 401,
