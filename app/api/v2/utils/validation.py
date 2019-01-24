@@ -42,6 +42,11 @@ def validate_input(schema):
                             "status": 400,
                             "error": "images should be in uri format(http://img.png)"
                         }
+                    elif "tags" == e.path[0]:
+                        err_obj = {
+                            "status": 400,
+                            "error": "tags should be only text"
+                        }
                     else:
                         err_obj = {
                             "status": 400,
