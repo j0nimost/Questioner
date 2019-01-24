@@ -2,17 +2,17 @@ import os
 import psycopg2
 import datetime
 
+from flask import g
 '''
 This file is reponsible for initializing the Database Connection.
 Setups all the required connections and creates tables
 '''
 
 
-def init():
+def init(env=''):
     '''Set's up the connection'''
-    x = os.getenv('APP_SETTINGS')
-
-    if x == 'testing':
+    # x = os.getenv("FLASK_ENV")
+    if env == 'testing':
         testing_db = os.getenv('DATABASE_URL_TEST')
         connection = psycopg2.connect(testing_db)
     else:
@@ -23,32 +23,33 @@ def init():
 
 def exec_queries(queries_: list):
     '''Create the tables for testdb'''
-    db = init()
-    db.autocommit = True
+    db = init('testing')
     try:
         for query in queries_:
             cur = db.cursor()
             cur.execute(query)
+            print("vako")
             db.commit()
             cur.close()
+            
     except Exception as e:
         return e
-    finally:
-        db.commit()
-        cur.close()
 
 
 def delete_test():
     '''Drop tables'''
-    drop_db = "DROP DATABASE IF EXISTS qtest;"
+    user_db = "DROP TABLE IF EXISTS usertbl;"
+    meetup_db = "DROP TABLE IF EXISTS meetup;"
+    roles_db = "DROP TABLE IF EXISTS roles;"
+    ques_db = "DROP TABLE IF EXISTS question;"
+    comment_db = "DROP TABLE IF EXISTS comment;"
 
-    drop_queries = [drop_db]
+    drop_queries = [user_db, meetup_db, roles_db, ques_db, comment_db]
     return drop_queries
 
 
 def create_query():
     '''Create Queries'''
-    create_qtest = "CREATE DATABASE IF NOT EXISTS qtest;"
     meetups_tbl = '''CREATE TABLE IF NOT EXISTS meetup(
         id serial PRIMARY KEY NOT NULL,
         userid INTEGER,
@@ -119,7 +120,7 @@ def create_query():
         UNIQUE (role)
     );'''
 
-    queries = [create_qtest, users_tbl, meetups_tbl, roles_tbl,
+    queries = [users_tbl, meetups_tbl, roles_tbl,
                question_tbl, comments_tbl, rsvp_tbl]
     return queries
 
@@ -128,8 +129,7 @@ def seed():
     creationTime = datetime.datetime.now()
     meetup = '''
         INSERT INTO meetup(createdOn, topic, location, happeningOn)
-        Values('{}','Nairobi Go', 'Senteru Plaza', '2019-01-26')
-        RETURNING id;
+        Values('{}','Nairobi Go', 'Senteru Plaza', '2019-01-26');
                 '''.format(creationTime)
 
     roles = '''
@@ -144,9 +144,7 @@ def seed():
     try:
         for query in queries:
             cur.execute(query)
-            id_ = cur.fetchone()[0]
-            return id_
+            db.commit()
+            cur.close()
     except Exception as e:
         return e
-    finally:
-        cur.close()
