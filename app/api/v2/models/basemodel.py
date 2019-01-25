@@ -21,15 +21,17 @@ class BaseModel(object):
         '''abstract method to insert data'''
         dbconn = self.conn
         # dbconn.autocommit = True
-        cur = dbconn.cursor(cursor_factory=RealDictCursor)
-        cur.execute(query, data)
-        if cur.rowcount != 0:
-            id_ = cur.fetchone()['id']
+        if dbconn:
+            print(os.getenv('FLASK_ENV'))
+            cur = dbconn.cursor(cursor_factory=RealDictCursor)
+            cur.execute(query, data)
+            if cur.rowcount != 0:
+                id_ = cur.fetchone()['id']
+                dbconn.commit()
+                cur.close()
+                return id_
             dbconn.commit()
             cur.close()
-            return id_
-        dbconn.commit()
-        cur.close()
         return None
 
     def fetch(self, name, item):
