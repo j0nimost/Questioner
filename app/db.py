@@ -11,29 +11,30 @@ Setups all the required connections and creates tables
 
 def init(env=''):
     '''Set's up the connection'''
-    # x = os.getenv("FLASK_ENV")
     if env == 'testing':
-        testing_db = os.getenv('DATABASE_URL_TEST')
-        connection = psycopg2.connect(testing_db)
-    else:
         prod_db = os.getenv('DATABASE_URL')
         connection = psycopg2.connect(prod_db)
-    return connection
+        return connection
+    else:
+        testing_db = os.getenv('DATABASE_URL_TEST')
+        connection = psycopg2.connect(testing_db)
+        return connection
 
 
 def exec_queries(queries_: list):
     '''Create the tables for testdb'''
-    db = init('testing')
     try:
         for query in queries_:
+            db = init('testing')
             cur = db.cursor()
             cur.execute(query)
-            print("vako")
             db.commit()
+            print('submitted')
             cur.close()
-            
     except Exception as e:
-        return e
+        print(e)
+    finally:
+        db.close()
 
 
 def delete_test():
