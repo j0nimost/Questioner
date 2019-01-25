@@ -4,6 +4,7 @@ from flask import Blueprint
 from ..utils.authorization import isAuthorized
 from ..models.meetupmodel import MeetupModel
 from ..utils.validation import validate_input
+from ..utils.authorization import decode_jwt
 meetup_v2 = Blueprint('meetup_v2', __name__, url_prefix='/api/v2')
 meetup_obj = MeetupModel()
 
@@ -17,6 +18,9 @@ def post():
     location = request.json['location']
     happeningOn = request.json['happeningOn']
 
+    token = request.headers.get('Authorization').split(" ")[1]
+    userid, _ = decode_jwt(token)
+
     exists = meetup_obj.exists('topic', topic)
     if exists:
         error_obj = {
@@ -24,7 +28,7 @@ def post():
             "error": "topic exists"
         }
         return jsonify(error_obj), 409
-    id_ = meetup_obj.insert_meetup_query(topic, location, happeningOn)
+    id_ = meetup_obj.insert_meetup_query(userid, topic, location, happeningOn)
     meetup_ = meetup_obj.fetch('id', id_)
     # create response body
     meetup_dict = {
