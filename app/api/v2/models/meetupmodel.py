@@ -40,6 +40,19 @@ class MeetupModel(BaseModel):
             return id_
         return None
 
+    def insert_tags(self, meetupid, tags=[]):
+        '''Update meetup and insert tags'''
+        meetup = super().fetch('id', meetupid)
+        tags = [('{' + x + '}',) for x in tags]
+        if meetup:
+            query = '''
+                        UPDATE meetup SET tags=tags || %s WHERE id={}
+                        RETURNING id;
+                    '''.format(meetupid)
+            id_ = super().update(query, tags)
+            return id_
+        return None
+
 
 meetup_schema = {
     "$schema": "http://json-schema.org/schema#",
@@ -68,4 +81,18 @@ image_schema = {
                    }
     },
     "required": ["images"]
+}
+
+tags_schema = {
+    "$schema": "https://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "tags": {"type": "array",
+                 "items": {"type": "string",
+                           "pattern": "^[A-Za-z]+$"},
+                 "minItems": 1,
+                 "maxItems": 4
+                 }
+    },
+    "required": ["tags"]
 }
