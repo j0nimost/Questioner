@@ -2,7 +2,7 @@ import os
 from psycopg2.extras import RealDictCursor
 from flask import current_app
 from flask import app
-from ....db import init
+from ....db import get_db
 
 '''
 This is the basemodel that will handle shared logic
@@ -13,16 +13,13 @@ class BaseModel(object):
     '''Generic Base Model'''
     def __init__(self, table=''):
         '''Initialize Db connection'''
-        env = os.getenv("FLASK_ENV")
-        self.conn = init(env)
         self.table = table
 
     def insert(self, data: dict, query: str):
         '''abstract method to insert data'''
-        dbconn = self.conn
+        dbconn = get_db(current_app.env)
         # dbconn.autocommit = True
         if dbconn:
-            print(os.getenv('FLASK_ENV'))
             cur = dbconn.cursor(cursor_factory=RealDictCursor)
             cur.execute(query, data)
             if cur.rowcount != 0:
@@ -36,7 +33,7 @@ class BaseModel(object):
 
     def fetch(self, name, item):
         '''abstract method to fetch item'''
-        dbconn = self.conn
+        dbconn = get_db(current_app.env)
         cur = dbconn.cursor(cursor_factory=RealDictCursor)
         query = '''
                     SELECT * FROM {} WHERE {}='{}'
@@ -48,7 +45,7 @@ class BaseModel(object):
 
     def exists(self, name, item):
         '''checks if item exists'''
-        dbconn = self.conn
+        dbconn = get_db(current_app.env)
         cur = dbconn.cursor()
         query = """
                 SELECT EXISTS (SELECT * FROM {}
@@ -61,7 +58,7 @@ class BaseModel(object):
 
     def update(self, query, data):
         '''abstract method handles updates'''
-        dbconn = self.conn
+        dbconn = get_db(current_app.env)
         cur = dbconn.cursor(cursor_factory=RealDictCursor)
 
         try:
