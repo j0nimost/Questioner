@@ -10,23 +10,27 @@ Setups all the required connections and creates tables
 
 def init():
     '''Set's up the connection'''
-    # connection_str = os.getenv('DATABASE_URL')
-    connection = psycopg2.connect("""dbname=questioner
-                                     user=questioner
-                                     password=andela1
-                                     host=localhost
-                                     port=5432""")
+    x = os.getenv('APP_SETTINGS')
+
+    if x == 'testing':
+        testing_db = os.getenv('DATABASE_URL_TEST')
+        connection = psycopg2.connect(testing_db)
+    else:
+        prod_db = os.getenv('DATABASE_URL')
+        connection = psycopg2.connect(prod_db)
     return connection
 
 
 def exec_queries(queries_: list):
     '''Create the tables for testdb'''
     db = init()
-    cur = db.cursor()
-
+    db.autocommit = True
     try:
         for query in queries_:
+            cur = db.cursor()
             cur.execute(query)
+            db.commit()
+            cur.close()
     except Exception as e:
         return e
     finally:
@@ -36,26 +40,27 @@ def exec_queries(queries_: list):
 
 def delete_test():
     '''Drop tables'''
-    usertbl = "DELETE FROM usertbl CASCADE;"
-    meetuptbl = "DELETE FROM meetup CASCADE;"
-    commenttbl = "DELETE FROM comment CASCADE;"
-    questiontbl = "DELETE FROM question CASCADE;"
-    rsvptbl = "DELETE FROM rsvp CASCADE;"
+    drop_db = "DROP DATABASE IF EXISTS qtest;"
 
-    drop_queries = [usertbl, meetuptbl, questiontbl, commenttbl, rsvptbl]
+    drop_queries = [drop_db]
     return drop_queries
 
 
 def create_query():
     '''Create Queries'''
+    create_qtest = "CREATE DATABASE IF NOT EXISTS qtest;"
     meetups_tbl = '''CREATE TABLE IF NOT EXISTS meetup(
         id serial PRIMARY KEY NOT NULL,
+        userid INTEGER,
         createdOn TIMESTAMP NOT NULL,
         topic VARCHAR(80) NOT NULL,
         location VARCHAR(55) NOT NULL,
         images TEXT[],
         tags TEXT[],
-        happeningOn TIMESTAMP NOT NULL
+        happeningOn TIMESTAMP NOT NULL,
+        CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
+        ON DELETE CASCADE,
+        UNIQUE(topic)
     );'''
 
     users_tbl = '''CREATE TABLE IF NOT EXISTS usertbl (
@@ -65,8 +70,10 @@ def create_query():
         username VARCHAR(55) NOT NULL,
         email VARCHAR(55) NOT NULL,
         password VARCHAR(100) NOT NULL,
+        userrole VARCHAR(20) NOT NULL,
         createOn TIMESTAMP NOT NULL,
-        UNIQUE (email, username)
+        UNIQUE (email, username),
+        CONSTRAINT role_fk FOREIGN KEY (userrole) REFERENCES roles(role)
     );'''
 
     comments_tbl = '''CREATE TABLE IF NOT EXISTS comment(
@@ -84,10 +91,13 @@ def create_query():
     question_tbl = '''CREATE TABLE IF NOT EXISTS question(
         id serial PRIMARY KEY NOT NULL,
         meetupid INTEGER NOT NULL,
+        userid INTEGER NOT NULL,
         title VARCHAR(80) NOT NULL,
         body VARCHAR(140) NOT NULL,
         votes INTEGER,
         CONSTRAINT ques_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
+        ON DELETE CASCADE,
+        CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
         ON DELETE CASCADE
     );'''
 
@@ -102,18 +112,32 @@ def create_query():
         ON DELETE CASCADE
     );'''
 
-    queries = [users_tbl, meetups_tbl, question_tbl, comments_tbl, rsvp_tbl]
+    roles_tbl = '''CREATE TABLE IF NOT EXISTS roles(
+        id serial NOT NULL,
+        role VARCHAR(20) NOT NULL,
+        CONSTRAINT roles_pk PRIMARY KEY (id, role),
+        UNIQUE (role)
+    );'''
+
+    queries = [create_qtest, users_tbl, meetups_tbl, roles_tbl,
+               question_tbl, comments_tbl, rsvp_tbl]
     return queries
 
 
-def seed_meetup():
+def seed():
     creationTime = datetime.datetime.now()
     meetup = '''
         INSERT INTO meetup(createdOn, topic, location, happeningOn)
         Values('{}','Nairobi Go', 'Senteru Plaza', '2019-01-26')
         RETURNING id;
                 '''.format(creationTime)
-    queries = [meetup]
+
+    roles = '''
+        INSERT INTO roles(role) VALUES('admin');
+        INSERT INTO roles(role) VALUES('user')
+            '''
+
+    queries = [meetup, roles]
     db = init()
     cur = db.cursor()
 

@@ -2,7 +2,7 @@ import unittest
 import json
 
 from app import create_app
-from ...db import create_query, delete_test, exec_queries, seed_meetup
+from ...db import create_query, delete_test, exec_queries
 
 
 class MeetupTestCase(unittest.TestCase):

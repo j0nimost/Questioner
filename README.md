@@ -97,6 +97,7 @@ Run the following commands subsequently.
 - `$ virtualenv env`
 - [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env-test) to create exports.
 - `$ pip install -r requirements.txt`
+- `$ python3 script.py`
 - `$ flask run`
 
 ### Running Tests
@@ -107,6 +108,7 @@ Run the following commands subsequently.
 - `$ virtualenv env`
 - [Use this](https://github.com/j0nimost/Questioner/blob/develop/.env-test) to create exports.
 - `$ pip install -r requirements.txt`
+- `$ python3 script.py`
 - `$ cd app/api/tests/<choose a version>`
 - `$ pytest`
 
