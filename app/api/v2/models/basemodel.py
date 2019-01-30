@@ -1,3 +1,7 @@
+import os
+from psycopg2.extras import RealDictCursor
+from flask import current_app
+from flask import app
 from ....db import init
 
 '''
@@ -9,26 +13,29 @@ class BaseModel(object):
     '''Generic Base Model'''
     def __init__(self, table=''):
         '''Initialize Db connection'''
-        self.conn = init()
+        env = os.getenv("FLASK_ENV")
+        self.conn = init(env)
         self.table = table
 
     def insert(self, data: dict, query: str):
         '''abstract method to insert data'''
         dbconn = self.conn
         # dbconn.autocommit = True
-        cur = dbconn.cursor()
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
         cur.execute(query, data)
         if cur.rowcount != 0:
-            id_ = cur.fetchone()[0]
+            id_ = cur.fetchone()['id']
+            dbconn.commit()
             cur.close()
             return id_
+        dbconn.commit()
         cur.close()
         return None
 
     def fetch(self, name, item):
         '''abstract method to fetch item'''
         dbconn = self.conn
-        cur = dbconn.cursor()
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
         query = '''
                     SELECT * FROM {} WHERE {}='{}'
                 '''.format(self.table, name, item,)
@@ -50,16 +57,10 @@ class BaseModel(object):
         cur.close()
         return exists
 
-    def save(self, conn: init()):
-        '''abstract handles closing of connections'''
-        conn.commit()
-        conn.cursor().close()
-        return True
-
     def update(self, query, data):
         '''abstract method handles updates'''
         dbconn = self.conn
-        cur = dbconn.cursor()
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
 
         try:
             if isinstance(data, list):

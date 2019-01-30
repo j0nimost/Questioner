@@ -120,5 +120,6 @@ class MeetupTestCase(unittest.TestCase):
                          data['error'])
 
     def tearDown(self):
+        # print(self.app)
         queries = delete_test()
         exec_queries(queries)

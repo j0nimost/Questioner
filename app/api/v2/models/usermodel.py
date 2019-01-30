@@ -18,7 +18,8 @@ class UserModel(BaseModel):
         lastname = fullname.split(' ')[-1]
         return firstname, lastname
 
-    def insert_query(self, fullname, username, email, password=''):
+    def insert_query(self, fullname, username, email,
+                     password='', userrole='user'):
         '''query to save user the database'''
         firstname, lastname = self.name(fullname)
         user_obj = {
@@ -27,14 +28,16 @@ class UserModel(BaseModel):
             'username': username,
             'email': email,
             'password': password,
-            'createOn': datetime.date.today().__str__()
+            'createOn': datetime.date.today().__str__(),
+            'userrole': userrole
         }
         query = '''
                 INSERT INTO {} (firstname, lastname, username, email,
-                password, createOn)
+                password, createOn, userrole)
                 VALUES (%(firstname)s, %(lastname)s, %(username)s,
-                %(email)s, %(password)s, %(createOn)s) ON CONFLICT
-                (email,username) DO NOTHING RETURNING id;'''.format(self.table)
+                %(email)s, %(password)s, %(createOn)s, %(userrole)s)
+                 ON CONFLICT (email,username) DO NOTHING
+                 RETURNING id;'''.format(self.table)
 
         id_ = super().insert(user_obj, query)
         return id_
@@ -53,7 +56,11 @@ user_schema = {
         "password": {"type": "string",
                      "minLength": 8},
         "confirmpassword": {"type": "string",
-                            "minLength": 8}
+                            "minLength": 8},
+        "role": {"type": "string",
+                 "pattern": "^[A-Za-z]+$",
+                 "enum": ["admin"]
+                 }
     },
     "required": ["fullname", "username", "email",
                  "password", "confirmpassword"]

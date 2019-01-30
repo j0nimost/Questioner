@@ -10,10 +10,10 @@ class AuthTestCase(unittest.TestCase):
     '''Test's Authorization and security'''
     def setUp(self):
         '''set up testing env'''
-        self.app = create_app('testing')
+        self.app = create_app(config='testing')
         self.client = self.app.test_client()
         queries = create_query()
-        self.val = exec_queries(queries)
+        exec_queries(queries)
         self.signup = {
             "fullname": "John Nyingi",
             "username": "j0nimost",
