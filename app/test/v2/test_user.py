@@ -3,17 +3,22 @@ import json
 import unittest
 
 from app import create_app
-from ...db import exec_queries, create_query, delete_test
+from flask import current_app
+from ...db import get_db, drop_tables
 
 
 class AuthTestCase(unittest.TestCase):
     '''Test's Authorization and security'''
     def setUp(self):
         '''set up testing env'''
-        self.app = create_app(config='testing')
+        env = os.getenv('TEST_SETTINGS')
+        self.app = create_app(env)
+
+        with self.app.app_context():
+            get_db(env)
+
         self.client = self.app.test_client()
-        queries = create_query()
-        exec_queries(queries)
+
         self.signup = {
             "fullname": "John Nyingi",
             "username": "j0nimost",
@@ -61,7 +66,7 @@ class AuthTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual("email format expected is joe@lin.com",
                          data['error'])
-                
+
     def test_auth_signup_fullnameregex(self):
         '''Test the fullname regex pattern'''
         self.signup['fullname'] = "mathogothanio"
@@ -124,6 +129,20 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual("user already exists with similar email/username",
                          data['error'])
 
+    def test_auth_signin(self):
+        '''Test user signin'''
+        _ = self.client.post('api/v2/auth/signup',
+                             data=json.dumps(self.signup),
+                             headers={
+                                      "Content-Type": "application/json"})
+        response = self.client.post('api/v2/auth/signin',
+                                    data=json.dumps(self.signin),
+                                    content_type='application/json')
+
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        self.assertIsNotNone(data['data'][0]['token'])
+
     def test_auth_signin_wronginput(self):
         '''Test invalid email/password'''
         self.signin['email'] = 'kenn@gmail.com'
@@ -167,5 +186,5 @@ class AuthTestCase(unittest.TestCase):
                          data['error'])
 
     def tearDown(self):
-        dqueries = delete_test()
-        exec_queries(dqueries)
+        with self.app.app_context():
+            drop_tables()
