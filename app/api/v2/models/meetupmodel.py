@@ -8,7 +8,7 @@ class MeetupModel(BaseModel):
     def __init__(self):
         super().__init__('meetup')
 
-    def insert_meetup_query(self, topic, location, happeningOn):
+    def insert_meetup_query(self, userid, topic, location, happeningOn=''):
         '''creates the insert query'''
         createdOn = datetime.datetime.now()
         meetup_dict = {
@@ -21,9 +21,9 @@ class MeetupModel(BaseModel):
         query = '''
                 INSERT INTO {}(userid,createdOn, topic
                 , location, happeningOn)
-                VALUES(1, %(createdOn)s, %(topic)s
+                VALUES({}, %(createdOn)s, %(topic)s
                 , %(location)s, %(happeningOn)s)
-                RETURNING id;'''.format(self.table)
+                RETURNING id;'''.format(self.table, userid)
         id_ = super().insert(meetup_dict, query)
         return id_
 
