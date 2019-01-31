@@ -57,3 +57,5 @@ CREATE TABLE IF NOT EXISTS comment(
         CONSTRAINT comment_question_fk FOREIGN KEY (questionid) REFERENCES
          question(id) ON DELETE CASCADE
     );
+INSERT INTO roles(role) VALUES('admin') ON CONFLICT DO NOTHING;
+INSERT INTO roles(role) VALUES('user') ON CONFLICT DO NOTHING;

@@ -40,7 +40,7 @@ def validate_input(schema):
                     elif "images" == e.path[0]:
                         err_obj = {
                             "status": 400,
-                            "error": "images should be in uri format(http://img.png)"
+                            "error": ("images should be in uri format(http://img.png)")
                         }
                     elif "tags" == e.path[0]:
                         err_obj = {

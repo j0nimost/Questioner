@@ -12,9 +12,8 @@
     - pip install pytest-cov
 
   env: 
-    - APP_SETTINGS='testing'
-    - DATABASE_URL="dbname='qtest' host='127.0.0.1' port='5432' user='questioner' password='andela1'"
-  
+    - TEST_SETTINGS='testing'
+    
   services:
     - postgresql
 
