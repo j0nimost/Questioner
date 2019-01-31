@@ -28,17 +28,16 @@ def exec_queries(queries_: list):
             db = init('testing')
             cur = db.cursor()
             cur.execute(query)
+            print("vako")
             db.commit()
             print('submitted')
             cur.close()
+            
     except Exception as e:
-        print(e)
+        pass
     finally:
         db.close()
 
-
-def delete_test():
-    '''Drop tables'''
     user_db = "DROP TABLE IF EXISTS usertbl;"
     meetup_db = "DROP TABLE IF EXISTS meetup;"
     roles_db = "DROP TABLE IF EXISTS roles;"

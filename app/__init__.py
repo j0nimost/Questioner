@@ -19,10 +19,9 @@ def create_app(config):
     app = Flask(__name__, instance_relative_config=True)
     app.config['JSON_SORT_KEYS'] = False
     app.config.from_object(app_config[config])
-    app.config.from_pyfile('config.py', silent=True)
+    # app.config.from_pyfile('config.py', silent=True)
     db = init(app.env)
     app.url_map.strict_slashes = False
-    app.register_blueprint(auth)
     app.register_blueprint(meetupv2)
     app.register_blueprint(ques_v2)
     app.register_blueprint(meetupreq)
