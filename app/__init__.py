@@ -11,6 +11,7 @@ from .api.v1.views.commentview import comment
 from .api.v2.views.userview import auth
 from .api.v2.views.meetupview import meetup_v2 as meetupv2
 from .api.v2.views.questionview import ques_v2
+from .api.v2.views.commentview import commentv2 as comv2
 from .db import get_db, init_app
 
 
@@ -22,6 +23,7 @@ def create_app(config):
     app.config.from_object(app_config[config])
     app.config.from_pyfile('config.py', silent=True)
     app.url_map.strict_slashes = False
+    app.register_blueprint(comv2)
     app.register_blueprint(meetupv2)
     app.register_blueprint(ques_v2)
     app.register_blueprint(auth)

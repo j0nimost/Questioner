@@ -5,8 +5,6 @@ import unittest
 from app import create_app
 from ...api.v2.utils.authorization import encode_jwt
 from ...db import get_db, drop_tables
-from ...api.v2.models.meetupmodel import MeetupModel
-from ...api.v2.models.usermodel import UserModel
 
 
 class QuestionTestCase(unittest.TestCase):
