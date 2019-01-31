@@ -39,7 +39,7 @@ def post():
 
 
 @meetup_v2.route('/meetups/<int:meetup_id>/images', methods=['PATCH'])
-@validate_input('tags')
+@validate_input('images')
 @isAuthorized("admin")
 def post_images(meetup_id):
     images_ = request.json['images']
