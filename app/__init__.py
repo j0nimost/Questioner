@@ -22,9 +22,9 @@ def create_app(config):
     app.config.from_object(app_config[config])
     app.config.from_pyfile('config.py', silent=True)
     app.url_map.strict_slashes = False
-    app.register_blueprint(auth)
     app.register_blueprint(meetupv2)
     app.register_blueprint(ques_v2)
+    app.register_blueprint(auth)
     app.register_blueprint(meetupreq)
     app.register_blueprint(ques)
     app.register_blueprint(comment)
