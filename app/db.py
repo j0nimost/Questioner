@@ -73,9 +73,11 @@ def exec_queries(queries_: list):
             db = init()
             cur = db.cursor()
             cur.execute(query)
+            print("vako")
             db.commit()
             cur.close()
+            
     except Exception as e:
-        print(e)
+        pass
     finally:
         db.close()'''
