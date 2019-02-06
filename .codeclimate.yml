@@ -5,4 +5,4 @@ engines:
       languages:
         python:
           python_version: 3
-          mass_threshold: 200
+          mass_threshold: 150

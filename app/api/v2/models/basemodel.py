@@ -69,7 +69,7 @@ class BaseModel(object):
                 return True
             else:
                 cur.execute(query, data)
-                id_ = cur.fetchone()[0]
+                id_ = cur.fetchone()['id']
                 dbconn.commit()
                 cur.close()
                 return id_

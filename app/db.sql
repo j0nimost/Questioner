@@ -39,11 +39,34 @@ CREATE TABLE IF NOT EXISTS question(
         userid INTEGER NOT NULL,
         title VARCHAR(80) NOT NULL,
         body VARCHAR(140) NOT NULL,
-        votes INTEGER,
+        voteup INTEGER DEFAULT 0,
+        votedown INTEGER DEFAULT 0,
         CONSTRAINT ques_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
         ON DELETE CASCADE,
         CONSTRAINT userid_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
         ON DELETE CASCADE
+    );
+
+CREATE TABLE IF NOT EXISTS voteup(
+    id serial PRIMARY KEY NOT NULL,
+    questionid INTEGER NOT NULL,
+    userid INTEGER NOT NULL,
+    CONSTRAINT voteup_question_fk FOREIGN KEY (questionid) REFERENCES question(id)
+    ON DELETE CASCADE,
+    CONSTRAINT voteup_user_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
+    ON DELETE CASCADE,
+    UNIQUE (questionid, userid)
+    );
+
+CREATE TABLE IF NOT EXISTS votedown(
+    id serial PRIMARY KEY NOT NULL,
+    questionid INTEGER NOT NULL,
+    userid INTEGER NOT NULL,
+    CONSTRAINT votedown_question_fk FOREIGN KEY (questionid) REFERENCES question(id)
+    ON DELETE CASCADE,
+    CONSTRAINT votedown_user_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
+    ON DELETE CASCADE,
+    UNIQUE (questionid, userid)
     );
 
 CREATE TABLE IF NOT EXISTS comment(
