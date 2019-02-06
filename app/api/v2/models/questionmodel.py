@@ -7,7 +7,7 @@ class QuestionModel(BaseModel):
     def __init__(self):
         '''Initialize table name'''
         super().__init__('question')
- 
+
     def insert_question_query(self, meetupid: int, userid: int, title='',
                               body=''):
         '''creates the insert query'''
@@ -22,6 +22,19 @@ class QuestionModel(BaseModel):
                 VALUES({},{},%(title)s,%(body)s)
                 RETURNING id;'''.format(self.table, meetupid, userid)
         id_ = super().insert(question_dict, query)
+        return id_
+
+    def update_voteup(self, questionid: int, vote: int):
+        '''Update vote up'''
+        vote_ = {
+            "questionid": questionid
+        }
+
+        query = '''UPDATE {table} SET voteup= COALESCE(voteup, 0) + {vote}
+                    WHERE id=%(questionid)s RETURNING id;
+                '''.format(table=self.table, vote=vote)
+
+        id_ = super().update(query, vote_)
         return id_
 
 
