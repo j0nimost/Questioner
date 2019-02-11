@@ -76,6 +76,18 @@ class BaseModel(object):
         except Exception as e:
             return e
 
-    def delete(self):
+    def delete(self, table: str, id_: int):
         '''abstract method delete items'''
-        pass
+        dbconn = get_db(current_app.env)
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
+
+        query = ''' DELETE FROM {table} WHERE id={id}
+                RETURNING *;'''.format(table=table, id=id_)
+
+        cur.execute(query)
+        del_item = cur.fetchone()
+        dbconn.commit()
+        cur.close()
+        if del_item:
+            return True
+        return False
