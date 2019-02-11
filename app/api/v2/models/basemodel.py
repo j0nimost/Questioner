@@ -76,7 +76,7 @@ class BaseModel(object):
         except Exception as e:
             return e
 
-    def fetch_multiple_ids(self, table: str, key1: str, value1: int,
+    def fetch_multiple_ids(self, key1: str, value1: int,
                            key2: str, value2: int):
         '''This selects Items using multiple Id's'''
         dbconn = get_db(current_app.env)
