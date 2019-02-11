@@ -53,31 +53,3 @@ def drop_tables():
         cur = db.cursor()
         cur.execute(query.read())
         db.commit()
-
-
-'''def init(env=''):
-    if env == 'testing':
-        prod_db = os.getenv('DATABASE_URL')
-        connection = psycopg2.connect(prod_db)
-        return connection
-    else:
-        testing_db = os.getenv('DATABASE_URL_TEST')
-        connection = psycopg2.connect(testing_db)
-        return connection
-
-
-
-def exec_queries(queries_: list):
-    try:
-        for query in queries_:
-            db = init()
-            cur = db.cursor()
-            cur.execute(query)
-            print("vako")
-            db.commit()
-            cur.close()
-            
-    except Exception as e:
-        pass
-    finally:
-        db.close()'''
