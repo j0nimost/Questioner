@@ -58,6 +58,16 @@ def question_upvote(ques_id):
         # add vote
         vote_id = voteup_obj.insert_voteup(ques_id, userid)
         if vote_id:
+            votedown = VoteDownModel()
+            downvote_exists = votedown.fetch_multiple_ids('questionid',
+                                                          ques_id,
+                                                          'userid', userid)
+            if downvote_exists:
+                # delete votedown
+                _ = votedown.delete(downvote_exists['id'])
+                vote_update = -1
+                _ = ques_obj.update_votedown(ques_id, vote_update)
+
             # increment vote
             q_id = ques_obj.update_voteup(ques_id, vote)
             # Fetch question
@@ -99,6 +109,15 @@ def question_downvote(ques_id):
         vote_id = votedown_obj.insert_votedown(ques_id, userid)
 
         if vote_id:
+
+            voteup = VoteUpModel()
+            upvote_exists = voteup.fetch_multiple_ids('questionid', ques_id,
+                                                      'userid', userid)
+            if upvote_exists:
+                _ = voteup.delete(upvote_exists['id'])
+                vote_update = -1
+                _ = ques_obj.update_voteup(ques_id, vote_update)
+
             q_id = ques_obj.update_votedown(ques_id, vote)
             # Fetch question
             question = ques_obj.fetch('id', q_id)
