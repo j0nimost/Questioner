@@ -37,6 +37,19 @@ class QuestionModel(BaseModel):
         id_ = super().update(query, vote_)
         return id_
 
+    def update_votedown(self, questionid: int, vote: int):
+        '''Update vote up'''
+        vote_ = {
+            "questionid": questionid
+        }
+
+        query = '''UPDATE {table} SET votedown= COALESCE(votedown, 0) + {vote}
+                    WHERE id=%(questionid)s RETURNING id;
+                '''.format(table=self.table, vote=vote)
+
+        id_ = super().update(query, vote_)
+        return id_
+
 
 question_schema = {
     "$schema": "http://json-schema.org/schema#",
