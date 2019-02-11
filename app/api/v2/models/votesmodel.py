@@ -20,6 +20,11 @@ class VoteUpModel(BaseModel):
         id_ = super().insert(voteup, query)
         return id_
 
+    def delete_voteup(self, id_: int):
+        '''Delete an existing upvote'''
+        result = super().delete(self.table, id_)
+        return result
+
 
 class VoteDownModel(BaseModel):
     '''Handles downvote business logic'''
@@ -41,6 +46,11 @@ class VoteDownModel(BaseModel):
 
         id_ = super().insert(votedown, query_)
         return id_
+
+    def delete_votedown(self, id_: int):
+        '''Delete an existing voteup'''
+        result = super().delete(self.table, id_)
+        return result
 
 votes_schema = {
     "$schema": "http://json-schema.org/schema#",
