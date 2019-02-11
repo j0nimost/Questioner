@@ -76,6 +76,33 @@ class BaseModel(object):
         except Exception as e:
             return e
 
-    def delete(self):
+    def fetch_multiple_ids(self, key1: str, value1: int,
+                           key2: str, value2: int):
+        '''This selects Items using multiple Id's'''
+        dbconn = get_db(current_app.env)
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
+        query = '''
+                    SELECT * FROM {table} WHERE {key1}='{value1}'
+                     AND {key2}='{value2}';
+                '''.format(table=self.table, key1=key1, value1=value1,
+                           key2=key2, value2=value2)
+        cur.execute(query)
+        data = cur.fetchone()
+        cur.close()
+        return data
+
+    def delete(self, id_: int):
         '''abstract method delete items'''
-        pass
+        dbconn = get_db(current_app.env)
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
+
+        query = ''' DELETE FROM {table} WHERE id={id}
+                RETURNING *;'''.format(table=self.table, id=id_)
+
+        cur.execute(query)
+        del_item = cur.fetchone()
+        dbconn.commit()
+        cur.close()
+        if del_item:
+            return True
+        return False

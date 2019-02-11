@@ -136,6 +136,68 @@ class QuestionTestCase(unittest.TestCase):
             data['error'],
             'unexpected 2 is greater than or equal to the maximum of 2')
 
+    def test_question_downvote(self):
+        '''Test Downvote functionality'''
+        meetup_res = self.client.post("api/v2/meetups",
+                                      data=json.dumps(self.meetup),
+                                      headers=self.auth_header)
+        self.assertEqual(meetup_res.status_code, 201)
+        data = json.loads(meetup_res.data)
+        meetup_id = data['data'][0]['id']
+        self.assertIsInstance(meetup_id, int)
+
+        ques_res = self.client.post(
+            'api/v2/meetups/{}/questions'.format(meetup_id),
+            data=json.dumps(self.ques),
+            headers=self.auth_header)
+        self.assertEqual(ques_res.status_code, 201)
+        data = json.loads(ques_res.data)
+        ques_id = data['data'][0]['id']
+        self.assertIsInstance(ques_id, int)
+
+        response = self.client.patch(
+            'api/v2/questions/{}/downvote'.format(ques_id),
+            data=json.dumps(self.vote),
+            headers=self.auth_header)
+        self.assertEqual(response.status_code, 202)
+        data = json.loads(response.data)
+        self.assertEqual(1, data['data'][0]['votedown'])
+
+    def test_question_downvote_validation(self):
+        '''Test value validation'''
+        self.vote['vote'] = 0
+        min_response = self.client.patch(
+            'api/v2/questions/1/downvote',
+            data=json.dumps(self.vote),
+            headers=self.auth_header)
+        self.assertEqual(min_response.status_code, 400)
+        data = json.loads(min_response.data)
+        self.assertEqual(
+            data['error'],
+            'unexpected 0 is less than or equal to the minimum of 0')
+
+        self.vote['vote'] = 0.55
+        float_response = self.client.patch(
+            'api/v2/questions/1/downvote',
+            data=json.dumps(self.vote),
+            headers=self.auth_header)
+        self.assertEqual(float_response.status_code, 400)
+        data = json.loads(float_response.data)
+        self.assertEqual(
+            data['error'],
+            "unexpected 0.55 is not of type 'integer'")
+
+        self.vote['vote'] = 2
+        max_response = self.client.patch(
+            'api/v2/questions/1/downvote',
+            data=json.dumps(self.vote),
+            headers=self.auth_header)
+        self.assertEqual(max_response.status_code, 400)
+        data = json.loads(max_response.data)
+        self.assertEqual(
+            data['error'],
+            'unexpected 2 is greater than or equal to the maximum of 2')
+
     def tearDown(self):
         with self.app.app_context():
             drop_tables()
