@@ -35,3 +35,27 @@ def post(quesid):
         "error": "Not Found"
     }
     return jsonify(notfound), 404
+
+
+@commentv2.route('comments/<int:commentid>', methods=['PATCH'])
+@validate_input('comment')
+@isAuthorized("")
+def patch(commentid):
+    '''Update a comment'''
+    body = request.json['body']
+    exists = comment_obj.exists("id", commentid)
+    if exists:
+        # update
+        id_ = comment_obj.update_comment(commentid, body)
+        comment = comment_obj.fetch('id', id_)
+        comment_return = {
+            "status": 202,
+            "data": [comment]
+        }
+        return jsonify(comment_return), 202
+
+    error = {
+        "status": 404,
+        "error": "Not Found"
+    }
+    return jsonify(error), 404

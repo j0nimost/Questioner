@@ -26,6 +26,17 @@ class CommentModel(BaseModel):
         id_ = super().insert(comment, comment_query)
         return id_
 
+    def update_comment(self, commentid: int, body: str):
+        '''Update a comment'''
+        comment = {
+            "commentid": commentid,
+            "body": body
+        }
+
+        update_query = '''UPDATE {table} SET body=%(body)s WHERE id=%(commentid)s
+                       RETURNING id;'''.format(table=self.table)
+        id_ = super().update(update_query, comment)
+        return id_
 
 comment_schema = {
     "$schema": "http://json-schema.org/schema#",
