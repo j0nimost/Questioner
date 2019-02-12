@@ -175,6 +175,17 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual('Where is the meeting point?',
                          update_data['data'][0]['body'])
 
+    def test_update_comment_notfound(self):
+        '''Test missing comment'''
+        update_response = self.client.patch(
+                        'api/v2/comments/0',
+                        data=json.dumps(self.comment),
+                        headers=self.auth_header)
+        self.assertEqual(update_response.status_code, 404)
+        update_data = json.loads(update_response.data)
+        self.assertEqual('Not Found',
+                         update_data['error'])
+
     def tearDown(self):
         with self.app.app_context():
             drop_tables()
