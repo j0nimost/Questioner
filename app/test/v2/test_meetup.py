@@ -54,6 +54,14 @@ class MeetupTestCase(unittest.TestCase):
                             "Content-Type": "application/json"
                             }
 
+    def test_getall_meetups(self):
+        '''Test get upcoming meetups'''
+        response = self.client.get('api/v2/meetups/upcoming',
+                                   headers=self.auth_header)
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertIsInstance(data['data'], list)
+
     def test_create_meetup(self):
         '''Test creation of meetup'''
         response = self.client.post("api/v2/meetups",

@@ -43,6 +43,16 @@ class BaseModel(object):
         cur.close()
         return data
 
+    def fetch_all_items(self):
+        '''Returns all the items'''
+        dbconn = get_db(current_app.env)
+        cur = dbconn.cursor(cursor_factory=RealDictCursor)
+        query = '''SELECT * FROM {table};'''.format(table=self.table)
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close
+        return data
+
     def exists(self, name, item):
         '''checks if item exists'''
         dbconn = get_db(current_app.env)
