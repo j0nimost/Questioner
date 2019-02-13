@@ -9,6 +9,18 @@ meetup_v2 = Blueprint('meetup_v2', __name__, url_prefix='/api/v2')
 meetup_obj = MeetupModel()
 
 
+@meetup_v2.route('/meetups/upcoming', methods=['GET'])
+@isAuthorized("")
+def get_all():
+    '''Get all upcoming meetups'''
+    upcoming_meetups = meetup_obj.fetch_all_items()
+    meetups = {
+        "status": 200,
+        "data": upcoming_meetups
+    }
+    return jsonify(meetups), 200
+
+
 @meetup_v2.route('/meetups', methods=['POST'])
 @validate_input('meetup')
 @isAuthorized("admin")
