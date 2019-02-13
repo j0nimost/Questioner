@@ -80,5 +80,17 @@ CREATE TABLE IF NOT EXISTS comment(
         CONSTRAINT comment_question_fk FOREIGN KEY (questionid) REFERENCES
          question(id) ON DELETE CASCADE
     );
+
+CREATE TABLE IF NOT EXISTS rsvp(
+    id serial PRIMARY KEY NOT NULL,
+    userid INTEGER NOT NULL,
+    meetupid INTEGER NOT NULL,
+    CONSTRAINT rsvp_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
+    ON DELETE CASCADE,
+    CONSTRAINT rsvp_user_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
+    ON DELETE CASCADE,
+    UNIQUE (meetupid, userid)
+    );
+
 INSERT INTO roles(role) VALUES('admin') ON CONFLICT DO NOTHING;
 INSERT INTO roles(role) VALUES('user') ON CONFLICT DO NOTHING;
