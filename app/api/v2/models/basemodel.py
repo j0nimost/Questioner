@@ -43,13 +43,13 @@ class BaseModel(object):
         cur.close()
         return data
 
-    def fetch_all(self):
+    def fetch_all_items(self):
         '''Returns all the items'''
         dbconn = get_db(current_app.env)
         cur = dbconn.cursor(cursor_factory=RealDictCursor)
-        query = ''' SELECT * FROM {table}; '''.format(table=self.table)
+        query = '''SELECT * FROM {table};'''.format(table=self.table)
         cur.execute(query)
-        data = cur.fetch_all()
+        data = cur.fetchall()
         cur.close
         return data
 
