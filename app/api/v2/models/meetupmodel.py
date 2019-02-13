@@ -69,6 +69,7 @@ class RsvpModel(BaseModel):
 
         query = """INSERT INTO {table}(userid, meetupid)
                 VALUES(%(userid)s, %(meetupid)s)
+                ON CONFLICT DO NOTHING
                 RETURNING id;""".format(table=self.table)
         id_ = super().insert(rsvp, query)
         return id_
