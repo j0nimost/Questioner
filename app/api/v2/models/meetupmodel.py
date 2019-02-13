@@ -54,6 +54,26 @@ class MeetupModel(BaseModel):
         return None
 
 
+class RsvpModel(BaseModel):
+    '''Handles RSVP business logic'''
+    def __init__(self):
+        '''initialize db name'''
+        super().__init__('rsvp')
+
+    def insert_rsvp(self, userid: int, meetupid: int):
+        '''Add meetup rsvp'''
+        rsvp = {
+            "userid": userid,
+            "meetupid": meetupid
+        }
+
+        query = """INSERT INTO {table}(userid, meetupid)
+                VALUES(%(userid)s, %(meetupid)s)
+                ON CONFLICT DO NOTHING
+                RETURNING id;""".format(table=self.table)
+        id_ = super().insert(rsvp, query)
+        return id_
+
 meetup_schema = {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",

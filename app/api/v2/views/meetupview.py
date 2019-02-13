@@ -2,11 +2,12 @@ from flask import jsonify, request
 from flask import Blueprint
 
 from ..utils.authorization import isAuthorized
-from ..models.meetupmodel import MeetupModel
+from ..models.meetupmodel import MeetupModel, RsvpModel
 from ..utils.validation import validate_input
 from ..utils.authorization import decode_jwt
 meetup_v2 = Blueprint('meetup_v2', __name__, url_prefix='/api/v2')
 meetup_obj = MeetupModel()
+rsvp_obj = RsvpModel()
 
 
 @meetup_v2.route('/meetups/upcoming', methods=['GET'])
@@ -117,3 +118,33 @@ def post_tags(meetup_id):
             "error": "Not Found"
         }
         return jsonify(notfound), 404
+
+
+@meetup_v2.route("meetups/<int:meetupid>/rsvp", methods=['POST'])
+@isAuthorized("")
+def post_rsvp(meetupid):
+    '''creates rsvp'''
+    exists = meetup_obj.exists('id', meetupid)
+    if exists:
+        token = request.headers.get('Authorization').split(" ")[1]
+        userid, _ = decode_jwt(token)
+
+        id_ = rsvp_obj.insert_rsvp(userid, meetupid)
+        if isinstance(id_, int):
+            rsvp = {
+                "status": 202,
+                "message": 'Successfully added to RSVP'
+            }
+            return jsonify(rsvp), 202
+        else:
+            exists_error = {
+                "status": 409,
+                "error": "Reservation already exists"
+            }
+            return jsonify(exists_error), 409
+
+    notfound_error = {
+        "status": 404,
+        "error": "Not Found"
+    }
+    return jsonify(notfound_error), 404
