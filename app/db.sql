@@ -85,11 +85,11 @@ CREATE TABLE IF NOT EXISTS rsvp(
     id serial PRIMARY KEY NOT NULL,
     userid INTEGER NOT NULL,
     meetupid INTEGER NOT NULL,
-    CONSTRAINT rsvp_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
-    ON DELETE CASCADE,
     CONSTRAINT rsvp_user_fk FOREIGN KEY (userid) REFERENCES usertbl(id)
     ON DELETE CASCADE,
-    UNIQUE (meetupid, userid)
+    CONSTRAINT rsvp_meetup_fk FOREIGN KEY (meetupid) REFERENCES meetup(id)
+    ON DELETE CASCADE,
+    UNIQUE (userid, meetupid)
     );
 
 INSERT INTO roles(role) VALUES('admin') ON CONFLICT DO NOTHING;
