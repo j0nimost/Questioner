@@ -40,6 +40,11 @@ class MeetupTestCase(unittest.TestCase):
             "happeningOn": "2019-01-26"
         }
 
+        self.question = {
+            "topic": "Where is the meetup",
+            "body": "I would like to know the venue of the meetup"
+        }
+
         self.images = {
             "images": ['http://lop.png', 'http://zip.png', 'http://zofgo.jpg',
                        'http://zik.jpg']
@@ -61,6 +66,42 @@ class MeetupTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertIsInstance(data['data'], list)
+
+    def test_get_meetup(self):
+        '''Test get single meetup with questions'''
+        meetup_res = self.client.post("api/v2/meetups",
+                                      data=json.dumps(self.meetup),
+                                      headers=self.auth_header)
+        self.assertEqual(meetup_res.status_code, 201)
+        data_meetup = json.loads(meetup_res.data)
+        meetupid = data_meetup['data'][0]['id']
+
+        question_res = self.client.post(
+            "api/v2/meetups/{}/questions".format(meetupid),
+            data=json.dumps(self.question),
+            headers=self.auth_header)
+        self.assertEqual(question_res.status_code, 201)
+
+        get_meetup = self.client.get(
+            "api/v2/meetups/{}".format(meetupid),
+            headers=self.auth_header)
+
+        self.assertEqual(get_meetup.status_code, 200)
+        meetup = json.loads(get_meetup.data)
+        self.assertEqual(
+            "Where is the meetup",
+            meetup['data'][0]['questions'][0]['title']
+        )
+
+    def get_meetup_notfound(self):
+        '''Test not found error'''
+        response = self.client.get(
+            "api/v2/meetups/0",
+            headers=self.auth_header)
+
+        self.assertEqual(response.status_code, 404)
+        err = json.loads(response.data)
+        self.assertEqual("Not Found", err['error'])
 
     def test_create_meetup(self):
         '''Test creation of meetup'''

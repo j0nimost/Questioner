@@ -15,6 +15,11 @@ class BaseModel(object):
         '''Initialize Db connection'''
         self.table = table
 
+    def db_instance(self):
+        '''return db instance'''
+        dbconn = get_db(current_app.env)
+        return dbconn
+
     def insert(self, data: dict, query: str):
         '''abstract method to insert data'''
         dbconn = get_db(current_app.env)
