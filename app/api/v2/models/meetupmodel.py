@@ -27,6 +27,33 @@ class MeetupModel(BaseModel):
         id_ = super().insert(meetup_dict, query)
         return id_
 
+    def fetch_meetup(self, id_: int):
+        '''Fetches specific meetup with questions'''
+        meetup_id = {
+            "meetupid": id_
+        }
+
+        query = '''SELECT json_agg(meetupag) AS json_object
+                From (
+                SELECT json_build_object('id', %(meetupid)s, 'topic', mt.topic,
+                'venue', mt.venue, 'images', mt.images,
+                'tags', mt.tags, 'happeningOn', mt.happeningon,
+                'questions', json_agg(ques.mt)) AS meetupag
+                From {} mt
+
+                LEFT JOIN(
+                SELECT meetupid, to_json(question) AS mt
+                From question) ques ON ques.meetupid = %(meetupid)s
+                group By mt.id, mt.topic, mt.venue, mt.images, mt.tags) sub;
+        '''.format(self.table)
+
+        dbconn = super().db_instance()
+        cursor = dbconn.cursor()
+        cursor.execute(query, meetup_id)
+        data = cursor.fetchone()
+        cursor.close()
+        return data
+
     def insert_images(self, meetupid, images=[]):
         '''Update meetup and insert images'''
         meetup = super().fetch('id', meetupid)
@@ -56,6 +83,7 @@ class MeetupModel(BaseModel):
 
 class RsvpModel(BaseModel):
     '''Handles RSVP business logic'''
+
     def __init__(self):
         '''initialize db name'''
         super().__init__('rsvp')
@@ -73,6 +101,7 @@ class RsvpModel(BaseModel):
                 RETURNING id;""".format(table=self.table)
         id_ = super().insert(rsvp, query)
         return id_
+
 
 meetup_schema = {
     "$schema": "http://json-schema.org/schema#",
