@@ -14,15 +14,15 @@ class MeetupModel(BaseModel):
         meetup_dict = {
             'createdOn': createdOn,
             'topic': topic,
-            'location': location,
+            'venue': location,
             'happeningOn': happeningOn
         }
 
         query = '''
                 INSERT INTO {}(userid,createdOn, topic
-                , location, happeningOn)
+                , venue, happeningOn)
                 VALUES({}, %(createdOn)s, %(topic)s
-                , %(location)s, %(happeningOn)s)
+                , %(venue)s, %(happeningOn)s)
                 RETURNING id;'''.format(self.table, userid)
         id_ = super().insert(meetup_dict, query)
         return id_
