@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS roles(
         id serial NOT NULL,
-        role VARCHAR(20) NOT NULL,
+        userrole VARCHAR(20) NOT NULL,
         CONSTRAINT roles_pk PRIMARY KEY (id, role),
         UNIQUE (role)
     );
@@ -92,5 +92,5 @@ CREATE TABLE IF NOT EXISTS rsvp(
     UNIQUE (userid, meetupid)
     );
 
-INSERT INTO roles(role) VALUES('admin') ON CONFLICT DO NOTHING;
-INSERT INTO roles(role) VALUES('user') ON CONFLICT DO NOTHING;
+INSERT INTO roles(userrole) VALUES('admin') ON CONFLICT DO NOTHING;
+INSERT INTO roles(userrole) VALUES('user') ON CONFLICT DO NOTHING;
