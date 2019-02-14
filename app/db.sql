@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS roles(
         id serial NOT NULL,
         userrole VARCHAR(20) NOT NULL,
-        CONSTRAINT roles_pk PRIMARY KEY (id, role),
-        UNIQUE (role)
+        CONSTRAINT roles_pk PRIMARY KEY (id, userrole),
+        UNIQUE (userrole)
     );
 
 CREATE TABLE IF NOT EXISTS usertbl (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS usertbl (
         userrole VARCHAR(20) NOT NULL,
         createOn TIMESTAMP NOT NULL,
         UNIQUE (email, username),
-        CONSTRAINT role_fk FOREIGN KEY (userrole) REFERENCES roles(role)
+        CONSTRAINT role_fk FOREIGN KEY (userrole) REFERENCES roles(userrole)
     );
 
 
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS meetup(
         userid INTEGER,
         createdOn TIMESTAMP NOT NULL,
         topic VARCHAR(80) NOT NULL,
-        location VARCHAR(55) NOT NULL,
+        venue VARCHAR(55) NOT NULL,
         images TEXT[],
         tags TEXT[],
         happeningOn TIMESTAMP NOT NULL,
