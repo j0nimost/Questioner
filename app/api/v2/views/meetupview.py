@@ -22,6 +22,28 @@ def get_all():
     return jsonify(meetups), 200
 
 
+@meetup_v2.route("/meetups/<int:meetupid>")
+@isAuthorized("")
+def get_meetup(meetupid):
+    '''Return a single meetup'''
+    exists = meetup_obj.exists('id', meetupid)
+
+    if exists:
+        meetup_ = meetup_obj.fetch_meetup(meetupid)[0]
+        print(meetup_)
+        meetup = {
+            "status": 200,
+            "data": meetup_
+        }
+        return jsonify(meetup), 200
+
+    notfound_error = {
+        "status": 404,
+        "error": "Not Found"
+    }
+    return jsonify(notfound_error), 404
+
+
 @meetup_v2.route('/meetups', methods=['POST'])
 @validate_input('meetup')
 @isAuthorized("admin")
