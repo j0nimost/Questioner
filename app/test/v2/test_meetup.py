@@ -285,7 +285,7 @@ class MeetupTestCase(unittest.TestCase):
 
     def test_update_meetup_notfound(self):
         '''Test not found meetup'''
-        response = self.client.patch('api/v2/meetup/0',
+        response = self.client.patch('api/v2/meetups/0',
                                      data=json.dumps(self.meetup),
                                      headers=self.auth_header)
         self.assertEqual(response.status_code, 404)
