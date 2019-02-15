@@ -27,6 +27,22 @@ class MeetupModel(BaseModel):
         id_ = super().insert(meetup_dict, query)
         return id_
 
+    def update_meetup(self, meetupid: int, topic="", venue="", happeningOn=""):
+        '''Update meetup query'''
+        meetup = {
+            "id": meetupid,
+            "topic": topic,
+            "venue": venue,
+            "happeningOn": happeningOn
+        }
+
+        query = """UPDATE {table} SET topic=%(topic)s,
+                venue=%(venue)s, happeningon=%(happeningOn)s
+                WHERE id=%(id)s RETURNING id;""".format(table=self.table)
+
+        id_ = super().update(query, meetup)
+        return id_
+
     def fetch_meetup(self, id_: int):
         '''Fetches specific meetup with questions'''
         meetup_id = {
