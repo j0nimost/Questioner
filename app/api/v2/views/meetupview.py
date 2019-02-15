@@ -73,6 +73,33 @@ def post():
     return jsonify(meetup_dict), 201
 
 
+@meetup_v2.route('meetups/<int:meetupid>', methods=['PATCH'])
+@validate_input('meetup')
+@isAuthorized("admin")
+def patch(meetupid):
+    '''Update meetup'''
+    topic = request.json['topic']
+    venue = request.json['location']
+    happeningOn = request.json['happeningOn']
+
+    exists = meetup_obj.exists('id', meetupid)
+    if exists:
+        id_ = meetup_obj.update_meetup(meetupid, topic=topic, venue=venue,
+                                       happeningOn=happeningOn)
+        meetup_upd = meetup_obj.fetch('id', id_)
+        meetup = {
+            "status": 202,
+            "data": [meetup_upd]
+        }
+        return jsonify(meetup), 202
+
+    notfound = {
+            "status": 404,
+            "error": "Not Found"
+        }
+    return jsonify(notfound), 404
+
+
 @meetup_v2.route('/meetups/<int:meetup_id>/images', methods=['PATCH'])
 @validate_input('images')
 @isAuthorized("admin")

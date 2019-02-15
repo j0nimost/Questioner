@@ -261,6 +261,37 @@ class MeetupTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data['error'], 'Not Found')
 
+    def test_update_meetup(self):
+        '''Test updating a meetup'''
+        create_response = self.client.post('api/v2/meetups',
+                                            data=json.dumps(self.meetup),
+                                            headers=self.auth_header)
+        self.assertEqual(create_response.status_code, 201)
+        meetup_data = json.loads(create_response.data)
+        meetupid = meetup_data['data'][0]['id']
+
+        self.meetup['topic'] = "Nairobi Golang Community"
+        self.meetup['happeningOn'] = "2019-02-23"
+        update_response = self.client.patch(
+            'api/v2/meetups/{}'.format(meetupid),
+            data=json.dumps(self.meetup),
+            headers=self.auth_header)
+        self.assertEqual(update_response.status_code, 202)
+        upd_data = json.loads(update_response.data)
+        self.assertEqual(
+            "Nairobi Golang Community",
+            upd_data['data'][0]['topic']
+        )
+
+    def test_update_meetup_notfound(self):
+        '''Test not found meetup'''
+        response = self.client.patch('api/v2/meetups/0',
+                                     data=json.dumps(self.meetup),
+                                     headers=self.auth_header)
+        self.assertEqual(response.status_code, 404)
+        error = json.loads(response.data)
+        self.assertEqual('Not Found', error['error'])
+
     def tearDown(self):
         with self.app.app_context():
             drop_tables()
