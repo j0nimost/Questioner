@@ -196,7 +196,9 @@ class MeetupTestCase(unittest.TestCase):
                                      headers=self.auth_header)
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual("""unexpected ['http://lop.png', 'http://zip.png', 'http://zofgo.jpg', 'http://zik.jpg', 'http://trial.png'] is too long""", data['error'])
+        self.assertEqual(
+            """unexpected ['http://lop.png', 'http://zip.png', 'http://zofgo.jpg', 'http://zik.jpg', 'http://trial.png'] is too long""",
+             data['error'])
 
     def test_create_meetup_images_arrtype(self):
         '''Test type of array'''
@@ -240,7 +242,8 @@ class MeetupTestCase(unittest.TestCase):
                                      headers=self.auth_header)
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual(data['error'], "unexpected 20 is not of type 'string'")
+        self.assertEqual(data['error'],
+                         "unexpected 20 is not of type 'string'")
 
     def test_create_meetup_tags_largearr(self):
         '''Test tags arr limit'''
@@ -250,7 +253,9 @@ class MeetupTestCase(unittest.TestCase):
                                      headers=self.auth_header)
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.data)
-        self.assertEqual(data['error'], "unexpected ['tech', 'theology', 'art', 'music', 'politics'] is too long")
+        self.assertEqual(
+            data['error'],
+            "unexpected ['tech', 'theology', 'art', 'music', 'politics'] is too long")
 
     def test_create_meetup_tags_notfound(self):
         '''Test meetup not found'''
@@ -264,8 +269,8 @@ class MeetupTestCase(unittest.TestCase):
     def test_update_meetup(self):
         '''Test updating a meetup'''
         create_response = self.client.post('api/v2/meetups',
-                                            data=json.dumps(self.meetup),
-                                            headers=self.auth_header)
+                                           data=json.dumps(self.meetup),
+                                           headers=self.auth_header)
         self.assertEqual(create_response.status_code, 201)
         meetup_data = json.loads(create_response.data)
         meetupid = meetup_data['data'][0]['id']
@@ -291,6 +296,31 @@ class MeetupTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         error = json.loads(response.data)
         self.assertEqual('Not Found', error['error'])
+
+    def test_delete_meetup(self):
+        '''Test delete a meetup'''
+        response = self.client.post("api/v2/meetups",
+                                    data=json.dumps(self.meetup),
+                                    headers=self.auth_header)
+        self.assertEqual(response.status_code, 201)
+        meetup = json.loads(response.data)
+        meetupid = meetup['data'][0]['id']
+
+        del_response = self.client.delete(
+            "api/v2/meetups/{}".format(meetupid),
+            headers=self.auth_header
+        )
+        self.assertEqual(del_response.status_code, 204)
+
+    def test_delete_meetup_notfound(self):
+        '''Test delete meetup not found'''
+        response = self.client.delete(
+            "api/v2/meetups/0",
+            headers=self.auth_header
+        )
+        self.assertEqual(response.status_code, 404)
+        error = json.loads(response.data)
+        self.assertEqual(error['error'], 'Not Found')
 
     def tearDown(self):
         with self.app.app_context():
