@@ -59,3 +59,32 @@ def patch(commentid):
         "error": "Not Found"
     }
     return jsonify(error), 404
+
+
+@commentv2.route('comments/<int:commentid>', methods=['DELETE'])
+@isAuthorized("")
+def delete(commentid):
+    '''Delete a comment'''
+    exists = comment_obj.exists('id', commentid)
+
+    if exists:
+        token = request.headers.get('Authorization').split(" ")[1]
+        userid, _ = decode_jwt(token)
+
+        comment = comment_obj.fetch('id', commentid)
+
+        if comment['userid'] == userid:
+            _ = comment_obj.delete(commentid)
+            return jsonify(), 204
+        else:
+            notallowed = {
+                "status": 405,
+                "error": "Only comment user can delete"
+            }
+            return jsonify(notallowed), 405
+
+    notfound = {
+        "status": 404,
+        "error": "Not Found"
+    }
+    return jsonify(notfound), 404
