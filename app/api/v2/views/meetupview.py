@@ -197,3 +197,23 @@ def post_rsvp(meetupid):
         "error": "Not Found"
     }
     return jsonify(notfound_error), 404
+
+
+@meetup_v2.route('meetups/<int:meetupid>', methods=['DELETE'])
+@isAuthorized("admin")
+def delete(meetupid):
+    '''Delete meetup'''
+    exists = meetup_obj.exists("id", meetupid)
+    if exists:
+        _ = meetup_obj.delete(meetupid)
+        result = {
+            "status": 204
+        }
+
+        return jsonify(result), 204
+
+    notfound = {
+        "status": 404,
+        "error": "Not Found"
+    }
+    return jsonify(notfound), 404
