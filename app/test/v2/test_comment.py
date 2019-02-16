@@ -186,6 +186,50 @@ class CommentTestCase(unittest.TestCase):
         self.assertEqual('Not Found',
                          update_data['error'])
 
+    def test_delete_comment(self):
+        '''Test delete comment'''
+        meetup_resp = self.client.post('api/v2/meetups',
+                                       data=json.dumps(self.meetup),
+                                       headers=self.auth_header)
+        self.assertEqual(meetup_resp.status_code, 201)
+        meetup_data = json.loads(meetup_resp.data)
+        meetupid = meetup_data['data'][0]['id']
+        self.assertIsInstance(meetupid, int)
+        ques_resp = self.client.post(
+            '''api/v2/meetups/{}/questions'''.format(meetupid),
+            data=json.dumps(self.question),
+            headers=self.auth_header
+            )
+        self.assertEqual(ques_resp.status_code, 201)
+        ques_data = json.loads(ques_resp.data)
+        quesid = ques_data['data'][0]['id']
+        self.assertIsInstance(quesid, int)
+
+        comment_res = self.client.post(
+            '''api/v2/questions/{}/comments'''.format(quesid),
+            data=json.dumps(self.comment),
+            headers=self.auth_header
+            )
+        self.assertEqual(comment_res.status_code, 201)
+        comment = json.loads(comment_res.data)
+        commentid = comment['data'][0]['id']
+
+        response = self.client.delete(
+            'api/v2/comments/{}'.format(commentid),
+            headers=self.auth_header
+        )
+        self.assertEqual(response.status_code, 204)
+
+    def test_delete_comment_notfound(self):
+        '''Test not found comment'''
+        response = self.client.delete(
+            'api/v2/comments/0',
+            headers=self.auth_header
+        )
+        self.assertEqual(response.status_code, 404)
+        error = json.loads(response.data)
+        self.assertEqual('Not Found', error['error'])
+
     def tearDown(self):
         with self.app.app_context():
             drop_tables()
