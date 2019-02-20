@@ -50,6 +50,34 @@ class QuestionModel(BaseModel):
         id_ = super().update(query, vote_)
         return id_
 
+    def fetch_question(self, id: int):
+        '''Fetch question and join the comments related'''
+
+        questionid = {
+            "id": id
+        }
+
+        query = ''' SELECT json_agg(quesag) AS json_object
+                From (
+                SELECT json_build_object('id', %(id)s, 'title', q.title,
+                'body', q.body,
+                'voteup', q.voteup,
+                'votedown', q.votedown,
+                'comments', json_agg(com.q)) AS quesag
+                From {table} q
+                LEFT JOIN(
+                SELECT questionid, to_json(comment) AS q
+                From comment) com ON com.questionid = %(id)s
+                group By q.id, q.title, q.body) sub;
+        '''.format(table=self.table)
+
+        dbconn = super().db_instance()
+        cursor = dbconn.cursor()
+        cursor.execute(query, questionid)
+        data = cursor.fetchone()
+        cursor.close()
+        return data
+
 
 question_schema = {
     "$schema": "http://json-schema.org/schema#",
