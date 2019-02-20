@@ -74,6 +74,54 @@ class QuestionTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual("Meetup not found", data['error'])
 
+    def test_get_question(self):
+        '''Test GET question'''
+        meetup_res = self.client.post("api/v2/meetups",
+                                      data=json.dumps(self.meetup),
+                                      headers=self.auth_header)
+        data = json.loads(meetup_res.data)
+        id_ = data['data'][0]['id']
+        ques_res = self.client.post('api/v2/meetups/{}/questions'.format(id_),
+                                    data=json.dumps(self.ques),
+                                    headers=self.auth_header)
+        self.assertEqual(ques_res.status_code, 201)
+
+        question = json.loads(ques_res.data)
+        quesid = question['data'][0]['id']
+
+        comment = {
+            "body": "I think the meetup will be in Senteru plaza"
+        }
+
+        comment_res = self.client.post(
+            '''api/v2/questions/{}/comments'''.format(quesid),
+            data=json.dumps(comment),
+            headers=self.auth_header
+            )
+
+        self.assertEqual(comment_res.status_code, 201)
+
+        response = self.client.get(
+            'api/v2/questions/{}'.format(quesid),
+            headers=self.auth_header
+        )
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertEqual(
+            "I think the meetup will be in Senteru plaza",
+            data['data'][0]['comments'][0]['body']
+        )
+
+    def test_get_question_notfound(self):
+        '''Test not found question'''
+        response = self.client.get(
+            'api/v2/questions/0',
+            headers=self.auth_header
+        )
+        self.assertEqual(response.status_code, 404)
+        error = json.loads(response.data)
+        self.assertEqual('Not Found', error['error'])
+
     def test_question_upvote(self):
         '''Test Upvote functionality'''
         meetup_res = self.client.post("api/v2/meetups",
