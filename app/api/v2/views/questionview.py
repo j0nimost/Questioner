@@ -138,3 +138,34 @@ def question_downvote(ques_id):
             "error": "Not Found"
         }
         return jsonify(notfound_json), 404
+
+
+@ques_v2.route('questions/<int:quesid>', methods=['DELETE'])
+@isAuthorized("")
+def delete(quesid):
+    '''Delete a question'''
+    exists = ques_obj.exists('id', quesid)
+
+    if exists:
+        token = request.headers.get('Authorization').split(" ")[1]
+        userid, _ = decode_jwt(token)
+
+        ques = ques_obj.fetch('id', quesid)
+
+        if ques['userid'] == userid:
+            _ = ques_obj.delete(quesid)
+            return jsonify(), 204
+
+        notallowed = {
+            "status": 405,
+            "error": "only question creater can delete"
+        }
+        return jsonify(notallowed), 405
+
+    else:
+        notfound = {
+            "status": 404,
+            "error": "Not Found"
+        }
+
+        return jsonify(notfound), 404
