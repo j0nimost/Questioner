@@ -14,6 +14,29 @@ ques_obj = QuestionModel()
 ques_v2 = Blueprint("ques_v2", __name__, url_prefix="/api/v2")
 
 
+@ques_v2.route('questions/<int:quesid>', methods=['GET'])
+@isAuthorized("")
+def get_question(quesid):
+    '''Get individual question'''
+    exists = ques_obj.exists('id', quesid)
+
+    if exists:
+        data = ques_obj.fetch_question(quesid)[0]
+
+        question = {
+            "status": 200,
+            "data": data
+        }
+
+        return jsonify(question), 200
+    else:
+        notfound = {
+            "status": 404,
+            "error": "Not Found"
+        }
+        return jsonify(notfound), 404
+
+
 @ques_v2.route("meetups/<int:meetup_id>/questions", methods=['POST'])
 @validate_input('ques')
 @isAuthorized("")
