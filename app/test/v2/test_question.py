@@ -198,6 +198,34 @@ class QuestionTestCase(unittest.TestCase):
             data['error'],
             'unexpected 2 is greater than or equal to the maximum of 2')
 
+    def test_delete_question(self):
+        '''Test the deletion of a question'''
+        meetup_res = self.client.post("api/v2/meetups",
+                                      data=json.dumps(self.meetup),
+                                      headers=self.auth_header)
+        data = json.loads(meetup_res.data)
+        id_ = data['data'][0]['id']
+        response = self.client.post('api/v2/meetups/{}/questions'.format(id_),
+                                    data=json.dumps(self.ques),
+                                    headers=self.auth_header)
+        self.assertEqual(response.status_code, 201)
+        ques_ = json.loads(response.data)
+        ques_id = ques_['data'][0]['id']
+
+        delete_res = self.client.delete('api/v2/questions/{}'.format(ques_id),
+                                        headers=self.auth_header)
+
+        self.assertEqual(delete_res.status_code, 204)
+
+    def test_delete_question_notfound(self):
+        '''Test deletion not found'''
+        response = self.client.delete('api/v2/questions/0',
+                                      headers=self.auth_header)
+
+        self.assertEqual(response.status_code, 404)
+        error = json.loads(response.data)
+        self.assertEqual(error['error'], 'Not Found')
+
     def tearDown(self):
         with self.app.app_context():
             drop_tables()
