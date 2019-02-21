@@ -11,9 +11,6 @@
     - pip install -r requirements.txt
     - pip install pytest-cov
 
-  env: 
-    - TEST_SETTINGS='testing'
-    
   services:
     - postgresql
 
