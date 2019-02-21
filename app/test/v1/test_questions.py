@@ -9,7 +9,7 @@ from ...api.v1.models.basemodel import questions
 class MeetupsTestCase(unittest.TestCase):
     '''These are the test cases for question features'''
     def setUp(self):
-        self.app = create_app(config='development')
+        self.app = create_app('testing')
         self.client = self.app.test_client()
 
         self.question = {
