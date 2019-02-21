@@ -16,10 +16,10 @@ def get_db(env=None):
 
     if '_db' not in g:
         '''set the db for test env'''
-        if env == 'development':
-            g._db = psycopg2.connect(devdb)
-        else:
+        if env.islower == 'testing':
             g._db = psycopg2.connect(testdb)
+        else:
+            g._db = psycopg2.connect(devdb)
     return g._db
 
 
