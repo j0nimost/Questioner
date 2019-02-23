@@ -1,0 +1,47 @@
+/*handles css specificaly for the login/register page*/
+div {
+    border-radius: 3px;
+    background-color: #f0f8ffd3;
+    padding: 20px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    height: auto;
+  }
+
+div .register, div .login {
+    width: 80%;
+    margin: auto;
+}
+
+input[type='text'], input[type='password'], input[type='email']{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: rgba(0, 119, 204, 0.847);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+div .register a, div .login a {
+    float: right;
+    text-decoration: none;
+    color: #131212dc;
+}
+
+div .register a:hover, div .login a:hover{
+    text-decoration: underline;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Questioner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/register.css"/>
+    
+</head>
+
+<body>
+
+    <!--The navigation bar-->
+    <nav>
+        <ul>
+            <li id="logo"><a href="index.html"><img src="../images/logo.svg" alt="logo"></a></li>
+            <li style="float: right;" id='admin'><a href="index.html" class="admin-button">Admin</a></li>
+        </ul>
+    </nav>
+
+    <div>
+        <div class="login">
+            <form name="login" onsubmit="return false">
+                <label>Username</label>
+                <label id="err" class="hidden" for="username">Username required</label>
+                <input type="text" name="username" placeholder="Username"/>
+                <label>Password</label>
+                <label id="err" class="hidden" for="password">Password required</label>
+                <input type="password" name="password" placeholder="Password"/>
+                <input type="submit" value="Submit" onclick="input_error()"/>
+                <a href="register.html">or Sign up?</a>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <h5>&copy;opyright 2019</h5>
+    </footer>
+
+    <script type="text/javascript" src="../scripts/main.js"></script>
+</body>
+
+</html>

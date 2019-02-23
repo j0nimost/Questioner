@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Questioner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/profile.css" />
+</head>
+
+<body>
+
+    <!--The navigation bar-->
+    <nav>
+        <ul>
+            <li id="logo"><a href="index.html"><img src="../images/logo.svg" alt="logo"></a></li>
+            <li id="profile_logo"><a href="login.html">Login</a></li>
+            <li style="float: right;" id='admin'><a href="index.html" class="admin-button">Admin</a></li>
+        </ul>
+    </nav>
+
+    <div>
+        <div class="profile">
+            <ul>
+                <li id='profile-img'>
+                    <img src="../images/profiles/Ferdinand.jpg" alt="profile" />
+                    <h5>Ferdinand Zvonimir</h5>
+
+                    <!--Add Notifications and summaries-->
+                    <ul>
+                        <li id="notifications">
+                            <h6>Questions Asked(5)</h6>
+                        </li>
+                        <li id="messages">
+                            <h6>Commented(10)</h6>
+                        </li>
+                    </ul>
+                </li>
+                <li id='profile-info'>
+                    <ul>
+                        <li>
+                            <h5>Bio</h5>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac erat libero. Ut ut est
+                                convallis, vulputate enim a, commodo sapien. Mauris venenatis, mi vitae gravida
+                                lacinia, felis lectus euismod neque, eu iaculis nisi mi id erat. </div>
+                        </li>
+                        <li>
+                            <h5>Tags</h5>
+                            <div>#Sports #Racing #Moto</div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="tab">
+                <button class="tab-btn" onclick="opentab(event, 'topquestion')">Top Questions</button>
+                <button class="tab-btn" onclick="opentab(event, 'commented')">Comments</button>
+            </div>
+            <div class="toggled">
+                <div id="topquestion" class="tabitem">
+                    <ul>
+                        <li>
+                            <a ><h4>Will there be food?</h4></a>
+                        </li>
+                        <li>
+                            <a><h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h4></a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="commented" class="tabitem">
+                    <ul>
+                        <li><a><h6>Sed aliquam vitae justo at ultrices. Nulla eget mattis massa.</h6></a></li>
+                        <li><a><h6>Praesent ut gravida dui, non cursus dui. Pellentesque in lectus et eros lacinia pulvinar vitae hendrerit mauris</h6></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <h5>&copy;opyright 2019</h5>
+    </footer>
+
+    <script type="text/javascript" src="../scripts/main.js"></script>
+</body>
+
+</html>
