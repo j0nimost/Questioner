@@ -1,6 +1,5 @@
 from flask import request, jsonify
 from flask import Blueprint
-from flask_cors import cross_origin
 
 from ..models.usermodel import UserModel
 from ..utils.validation import validate_input, match_password
@@ -12,7 +11,6 @@ auth = Blueprint('auth', __name__, url_prefix='/api/v2')
 
 
 @auth.route('/auth/signup', methods=['POST'])
-@cross_origin(allow_headers=['Content-Type'])
 @validate_input('user')
 def post():
     fullname = request.json['fullname']
@@ -44,7 +42,7 @@ def post():
         return jsonify(err_obj), 409
 
     h_password = hash_pass(password)
-    
+
     if userrole:
         _id = usr_obj.insert_query(fullname, username, email, h_password,
                                    userrole)
@@ -72,7 +70,6 @@ def post():
 
 
 @auth.route('auth/signin', methods=['POST'])
-@cross_origin(allow_headers=['Content-Type'])
 @validate_input('login')
 def login():
     '''This is the login endpoint'''
