@@ -1,5 +1,6 @@
 import os
 from flask import Flask, current_app
+from flask_cors import CORS
 
 from instance.config import app_config
 
@@ -19,6 +20,8 @@ def create_app(config):
     '''Creates all Flask configurations and returns app.
     Expects config name'''
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)  # enable cors for all endpoints
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['JSON_SORT_KEYS'] = False
     app.config.from_object(app_config[config])
     app.config.from_pyfile('config.py', silent=True)

@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask import Blueprint
+from flask_cors import cross_origin
 
 from ..utils.authorization import isAuthorized
 from ..models.meetupmodel import MeetupModel, RsvpModel
@@ -11,6 +12,7 @@ rsvp_obj = RsvpModel()
 
 
 @meetup_v2.route('/meetups/upcoming', methods=['GET'])
+@cross_origin()
 @isAuthorized("")
 def get_all():
     '''Get all upcoming meetups'''
@@ -23,6 +25,7 @@ def get_all():
 
 
 @meetup_v2.route("/meetups/<int:meetupid>")
+@cross_origin()
 @isAuthorized("")
 def get_meetup(meetupid):
     '''Return a single meetup'''
@@ -45,6 +48,7 @@ def get_meetup(meetupid):
 
 
 @meetup_v2.route('/meetups', methods=['POST'])
+@cross_origin()
 @validate_input('meetup')
 @isAuthorized("admin")
 def post():
@@ -74,6 +78,7 @@ def post():
 
 
 @meetup_v2.route('meetups/<int:meetupid>', methods=['PATCH'])
+@cross_origin()
 @validate_input('meetup')
 @isAuthorized("admin")
 def patch(meetupid):
@@ -101,6 +106,7 @@ def patch(meetupid):
 
 
 @meetup_v2.route('/meetups/<int:meetup_id>/images', methods=['PATCH'])
+@cross_origin()
 @validate_input('images')
 @isAuthorized("admin")
 def post_images(meetup_id):
@@ -135,6 +141,7 @@ def post_images(meetup_id):
 
 
 @meetup_v2.route("/meetups/<int:meetup_id>/tags", methods=['PATCH'])
+@cross_origin()
 @validate_input("tags")
 @isAuthorized("admin")
 def post_tags(meetup_id):
@@ -170,6 +177,7 @@ def post_tags(meetup_id):
 
 
 @meetup_v2.route("meetups/<int:meetupid>/rsvp", methods=['POST'])
+@cross_origin()
 @isAuthorized("")
 def post_rsvp(meetupid):
     '''creates rsvp'''
@@ -200,6 +208,7 @@ def post_rsvp(meetupid):
 
 
 @meetup_v2.route('meetups/<int:meetupid>', methods=['DELETE'])
+@cross_origin()
 @isAuthorized("admin")
 def delete(meetupid):
     '''Delete meetup'''

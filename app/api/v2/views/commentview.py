@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask import Blueprint
+from flask_cors import cross_origin
 
 from ..models.commentmodel import CommentModel
 from ..models.questionmodel import QuestionModel
@@ -12,6 +13,7 @@ comment_obj = CommentModel()
 
 
 @commentv2.route('questions/<int:quesid>/comments', methods=['POST'])
+@cross_origin()
 @validate_input('comment')
 @isAuthorized("")
 def post(quesid):
@@ -38,6 +40,7 @@ def post(quesid):
 
 
 @commentv2.route('comments/<int:commentid>', methods=['PATCH'])
+@cross_origin()
 @validate_input('comment')
 @isAuthorized("")
 def patch(commentid):
@@ -62,6 +65,7 @@ def patch(commentid):
 
 
 @commentv2.route('comments/<int:commentid>', methods=['DELETE'])
+@cross_origin()
 @isAuthorized("")
 def delete(commentid):
     '''Delete a comment'''

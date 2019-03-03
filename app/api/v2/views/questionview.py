@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from flask import Blueprint
+from flask_cors import cross_origin
 
 from ..utils.authorization import isAuthorized
 from ..utils.validation import validate_input
@@ -15,6 +16,7 @@ ques_v2 = Blueprint("ques_v2", __name__, url_prefix="/api/v2")
 
 
 @ques_v2.route('questions/<int:quesid>', methods=['GET'])
+@cross_origin()
 @isAuthorized("")
 def get_question(quesid):
     '''Get individual question'''
@@ -38,6 +40,7 @@ def get_question(quesid):
 
 
 @ques_v2.route("meetups/<int:meetup_id>/questions", methods=['POST'])
+@cross_origin()
 @validate_input('ques')
 @isAuthorized("")
 def create_ques(meetup_id):
@@ -65,6 +68,7 @@ def create_ques(meetup_id):
 
 
 @ques_v2.route('questions/<int:ques_id>/upvote', methods=['PATCH'])
+@cross_origin()
 @validate_input('vote')
 @isAuthorized("")
 def question_upvote(ques_id):
@@ -115,6 +119,7 @@ def question_upvote(ques_id):
 
 
 @ques_v2.route('questions/<int:ques_id>/downvote', methods=['PATCH'])
+@cross_origin()
 @validate_input('vote')
 @isAuthorized("")
 def question_downvote(ques_id):
@@ -164,6 +169,7 @@ def question_downvote(ques_id):
 
 
 @ques_v2.route('questions/<int:quesid>', methods=['DELETE'])
+@cross_origin()
 @isAuthorized("")
 def delete(quesid):
     '''Delete a question'''
