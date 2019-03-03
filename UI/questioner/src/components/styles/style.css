@@ -93,7 +93,8 @@ nav ul #profile_logo a {
     width: 90%;
 }
 
-nav ul #profile_logo a img{
+nav ul #profile_logo a .profileIcon{
+    background-image: url('https://img.icons8.com/metro/26/000000/contacts.png');
     width: 25px;
     height: 25px;
     overflow: hidden;
