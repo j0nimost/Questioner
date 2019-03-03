@@ -1,1 +1,9 @@
 .vscode/
+
+.pytest_cache/
+
+app/
+
+env/
+
+instance/
