@@ -3,7 +3,7 @@ div {
     border-radius: 3px;
     background-color: #f0f8ffd3;
     padding: 20px;
-    width: 40%;
+    width: 55%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 100px;
@@ -11,7 +11,7 @@ div {
   }
 
 div .register, div .login {
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 
