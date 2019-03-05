@@ -123,9 +123,10 @@ footer h5{
     display: none !important; 
 }
 
-#err {
+#error {
     display: block !important;
-    font-size: 13px;
+    font-size: 15px;
     color: #ff0000c5;
+    margin-bottom: 10px;
 }
 
