@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 import axios from 'axios'
 import { Cookies } from 'react-cookie' 
 import './register.css'
@@ -62,7 +62,7 @@ class RegisterUser extends Component {
         const isError = this.state.hasError
         const err = this.state.error.toUpperCase()
         return (
-            <div class="register">
+            <div className="register">
                 <form name="register" onSubmit={this.submitHandler}>
                 
                 { isError ? <h5 id="error">{err}</h5> : null}
@@ -102,7 +102,7 @@ class RegisterUser extends Component {
                         onChange={this.changeHandler} />
 
                     <input type="submit" value="Submit" />
-                    <a href="#login">or Sign in?</a>
+                    <Link to='/login' id='link'>or Sign in?</Link>
                 </form>
             </div>
         )
