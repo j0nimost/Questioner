@@ -20,7 +20,7 @@ class Navbar extends Component {
                     </li>
                     { isLoggedin ? (<li id="profile_logo">
                         <a href="#profile">
-                             <profileIcon className="profileIcon"/> 
+                             <ProfileIcon className="profileIcon"/> 
                         </a>
                     </li>) : null}
                 </ul>
@@ -29,9 +29,9 @@ class Navbar extends Component {
     }
 }
 
-const profileIcon = ({isLoggedin}) => {
+const ProfileIcon = ({isLoggedin}) => {
     return (
-        <img src='' alt='profile' />
+        <img src='https://img.icons8.com/metro/26/000000/contacts.png' alt='profile' />
     )
 }
 
