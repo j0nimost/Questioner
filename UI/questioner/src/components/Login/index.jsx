@@ -40,9 +40,10 @@ class LoginUser extends Component {
         axios.post('https://questioneradc36.herokuapp.com/api/v2/auth/signin', payload
         ).then( response => {
                 const cookie = new Cookies()
-                const token = response.data.data["0"].token
-                console.log(token)
-                cookie.set('token', token, {path: '/', secure: true})
+            const token = JSON.stringify(response.data.data["0"].token)
+            // console.log(token)
+            cookie.set('token', `${token}`, { path: '/', maxAge: exptime })
+            console.log('my token ' + cookie.get('token'))
         }).catch(err => {
             this.setState({
                 hasError: true,
