@@ -1,5 +1,5 @@
 /*handles css specificaly for the login/register page*/
-div {
+.div-login {
     border-radius: 3px;
     background-color: #f0f8ffd3;
     padding: 20px;
