@@ -3,7 +3,6 @@ import { browserHistory, Link } from 'react-router'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import './register.css'
-import '../styles/style.css'
 
 class RegisterUser extends Component {
     constructor(props) {
