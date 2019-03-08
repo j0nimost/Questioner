@@ -44,9 +44,13 @@ class RegisterUser extends Component {
         }
 
         axios.post('https://questioneradc36.herokuapp.com/api/v2/auth/signup', payload
-        ).then( response => {
-                // set cookie
-                const cookie = new Cookies()
+        ).then(response => {
+            // set cookie
+            const cookie = new Cookies()
+            let timenow = new Date()
+            let timelapse = new Date()
+
+            let exptime = timelapse.setDate(timenow.getDay() + 14)
 
             const token = response.data.data["0"].token
             cookie.set('token', `${token}`, { path: '/', maxAge: exptime })
