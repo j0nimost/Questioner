@@ -3,7 +3,6 @@ import { browserHistory, Link } from 'react-router'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import './login.css'
-import '../styles/style.css'
 
 
 class LoginUser extends Component {
@@ -63,27 +62,29 @@ class LoginUser extends Component {
         const isError = this.state.hasError
         const err = this.state.error
         return (
-            <div className="login">
-                <form name="login" onSubmit={this.submitHandler}>
-                 
-                    {isError ?  <h5 id="error">{err}</h5> : null }
+            <div className='div-login'>
+                <div className="login">
+                    <form onSubmit={this.submitHandler}>
 
-                    <label>Email</label>
-                    <input type="email" 
-                           name="email" 
-                           placeholder="email"
-                           value={this.state.email.value}
-                           onChange={this.changeHandler} />
+                        {isError ? <h5 id="error">{err}</h5> : null}
 
-                    <label>Password</label>
-                    <input type="password" 
-                           name="password" 
-                           placeholder="Password"
-                           value={this.state.password.value} 
-                           onChange={this.changeHandler}/>
-                    <input type="submit" value="Submit"/>
-                    <Link to='/' id="link">or Sign up?</Link>
-                </form>
+                        <label>Email</label>
+                        <input type="email"
+                            name="email"
+                            placeholder="email"
+                            value={this.state.email.value}
+                            onChange={this.changeHandler} />
+
+                        <label>Password</label>
+                        <input type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={this.state.password.value}
+                            onChange={this.changeHandler} />
+                        <input type="submit" value="Submit" />
+                        <Link to='/register' id="link">or Sign up?</Link>
+                    </form>
+                </div>
             </div>
         )
     }

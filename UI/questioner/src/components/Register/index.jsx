@@ -67,48 +67,50 @@ class RegisterUser extends Component {
         const isError = this.state.hasError
         const err = this.state.error.toUpperCase()
         return (
-            <div className="register">
-                <form name="register" onSubmit={this.submitHandler}>
-                
-                { isError ? <h5 id="error">{err}</h5> : null}
-                    <label>Fullname</label>
-                    <input type="text"
-                        name="fullname"
-                        placeholder="Fullname"
-                        value={this.state.fullname.value}
-                        onChange={this.changeHandler} />
+            <div className='div-reg'>
+                <div className="register">
+                    <form onSubmit={this.submitHandler}>
 
-                    <label>Email</label>
-                    <input type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={this.state.email.value}
-                        onChange={this.changeHandler} />
+                        {isError ? <h5 id="error">{err}</h5> : null}
+                        <label>Fullname</label>
+                        <input type="text"
+                            name="fullname"
+                            placeholder="Fullname"
+                            value={this.state.fullname.value}
+                            onChange={this.changeHandler} />
 
-                    <label>Username</label>
-                    <input type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={this.state.username.value}
-                        onChange={this.changeHandler} />
+                        <label>Email</label>
+                        <input type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={this.state.email.value}
+                            onChange={this.changeHandler} />
 
-                    <label>Password</label>
-                    <input type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password.value}
-                        onChange={this.changeHandler} />
+                        <label>Username</label>
+                        <input type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={this.state.username.value}
+                            onChange={this.changeHandler} />
 
-                    <label>Confirm Password</label>
-                    <input type="password"
-                        name="confirmpassword"
-                        placeholder="Confirm Password"
-                        value={this.state.confirmpassword.value}
-                        onChange={this.changeHandler} />
+                        <label>Password</label>
+                        <input type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={this.state.password.value}
+                            onChange={this.changeHandler} />
 
-                    <input type="submit" value="Submit" />
-                    <Link to='/login' id='link'>or Sign in?</Link>
-                </form>
+                        <label>Confirm Password</label>
+                        <input type="password"
+                            name="confirmpassword"
+                            placeholder="Confirm Password"
+                            value={this.state.confirmpassword.value}
+                            onChange={this.changeHandler} />
+
+                        <input type="submit" value="Submit" />
+                        <Link to='/login' id='link'>or Sign in?</Link>
+                    </form>
+                </div>
             </div>
         )
     }
