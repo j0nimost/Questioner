@@ -16,14 +16,14 @@ class RegisterUser extends Component {
             confirmpassword: '',
             hasError: false,
             error: ''
-            }
-        
+        }
+
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)/**/
     }
 
     componentDidMount() {
-        browserHistory.push('/')
+        browserHistory.push('/register')
     }
 
     changeHandler = event => {
