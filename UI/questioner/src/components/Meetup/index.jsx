@@ -1,18 +1,125 @@
 import React, { Component } from 'react'
-import { browserHistory, Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import axios from 'axios'
+import axiosRetry from 'axios-retry'
 import { Cookies } from 'react-cookie'
 import './meetup.css'
-import '../styles/style.css'
 
 
-class Meetup extends Component{
-    constructor(){
+class Meetup extends Component {
+
+    constructor() {
         super()
-        this.state = {}
+
+        const cookie = new Cookies()
+        this.state = {
+            token: cookie.get('token') || '',
+            meetups: [],
+            hasError: false,
+            error: ''
+        }
+
     }
 
-    render(){
-        return(null)
+    componentDidMount = () => {
+        this.getallHandler()
+        browserHistory.push('/')
+    }
+
+    getallHandler = () => {
+        const upcoming_meetups = 'https://questioneradc36.herokuapp.com/api/v2/meetups/upcoming'
+        axiosRetry(axios, { retries: 40 });
+
+        axios.get(upcoming_meetups, { headers: { "Authorization": `Bearer ${this.state.token}` } }
+        ).then((response) => {
+            let arr_meetups = []
+            arr_meetups = response.data.data
+            console.log(typeof arr_meetups)
+            this.setState({
+                meetups: arr_meetups
+            })
+            console.log('meetups \n' + JSON.stringify(arr_meetups))
+        }).catch((err) => {
+            if (!err.response) {
+                console.log(err)
+            }
+            else {
+                const response_err = err.response
+                console.log(response_err.data)
+
+                this.setState({
+                    hasError: true,
+                    error: response_err.data,
+                })
+
+            }
+        })
+    }
+
+    render() {
+
+        let meetups = this.state.meetups
+
+        return (
+            <div className="meetup">
+                <div className="meetup-list">
+                    <ul>
+                        {meetups.map(meetup => <MeetupsList key={meetup.id} meetup={meetup} />)}
+                    </ul>
+                </div>
+                <div className="info">
+                    <div className="meetup-types">
+                        <ul>
+                            <li className="active"><span>All Meetups</span></li>
+                            <li><span>My Meetups</span></li>
+                            <li><span>Attending</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
+
+
+const MeetupsList = ({ meetup }) => {
+    return (
+        <li id='list-item'>
+            <div className="meetup-inline">
+
+                <div id="time">
+                    <h4>{meetup.happeningon}</h4>
+                </div>
+                <div id="meetup-body">
+                    <div>
+                        {meetup.tags ? <ul>{meetup.tags.map(tg => <TagList key={tg} tag={tg} />)}</ul> : null}
+                        <span id="scheduled"><img src="https://img.icons8.com/ios/50/000000/alarm.png" alt="scheduled" /></span>
+                        <div>
+                            <a href="meetup.html" id="title">
+                                <h3>{meetup.topic}</h3>
+                            </a>
+                            <p>{meetup.venue}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    )
+}
+
+
+const TagList = ({ tag }) => {
+    const listStyle = {
+        display: 'inline-block',
+        padding: 2
+    }
+    return (
+        <li style={listStyle}>
+            <a href='#tag' id='tag'>
+                <h5>#{tag}</h5>
+            </a>
+        </li>
+    )
+}
+
+export default Meetup
