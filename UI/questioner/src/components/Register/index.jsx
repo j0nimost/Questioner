@@ -47,11 +47,12 @@ class RegisterUser extends Component {
         ).then( response => {
                 // set cookie
                 const cookie = new Cookies()
-                const token = response.data.data["0"].token
-                cookie.set('token', token, {path: '/', secure: true})
-                console.log('cookie created')
+
+            const token = response.data.data["0"].token
+            cookie.set('token', `${token}`, { path: '/', maxAge: exptime })
+            console.log('cookie created')
         }).catch(error => {
-            this.setState({ 
+            this.setState({
                 hasError: true,
                 error: error.response.data.error
             })
