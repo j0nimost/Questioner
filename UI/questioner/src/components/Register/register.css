@@ -11,22 +11,24 @@
     height: auto;
   }
 
-div .register{
-    width: 100%;
+.div-reg .register{
+    width: 70%;
     margin: auto;
+    border-radius: 4px;
 }
 
-input[type='text'], input[type='password'], input[type='email']{
-    width: 100%;
+.register input[type='text'], .register input[type='password'],.register input[type='email']{
+    width: 99%;
     padding: 12px 20px;
-    margin: 8px 0;
+    margin: 8px 3px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box; 
+    color: inherit;
 }
 
-input[type=submit] {
+.register input[type=submit] {
     width: 100%;
     background-color: rgba(0, 119, 204, 0.847);
     color: white;
@@ -36,6 +38,10 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
   }
+
+.register label {
+  margin-left: 3px;
+}
 
 div .register #link{
     float: right;
