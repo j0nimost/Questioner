@@ -68,20 +68,20 @@ div .meetup .info ul > li:last-child{
     border-bottom: none;
 }
 
-div .meetup .meetup-list ul li {
+div .meetup .meetup-list ul #list-item {
     border: 1px solid rgb(82, 80, 80);
     margin-bottom: 10px;
     border-radius: 5px;
 }
 
-div .meetup .meetup-list ul li .meetup-inline {
+div .meetup .meetup-list ul #list-item .meetup-inline {
     display: inline-block;
     width: 100%;
     padding: 0;
     margin-top: 5px;
 }
 
-div .meetup .meetup-list ul li #time {
+div .meetup .meetup-list ul #list-item #time {
     display: block;
     width: 20%;
     padding: 0;
@@ -91,7 +91,7 @@ div .meetup .meetup-list ul li #time {
     height: 100%;
 }
 
-div .meetup .meetup-list ul li #meetup-body {
+div .meetup .meetup-list ul #list-item #meetup-body {
     display: block;
     width: 70%;
     padding: 0;
@@ -100,13 +100,13 @@ div .meetup .meetup-list ul li #meetup-body {
     float: right;
 }
 
-div .meetup .meetup-list ul li #meetup-body div {
+div .meetup .meetup-list ul #list-item #meetup-body div {
     margin-top: 0;
     padding: 0;
     display: inline-block;
 }
 
-div .meetup .meetup-list ul li #meetup-body div #tag {
+div .meetup .meetup-list ul #list-item #meetup-body div #tag {
     display: block;
     float: left;
     padding: 0;
@@ -114,14 +114,14 @@ div .meetup .meetup-list ul li #meetup-body div #tag {
     color: #131212dc;
 }
 
-div .meetup .meetup-list ul li #meetup-body div #scheduled {
+div .meetup .meetup-list ul #list-item #meetup-body div #scheduled {
     display: block;
     float: right;
     padding: 0;
     margin-right: 5px;
 }
 
-div .meetup .meetup-list ul li #meetup-body div #scheduled img {
+div .meetup .meetup-list ul #list-item #meetup-body div #scheduled img {
     height: 25px;
     width: 22px;
 }
@@ -133,27 +133,33 @@ div .meetup .meetup-list ul li #meetup-body div div #title {
     color: #131212dc;
 }
 
-div .meetup .meetup-list ul li #meetup-body div div #meetup-question {
+div .meetup .meetup-list ul #list-item #meetup-body div div #meetup-question {
     text-decoration: none;
     color: #292828ce;
     font-size: 15px;
 }
 
-div .meetup .meetup-list ul li #meetup-body div div #meetup-question:hover{
+div .meetup .meetup-list ul #list-item #meetup-body div div #meetup-question:hover{
     color: #131212dc;
 }
 
-div .meetup .meetup-list ul li #meetup-body div div p {
+div .meetup .meetup-list ul #list-item #meetup-body div div p {
     margin-bottom: 0;
 }
 
-div .meetup .meetup-list ul li #meetup-body div div #title:hover, div .meetup .meetup-list ul li #meetup-body div #tag:hover {
+div .meetup .meetup-list ul #list-item #meetup-body div div #title:hover, div .meetup .meetup-list ul li #meetup-body div #tag:hover {
     text-decoration: underline;
 }
 
-div .meetup .meetup-list ul li #meetup-body div div #title h3 {
+div .meetup .meetup-list ul #list-item #meetup-body div div #title h3 {
     margin-top: 0;
 }
+
+div .meetup .meetup-list ul #list-item #meetup-body ul {
+    padding-left: 0;
+    height: 37px;
+}
+
 
 @media all and (max-width: 480px) {
     .info { display: none; }
