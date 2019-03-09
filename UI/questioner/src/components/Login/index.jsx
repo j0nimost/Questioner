@@ -48,11 +48,14 @@ class LoginUser extends Component {
             // console.log(token)
             cookie.set('token', `${token}`, { path: '/', maxAge: exptime })
             console.log('my token ' + cookie.get('token'))
+            browserHistory.push('/')
         }).catch(err => {
-            this.setState({
-                hasError: true,
-                error: err.response.data.error
-            })
+            if(err.response){
+                this.setState({
+                    hasError: true,
+                    error: err.response.data.error
+                })
+            }
         })
 
     }

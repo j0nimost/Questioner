@@ -54,11 +54,14 @@ class RegisterUser extends Component {
             const token = response.data.data["0"].token
             cookie.set('token', `${token}`, { path: '/', maxAge: exptime })
             console.log('cookie created')
+            browserHistory.push('/')
         }).catch(error => {
-            this.setState({
-                hasError: true,
-                error: error.response.data.error
-            })
+            if(error.response){
+                this.setState({
+                    hasError: true,
+                    error: error.response.data.error
+                })
+            }
         })
     }
 
