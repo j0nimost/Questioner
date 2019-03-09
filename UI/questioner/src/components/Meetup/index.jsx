@@ -8,8 +8,8 @@ import './meetup.css'
 
 class Meetup extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         const cookie = new Cookies()
         this.state = {
@@ -18,7 +18,6 @@ class Meetup extends Component {
             hasError: false,
             error: ''
         }
-
     }
 
     componentDidMount = () => {
@@ -28,7 +27,7 @@ class Meetup extends Component {
 
     getallHandler = () => {
         const upcoming_meetups = 'https://questioneradc36.herokuapp.com/api/v2/meetups/upcoming'
-        axiosRetry(axios, { retries: 40 });
+        axiosRetry(axios, { retries: 5 });
 
         axios.get(upcoming_meetups, { headers: { "Authorization": `Bearer ${this.state.token}` } }
         ).then((response) => {
@@ -44,14 +43,14 @@ class Meetup extends Component {
                 console.log(err)
             }
             else {
-                const response_err = err.response
-                console.log(response_err.data)
+                const response_err = JSON.stringify(err.response.data.error)
+                console.log(response_err)
 
                 this.setState({
                     hasError: true,
-                    error: response_err.data,
+                    error: response_err,
                 })
-
+                browserHistory.push('/login')
             }
         })
     }
